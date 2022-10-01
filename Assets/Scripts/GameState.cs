@@ -12,12 +12,12 @@ public class GameState : MonoBehaviour
     public bool IsGameComplete;
 
     // paused is independent of ball active and game complete. When unpaused, the game's behavior
-    // determined by isBallActive and isGameComplete.
+    // determined by IsBallActive and IsGameComplete.
     public bool paused;
     
-    public GameState(bool isBallActive, bool isGameComplete)
+    public GameState(bool IsBallActive, bool IsGameComplete)
     {
-        this.isBallActive = isBallActive;
-        this.isGameComplete = isGameComplete;
+        this.IsBallActive = IsBallActive;
+        this.IsGameComplete = IsGameComplete;
     }
 }
