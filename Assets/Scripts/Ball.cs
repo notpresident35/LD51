@@ -15,7 +15,7 @@ public class Ball : MonoBehaviour {
 		body = GetComponent<Rigidbody2D>();
 
 		//hit ball in random direction at start
-		onBallHit(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
+		ballHit(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
 	}
 
 	private void FixedUpdate() {
@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour {
 	}
 
 
-	public void onBallHit(bool isCurveBall, float newAngle, float newSpeed) {
+	public void ballHit(bool isCurveBall, float newAngle, float newSpeed) {
 		moveSpd = newSpeed;
 		angle = newAngle;
 	}
