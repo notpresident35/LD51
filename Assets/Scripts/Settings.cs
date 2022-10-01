@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
-    
+    float val = PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD);
 }
