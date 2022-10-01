@@ -8,7 +8,7 @@ public class VFXManager : MonoBehaviour {
 
     public static VFXManager Instance;
 
-    private void Start() {
+    private void Awake() {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -17,10 +17,13 @@ public class VFXManager : MonoBehaviour {
             return;
         }
 
-        EventSystem.Instance.goalHit.AddListener(createBallExplosion);
     }
 
-    private void createBallExplosion(int team, Vector3 coords) {
+    private void Start() {
+        EventSystem.Instance.ballExplode.AddListener(createBallExplosion);
+    }
+
+    public void createBallExplosion(Vector3 coords) {
         Instantiate(ballExplosionPS, coords, Quaternion.identity);
     }
 
