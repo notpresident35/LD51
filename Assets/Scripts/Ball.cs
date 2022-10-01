@@ -1,13 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//vvv REMOVE LATER WE DONT NEED IT HERE vvv
-using UnityEngine.Events;
 
-public class Ball : MonoBehaviour
-{
-	//test event ig??
-	UnityEvent<bool, float, float> ballHit_test = new UnityEvent<bool, float, float>();
+public class Ball : MonoBehaviour {
 
 	private Rigidbody2D body;
 
@@ -19,17 +14,8 @@ public class Ball : MonoBehaviour
 		//get references
 		body = GetComponent<Rigidbody2D>();
 
-		//test event
-		ballHit_test.AddListener(onBallHit);
-
 		//hit ball in random direction at start
-		ballHit_test.Invoke(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
-	}
-
-	private void Update() {
-		if (Input.GetMouseButtonDown(0)) {
-			ballHit_test.Invoke(false, Mathf.Atan2(-transform.position.y, -transform.position.x), moveSpd + .1f);
-		}
+		onBallHit(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
 	}
 
 	private void FixedUpdate() {
@@ -41,7 +27,7 @@ public class Ball : MonoBehaviour
 	}
 
 
-	private void onBallHit(bool isCurveBall, float newAngle, float newSpeed) {
+	public void onBallHit(bool isCurveBall, float newAngle, float newSpeed) {
 		moveSpd = newSpeed;
 		angle = newAngle;
 	}
