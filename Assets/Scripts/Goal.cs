@@ -7,10 +7,13 @@ public class Goal : MonoBehaviour {
 
     public int team;
 
-    private void OnCollisionEnter(Collision collision) {
+    private void OnTriggerEnter2D(Collider2D collider) {
 
-        ContactPoint contact = collision.contacts[0];
-        EventSystem.Instance.goalHit.Invoke(team, contact.point);
+        if (collider.tag == "ball") {
+            print("hit ball");
+            EventSystem.Instance.goalHit.Invoke(team, collider.transform.position);
+
+        }
 
     }
 
