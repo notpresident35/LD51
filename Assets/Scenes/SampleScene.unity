@@ -238,9 +238,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputKeycodePPDs:
   - Name: P1Up
-    DefaultValue: 273
+    DefaultValue: 119
   - Name: P1Down
-    DefaultValue: 274
+    DefaultValue: 115
+  - Name: P1Dash
+    DefaultValue: 304
 --- !u!4 &840056726
 Transform:
   m_ObjectHideFlags: 0
