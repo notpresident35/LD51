@@ -5,21 +5,15 @@ using UnityEngine.Events;
 
 public class Goal : MonoBehaviour {
 
-    //private BoxCollider2D goalCollider;
     public int team;
 
-    /*
-    private void Start() {
+    private void OnTriggerEnter2D(Collider2D collider) {
 
-        goalCollider = gameObject.GetComponent<BoxCollider2D>();
+        if (collider.tag == "ball") {
+            print("hit ball");
+            EventSystem.Instance.goalHit.Invoke(team, collider.transform.position);
 
-    }
-    */
-
-    private void OnCollisionEnter(Collision collision) {
-
-        ContactPoint contact = collision.contacts[0];
-        // do event shit here (pass in team # and collision point)
+        }
 
     }
 

@@ -7,5 +7,19 @@ public class EventSystem : MonoBehaviour {
 
     public UnityEvent<int, Vector3> goalHit;
     public UnityEvent<Vector3> paddleHit;
+    public UnityEvent settingsSet;
+    public UnityEvent<Vector3> ballExplode;
+
+    public static EventSystem Instance;
+
+    private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
 }
