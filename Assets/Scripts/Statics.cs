@@ -49,5 +49,7 @@ public class Statics
     public static FloatPlayerPrefData AudioMasterVolumePPD = new FloatPlayerPrefData ("Master Volume", 1.0f);
     public static FloatPlayerPrefData AudioSFXVolumePPD = new FloatPlayerPrefData ("SFX Volume", 1.0f);
     public static FloatPlayerPrefData AudioMusicVolumePPD = new FloatPlayerPrefData ("Music Volume", 1.0f);
-    
+
+    // filepath relative to Resources directory for audio files
+    public static string AudioFilePathPrefix = "SFX/";
 }
