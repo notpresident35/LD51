@@ -7,21 +7,31 @@ using UnityEngine;
  * to always draw from and push to an object pool rather than use constructors and garbage
  * collection.
  *
- * Drawing from an empty object pool is the same as creating the new object.
+ * Drawing from an object pool returns an object in an indeterminate state.
+ * Drawing from an empty object pool calls its constructor with no parameters.
  *
  */
  
-public class ObjectPool<ObjectType> : MonoBehaviour
+public class ObjectPool<ObjectType> where ObjectType : class, new()
 {
-    // Start is called before the first frame update
-    void Start()
+    private static Queue<ObjectType> pool = new Queue<ObjectType>();
+    
+    public static void Push(ObjectType thing)
     {
-        
+        pool.Enqueue(thing);
+    }
+    
+    public static bool IsEmpty()
+    {
+        return pool.Count == 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static ObjectType Pop()
     {
-        
+        if (pool.Count == 0)
+        {
+            return new ObjectType();
+        }
+        return pool.Dequeue();
     }
 }
