@@ -283,6 +283,10 @@ PrefabInstance:
       propertyPath: facingRight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: dashSmoothFactor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -333,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
@@ -348,8 +352,16 @@ PrefabInstance:
       value: P1Charge
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].Name
+      value: P1Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
       value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].DefaultValue
+      value: 304
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -634,6 +646,14 @@ PrefabInstance:
       propertyPath: teamID
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: dashSmoothFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: useDedicatedCharge
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -688,7 +708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
@@ -703,6 +723,10 @@ PrefabInstance:
       value: P2Charge
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].Name
+      value: P2Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].DefaultValue
       value: 276
       objectReference: {fileID: 0}
@@ -713,6 +737,10 @@ PrefabInstance:
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
       value: 274
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].DefaultValue
+      value: 303
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -8,16 +8,27 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private int teamID;
 	[SerializeField] private bool facingRight;
 	[SerializeField] private float moveSpeed;
+	[SerializeField] private float inputSmoothFactor;
 	[SerializeField] private float strongHitStrength = 6;
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
+	[SerializeField] private float dashSpeed;
+	[SerializeField] private float dashCooldown;
+	[SerializeField] private float dashFalloff;
 	private Vector2 velocity;
+	private float yMoveDir;
 	private float paddleHeight;
 	private float chargeShotTimer;
+	private float dashInterpolation;
 	private float dashTimer;
 	private float curveBallTimer;
 
+	private bool chargeInput;
+	private bool chargeInputDown;
+
+	// TEMP - MAKE AN OPTION IN SETTINGS LATER
+	[SerializeField] bool useDedicatedCharge;
 	// TEMP FOR TESTING
 	[SerializeField] bool mustFullyCharge;
 	// TEMP FOR UNTIL WE HAVE ANIMATIONS
@@ -30,11 +41,13 @@ public class Paddle : MonoBehaviour
 	KeyCode upKey;
 	KeyCode downKey;
 	KeyCode chargeKey;
+	KeyCode dashKey;
 
 	public void Config() {
 		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
 		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
+		dashKey = inputHandler.GetKeycodeForInput($"P{teamID}Dash");
 	}
 
 	private void Awake () {
@@ -51,6 +64,10 @@ public class Paddle : MonoBehaviour
 		Config();
 
 		chargeShotTimer = 0;
+		dashInterpolation = 0;
+		curveBallTimer = 0;
+
+		yMoveDir = 0;
 
 		//nono zone config?
 		if ((facingRight && nonoZoneSize > .5f) || (!facingRight && nonoZoneSize < .5f)) {
@@ -61,29 +78,51 @@ public class Paddle : MonoBehaviour
 
 
 	private void Update () {
-		float yMoveDir = (Input.GetKey (upKey) ? 1 : 0) - (Input.GetKey (downKey) ? 1 : 0);
-
-		// DEBUG NONO ZONE LINE UNTIL WE GET ART
-		Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
-
-		//start charging
-		if (Input.GetKeyDown(chargeKey)) {
-			chargeShotTimer = 0;
-		}
-		
-		if (!Input.GetKey(chargeKey)) {
-			velocity = new Vector2(0, moveSpeed * yMoveDir);
-
-			sprite.color = Color.white;
+		if (useDedicatedCharge) {
+			chargeInput = Input.GetKey(chargeKey);
+			chargeInputDown = Input.GetKeyDown(chargeKey);
 		} else {
+			chargeInput = Input.GetKey(upKey) && Input.GetKey(downKey);
+
+			chargeInputDown = (Input.GetKeyDown(upKey) && Input.GetKey(downKey)) || (Input.GetKeyDown(downKey) && Input.GetKey(upKey));
+		}
+
+		yMoveDir = Mathf.Lerp(yMoveDir, (Input.GetKey(upKey) ? 1 : 0) - (Input.GetKey(downKey) ? 1 : 0), inputSmoothFactor);
+
+		if (chargeInput) {
+			yMoveDir = 0;
+
 			// DEBUG ANIM TO SHOW YOURE CHARGING
 			sprite.color = new Color(1, (1 - Mathf.Min(chargeShotTimer / chargeTime, 1)), 1);
-			if (mustFullyCharge && chargeShotTimer/chargeTime >= 1) {
+			if (mustFullyCharge && chargeShotTimer / chargeTime >= 1) {
 				sprite.color = new Color(0, .5f, .8f);
 			}
+		} else {
+			sprite.color = Color.white;
 		}
 
+			// DEBUG NONO ZONE LINE UNTIL WE GET ART
+			Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+
+		//start charging
+		if (chargeInputDown) {
+			chargeShotTimer = 0;
+		}
+
+		//dash
+		if (Input.GetKeyDown(dashKey) && dashTimer <= Mathf.Epsilon) {
+			velocity.y = yMoveDir * dashSpeed;
+			dashInterpolation = 1;
+			dashTimer = dashCooldown;
+		}
+
+		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolation);
+
 		chargeShotTimer += Time.deltaTime;
+		curveBallTimer += Time.deltaTime;
+		dashTimer = Mathf.Max(0, dashTimer - Time.deltaTime);
+
+		dashInterpolation = Mathf.Max(0, dashInterpolation - (dashFalloff * Time.deltaTime));
 	}
 
 	private void FixedUpdate() {
@@ -99,12 +138,11 @@ public class Paddle : MonoBehaviour
 			
 			float hitStrength = 0;
 			if (mustFullyCharge) {
-				if (chargeShotTimer > chargeTime && Input.GetKey(chargeKey)) {
+				if (chargeShotTimer > chargeTime && chargeInput) {
 					hitStrength = strongHitStrength;
 				}
-			} else if (Input.GetKey(chargeKey)) {
+			} else if (chargeInput) {
 				hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
-				print($"{hitStrength}, {chargeShotTimer}, {chargeTime}");
 			}
 			chargeShotTimer = 0;
 
