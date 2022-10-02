@@ -13,6 +13,10 @@ public class GameMode : ScriptableObject
     public bool UsePowerups;
     [ConditionalField ("UsePowerups")] public float PowerupSpawnDelay;
 
+    public float ballStartAngleSpread;
+    public bool ballStartsWithRandomDirection;
+    [ConditionalField ("ballStartsWithRandomDirection", true)] public bool ballStartsGoingLeft;
+
     public List<Vector3> BallDefaultPositions;
     public List<Vector3> PaddleDefaultPositions;
 }

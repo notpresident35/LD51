@@ -141,10 +141,10 @@ MonoBehaviour:
   nonoZoneSize: 0.12
   angleSpread: 60
   chargeTime: 0.5
-  dashSpeed: 85
+  dashSpeed: 90
   dashCooldown: 0.17
-  dashFalloff: 1
-  useDedicatedCharge: 0
+  dashFalloff: 0.25
+  useDedicatedCharge: 1
   mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
