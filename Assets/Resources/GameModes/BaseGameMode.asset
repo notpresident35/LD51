@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2188ef128029e14680b32d7452ba426, type: 3}
-  m_Name: BasicGameMode
+  m_Name: BaseGameMode
   m_EditorClassIdentifier: 
   Description: A game mode with 2 players on separate teams, one paddle per player,
     and one ball at the start.

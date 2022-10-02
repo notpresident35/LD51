@@ -5,7 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public float RestartTime = 2;
-    public GameMode DefaultMode;
+
+    private void Awake () {
+        // Load default game mode
+        if (GameState.CurrentMode == null) {
+            SetGameMode (Resources.Load (Statics.GameModeFilePathPrefix + "BaseGameMode") as GameMode);
+        }
+    }
 
     // Note: Because GameManager is later in script execution order, it adds this as a listener after all other listeners
     // This means that it can rely on the score being updated when that happens in another script before this is called
@@ -19,6 +25,10 @@ public class GameManager : MonoBehaviour
             GameState.IsBallActive = true;
             StartCoroutine (RestartRound ());
         }
+    }
+
+    private void Start () {
+        StartCoroutine (RestartRound ());
     }
 
     private void OnEnable () {
@@ -43,5 +53,9 @@ public class GameManager : MonoBehaviour
         GameState.IsGameComplete = false;
         SingletonManager.EventSystemInstance.OnGameRestart.Invoke ();
         StartCoroutine (RestartRound ());
+    }
+
+    public void SetGameMode (GameMode newMode) {
+        GameState.CurrentMode = newMode;
     }
 }

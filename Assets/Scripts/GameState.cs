@@ -8,12 +8,12 @@ public static class GameState
     // false, true : game just ended
     // true,  false: game is running
     // true,  true : never
-    public static bool IsBallActive = true;
+    public static bool IsBallActive = false;
     public static bool IsGameComplete = false;
 
     // paused is independent of ball active and game complete. When unpaused, the game's behavior
     // determined by IsBallActive and IsGameComplete.
     public static bool Paused = false;
 
-    public static GameMode CurrentMode;
+    public static GameMode CurrentMode = null;
 }
