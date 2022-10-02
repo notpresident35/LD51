@@ -20,6 +20,8 @@ public class Paddle : MonoBehaviour
 
 	// TEMP FOR TESTING
 	[SerializeField] bool mustFullyCharge;
+	// TEMP FOR UNTIL WE HAVE ANIMATIONS
+	private SpriteRenderer sprite;
 
 	private Rigidbody2D rb;
 	private BoxCollider2D boxCollider;
@@ -39,6 +41,9 @@ public class Paddle : MonoBehaviour
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
+
+		// TEMP FOR UNTIL WE HAVE ANIMATIONS
+		sprite = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	private void Start() {
@@ -68,9 +73,14 @@ public class Paddle : MonoBehaviour
 		
 		if (!Input.GetKey(chargeKey)) {
 			velocity = new Vector2(0, moveSpeed * yMoveDir);
+
+			sprite.color = Color.white;
 		} else {
-			// DEBUG LINE TO SHOW YOURE CHARGING
-			Debug.DrawRay(transform.TransformPoint(Vector3.zero), Vector2.up, Color.green);
+			// DEBUG ANIM TO SHOW YOURE CHARGING
+			sprite.color = new Color(1, (1 - Mathf.Min(chargeShotTimer / chargeTime, 1)), 1);
+			if (mustFullyCharge && chargeShotTimer/chargeTime >= 1) {
+				sprite.color = new Color(0, .5f, .8f);
+			}
 		}
 
 		chargeShotTimer += Time.deltaTime;
@@ -91,7 +101,6 @@ public class Paddle : MonoBehaviour
 			if (mustFullyCharge) {
 				if (chargeShotTimer > chargeTime && Input.GetKey(chargeKey)) {
 					hitStrength = strongHitStrength;
-					print("yeeted");
 				}
 			} else if (Input.GetKey(chargeKey)) {
 				hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
