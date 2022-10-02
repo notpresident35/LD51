@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4069176752746549633}
   - component: {fileID: 4069176752746549632}
   - component: {fileID: 4069176752746549634}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.5, y: 65}
   m_EdgeRadius: 0
 --- !u!114 &4069176752746549634
 MonoBehaviour:
@@ -71,4 +71,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4773c90776727de44aa396b0459fae46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
+  teamID: 0

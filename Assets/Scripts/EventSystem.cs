@@ -12,16 +12,4 @@ public class EventSystem : MonoBehaviour {
 
     // VFX Handovers
     public UnityEvent<Vector3> OnBallExplode;
-
-    public static EventSystem Instance;
-
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-            return;
-        }
-    }
 }

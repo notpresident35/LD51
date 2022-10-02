@@ -27,7 +27,7 @@ public class Paddle : MonoBehaviour
         upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
 		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 
-        TeamManager.Instance.RegisterPaddle (this, teamID);
+        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID);
     }
 
 
@@ -49,6 +49,8 @@ public class Paddle : MonoBehaviour
 	}
 
 	void OnDestroy() {
-        TeamManager.Instance.DeregisterPaddle (this, teamID);
+		if (SingletonManager.Instance) {
+			SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterPaddle (this, teamID);
+		}
     }
 }

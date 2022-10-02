@@ -5,16 +5,16 @@ public class Goal : MonoBehaviour {
     public int teamID;
 
     private void Start () {
-        TeamManager.Instance.RegisterGoal (this, teamID);
+        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterGoal (this, teamID);
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {
         if (collider.tag == "ball") {
-            EventSystem.Instance.OnGoalHit.Invoke(teamID, collider.transform.position);
+            SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.Invoke(teamID, collider.transform.position);
         }
     }
 
     private void OnDisable () {
-        TeamManager.Instance.DeregisterGoal (this, teamID);
+        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterGoal (this, teamID);
     }
 }

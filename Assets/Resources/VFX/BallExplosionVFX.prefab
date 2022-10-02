@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2010105227395491942}
   - component: {fileID: 2010105227395491941}
   m_Layer: 0
-  m_Name: BallExplosion
+  m_Name: BallExplosionVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

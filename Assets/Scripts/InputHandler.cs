@@ -26,7 +26,7 @@ public class InputHandler : MonoBehaviour
                 return GetKeycode (p);
             }
         }
-        Debug.LogError ("Failed to get keycode!");
+        Debug.LogError ($"Failed to get keycode for {inputName}");
         return KeyCode.Home;
     }
 }
