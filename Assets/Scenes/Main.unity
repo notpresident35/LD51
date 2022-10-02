@@ -666,11 +666,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].DefaultValue
-      value: 273
+      value: 275
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[1].DefaultValue
-      value: 274
+      value: 276
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

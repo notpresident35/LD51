@@ -15,6 +15,8 @@ public class Goal : MonoBehaviour {
     }
 
     private void OnDisable () {
-        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterGoal (this, teamID);
+        if (SingletonManager.Instance != null) {
+            SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterGoal (this, teamID);
+        }
     }
 }
