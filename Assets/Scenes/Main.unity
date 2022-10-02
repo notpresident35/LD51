@@ -271,10 +271,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d28ab441f5c5db04a96f9b7567547722, type: 2}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 1
@@ -283,9 +279,17 @@ PrefabInstance:
       propertyPath: facingRight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: dashSmoothFactor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -333,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
@@ -348,8 +352,16 @@ PrefabInstance:
       value: P1Charge
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].Name
+      value: P1Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
       value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].DefaultValue
+      value: 304
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -381,6 +393,14 @@ PrefabInstance:
     - target: {fileID: 5152428661723124835, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
       propertyPath: m_Name
       value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: initialSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428662059834263, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -415,10 +435,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WidthCompression: 0.28
-  MinZoomSize: 16
-  InitialZoomSize: 22
-  EdgePadding: {x: 0, y: 7}
-  smoothFactor: 1
+  MinZoomSize: 4
+  InitialZoomSize: 0
+  EdgePadding: {x: 0, y: 12}
+  ShakeAmplitude: 0
+  ShakeFrequency: 0
+  smoothFactor: 0.006
+  horizontalWiggleFactor: 20
+  perlinNoisePosition: 0
 --- !u!4 &851951288
 Transform:
   m_ObjectHideFlags: 0
@@ -606,7 +630,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -633,6 +657,14 @@ PrefabInstance:
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: dashSmoothFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: useDedicatedCharge
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
@@ -688,7 +720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
@@ -703,6 +735,10 @@ PrefabInstance:
       value: P2Charge
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].Name
+      value: P2Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].DefaultValue
       value: 276
       objectReference: {fileID: 0}
@@ -713,6 +749,10 @@ PrefabInstance:
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
       value: 274
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[3].DefaultValue
+      value: 303
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -845,7 +885,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Singletons
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1135925428069325439, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+    m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
