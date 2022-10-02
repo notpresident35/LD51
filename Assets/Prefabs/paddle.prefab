@@ -144,6 +144,7 @@ MonoBehaviour:
   dashSpeed: 90
   dashCooldown: 0.17
   dashFalloff: 0.25
+  useDedicatedCharge: 1
   mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:

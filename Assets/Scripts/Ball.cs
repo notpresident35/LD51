@@ -25,7 +25,7 @@ public class Ball : MonoBehaviour {
 		moveSpeed = initialSpeed;
 
 		// Hit ball at start
-		ballHit (false, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
+		ballHit(false, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
 	private void FixedUpdate() {
