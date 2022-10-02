@@ -280,16 +280,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: angleSpread
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: facingRight
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: nonoZoneSize
-      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
@@ -344,12 +336,24 @@ PrefabInstance:
       value: paddle
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
       value: P1Up
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[1].Name
       value: P1Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[2].Name
+      value: P1Charge
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
+      value: 115
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -636,21 +640,13 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8518116055070483568, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_Size.y
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: moveSpeed
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: angleSpread
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: nonoZoneSize
-      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
@@ -701,6 +697,10 @@ PrefabInstance:
       value: paddle (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].Name
       value: P2Up
       objectReference: {fileID: 0}
@@ -709,12 +709,20 @@ PrefabInstance:
       value: P2Down
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[2].Name
+      value: P2Charge
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[0].DefaultValue
-      value: 275
+      value: 276
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: InputKeycodePPDs.Array.data[1].DefaultValue
-      value: 276
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483582, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: InputKeycodePPDs.Array.data[2].DefaultValue
+      value: 274
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -50,11 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angle: 0
   initialSpeed: 0
-  initialRotation: 0
-  useRandomInitialRotation: 0
   moveSpeed: 0
   speedMultiplier: 1
-  smoothFactor: 0.015
+  smoothFactor: 0.012
+  initialRotation: 0
+  useRandomInitialRotation: 0
 --- !u!50 &5152428661723124844
 Rigidbody2D:
   serializedVersion: 4
