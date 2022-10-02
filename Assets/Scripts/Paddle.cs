@@ -29,6 +29,12 @@ public class Paddle : MonoBehaviour
 	KeyCode downKey;
 	KeyCode chargeKey;
 
+	public void Config() {
+		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
+		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
+		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
+	}
+
 	private void Awake () {
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
@@ -37,9 +43,7 @@ public class Paddle : MonoBehaviour
 
 	private void Start() {
 		// Get initial input config
-		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
-		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
-		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
+		Config();
 
 		chargeShotTimer = 0;
 
@@ -101,11 +105,13 @@ public class Paddle : MonoBehaviour
 
 	private void OnEnable () {
         SingletonManager.TeamManagerInstance.RegisterPaddle (this, teamID - 1);
-    }
+		SingletonManager.EventSystemInstance.OnSettingsSaved.AddListener(Config);
+	}
 
 	private void OnDisable () {
 		if (SingletonManager.Instance) {
 			SingletonManager.TeamManagerInstance.DeregisterPaddle (this, teamID - 1);
+			SingletonManager.EventSystemInstance.OnSettingsSaved.RemoveListener(Config);
 		}
 	}
 }
