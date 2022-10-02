@@ -5,6 +5,7 @@ using UnityEngine;
 public class TeamManager : MonoBehaviour
 {
     public class Team {
+        // Note: This stores inverse score, or times other team(s) have scored against this team
         public float Score = 0;
         public List<Paddle> Paddles = new List<Paddle>();
         public List<Goal> Goals = new List<Goal>();

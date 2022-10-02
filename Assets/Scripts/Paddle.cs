@@ -48,8 +48,6 @@ public class Paddle : MonoBehaviour
 			nonoZoneSize = 1-nonoZoneSize;
 		}
 		paddleHeight = 2 * boxCollider.bounds.extents.y;
-
-		SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID - 1);
 	}
 
 
@@ -101,7 +99,11 @@ public class Paddle : MonoBehaviour
 		}
 	}
 
-	void OnDestroy() {
+	private void OnEnable () {
+        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID - 1);
+    }
+
+	private void OnDisable () {
 		if (SingletonManager.Instance) {
 			SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterPaddle (this, teamID - 1);
 		}

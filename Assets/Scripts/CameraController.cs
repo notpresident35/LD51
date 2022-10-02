@@ -20,12 +20,18 @@ public class CameraController : MonoBehaviour
     }
 
     Bounds GetTargetedBounds () {
-        Bounds bounds = new Bounds();
+        // Focus on center position with minimum zoom
+        Vector3 centerPos = Vector3.zero;
+        foreach (CameraTracker trackedObj in CameraTracker.Trackers) {
+            centerPos += trackedObj.transform.position;
+        }
+        centerPos /= CameraTracker.Trackers.Count;
 
+        // Find bounds around camera trackers, with minimum camera size
+        Bounds bounds = new Bounds(centerPos, Vector3.one * MinZoomSize);
         foreach (CameraTracker trackedObj in CameraTracker.Trackers) {
             bounds.Encapsulate (trackedObj.transform.position);
         }
-
         return bounds;
     }
 
@@ -36,7 +42,7 @@ public class CameraController : MonoBehaviour
         // Position camera
         transform.position = bounds.center;
 
-        // Size to focus on all objects
-        cam.orthographicSize = Mathf.Max (Mathf.Max (bounds.extents.x, bounds.extents.y), MinZoomSize);
+        // Size to focus on bounds
+        cam.orthographicSize = Mathf.Max (bounds.extents.x, bounds.extents.y);
     }
 }
