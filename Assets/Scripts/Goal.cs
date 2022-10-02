@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Goal : MonoBehaviour {
 
-    public int team;
+    public int teamID;
 
-    private void OnTriggerEnter2D(Collider2D collider) {
-
-        if (collider.tag == "ball") {
-            print("hit ball");
-            EventSystem.Instance.goalHit.Invoke(team, collider.transform.position);
-
-        }
-
+    private void Start () {
+        TeamManager.Instance.RegisterGoal (this, teamID);
     }
 
+    private void OnTriggerEnter2D(Collider2D collider) {
+        if (collider.tag == "ball") {
+            EventSystem.Instance.OnGoalHit.Invoke(teamID, collider.transform.position);
+        }
+    }
+
+    private void OnDisable () {
+        TeamManager.Instance.DeregisterGoal (this, teamID);
+    }
 }

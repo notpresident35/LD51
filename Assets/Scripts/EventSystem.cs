@@ -5,10 +5,13 @@ using UnityEngine.Events;
 
 public class EventSystem : MonoBehaviour {
 
-    public UnityEvent<int, Vector3> goalHit;
-    public UnityEvent<Vector3> paddleHit;
-    public UnityEvent settingsSet;
-    public UnityEvent<Vector3> ballExplode;
+    // State events
+    public UnityEvent<int, Vector3> OnGoalHit;
+    public UnityEvent<Vector3> OnPaddleHit;
+    public UnityEvent OnSettingsSaved;
+
+    // VFX Handovers
+    public UnityEvent<Vector3> OnBallExplode;
 
     public static EventSystem Instance;
 
@@ -21,5 +24,4 @@ public class EventSystem : MonoBehaviour {
             return;
         }
     }
-
 }

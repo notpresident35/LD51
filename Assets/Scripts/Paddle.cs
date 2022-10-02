@@ -5,47 +5,50 @@ using UnityEngine;
 [RequireComponent(typeof(InputHandler))]
 public class Paddle : MonoBehaviour
 {
-	private Rigidbody2D body;
-	private InputHandler inputHandler;
-
-	//controls
-	KeyCode upKey;
-	KeyCode downKey;
-
 	[SerializeField] private int teamID;
-	private Vector2 velocity;
-	[SerializeField] private int facing;
-	[SerializeField] private float moveSpd;
+	[SerializeField] private bool facingRight;
+	[SerializeField] private float moveSpeed;
+	[SerializeField] private float hitStrength = 8;
+    private Vector2 velocity;
 
-	private void Start() {
-		//get references
-		body = GetComponent<Rigidbody2D>();
-		inputHandler = GetComponent<InputHandler>();
+    private Rigidbody2D rb;
+    private InputHandler inputHandler;
+    // Control keycode cache
+    KeyCode upKey;
+    KeyCode downKey;
 
-		//get initial input config
-		upKey = inputHandler.GetKeycodeForInput("P1Up");
-		downKey = inputHandler.GetKeycodeForInput("P1Down");
+	private void Awake () {
+		rb = GetComponent<Rigidbody2D> ();
+		inputHandler = GetComponent<InputHandler> ();
 	}
 
-	private void Update() {
-		float vspd = moveSpd * ((Input.GetKey(upKey) ? 1 : 0) - (Input.GetKey(downKey) ? 1 : 0));
+    private void Start() {
+        // Get initial input config
+        upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
+		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 
-		velocity = new Vector2(0, vspd);
+        TeamManager.Instance.RegisterPaddle (this, teamID);
+    }
+
+
+    private void Update () {
+		float yMoveDir = (Input.GetKey (upKey) ? 1 : 0) - (Input.GetKey (downKey) ? 1 : 0);
+
+		velocity = new Vector2(0, moveSpeed * yMoveDir);
 	}
 
 	private void FixedUpdate() {
-		body.velocity = velocity;
+		rb.velocity = velocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "ball") {
-			float hitAngle;
-			float hitStrength = 8;
-
-			hitAngle = Mathf.Atan2(0,facing);
-
+			float hitAngle = Mathf.Atan2(0, facingRight ? 1 : -1);
 			collision.gameObject.GetComponent<Ball>().ballHit(false, hitAngle, hitStrength);
-			print("YEEEEEEET");
 		}
 	}
+
+	void OnDestroy() {
+        TeamManager.Instance.DeregisterPaddle (this, teamID);
+    }
 }

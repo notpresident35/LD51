@@ -20,7 +20,7 @@ public class VFXManager : MonoBehaviour {
     }
 
     private void Start() {
-        EventSystem.Instance.ballExplode.AddListener(createBallExplosion);
+        EventSystem.Instance.OnBallExplode.AddListener(createBallExplosion);
     }
 
     public void createBallExplosion(Vector3 coords) {
