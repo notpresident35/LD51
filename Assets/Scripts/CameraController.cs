@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 
     // TODO: move this magic number to Statics.cs eventually
     [SerializeField]
-    private float smoothFactor = 0.99f;
+    private float smoothFactor = 0.006f;
 
     private Bounds lastBounds;
 
