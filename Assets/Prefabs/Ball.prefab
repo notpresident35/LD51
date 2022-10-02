@@ -48,7 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
+  startSpd: 5
   moveSpd: 5
+  speedMultiplier: 1
+  smoothFactor: 0.1
 --- !u!50 &5152428661723124844
 Rigidbody2D:
   serializedVersion: 4
