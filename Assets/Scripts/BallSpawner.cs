@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour
 {
-    public GameObject BallPrefab;
+    public Ball BallPrefab;
 
-    static ObjectPool<Ball> BallPit;
+    private ObjectPool<Ball> BallPit;
 
     private void Awake () {
-        // TODO: don't do this lol
-        //BallPit = new ObjectPool (BallPrefab);
+        BallPit = new ObjectPool<Ball> (BallPrefab);
     }
 
     public void SpawnBalls () {
