@@ -271,10 +271,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 8518116055070483568, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: m_Size.y
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 1
@@ -640,10 +636,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8518116055070483568, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: m_Size.y
-      value: 300
-      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 2
