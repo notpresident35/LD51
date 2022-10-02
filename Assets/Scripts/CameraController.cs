@@ -8,9 +8,10 @@ public class CameraController : MonoBehaviour
     public float MinZoomSize;
     public Vector2 EdgePadding;
 
-    // TODO: move this magic number to Statics.cs eventually
     [SerializeField]
-    private float smoothFactor = 0.006f;
+    private float smoothFactor; 
+    // sorry for the magic number, hopefully hazel never reads this code
+    private float smoothFactorRationalizationConstant = 0.006f;
 
     private Bounds lastBounds;
 
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour
     
     Vector3 Interpolate(Vector3 a, Vector3 b)
     {
-        return Vector3.Lerp(a, b, smoothFactor);
+        return Vector3.Lerp(a, b, smoothFactorRationalizationConstant / smoothFactor);
     }
 
     void FocusOnBounds (Bounds bounds) {

@@ -425,7 +425,7 @@ MonoBehaviour:
   WidthCompression: 0.28
   MinZoomSize: 4
   EdgePadding: {x: 0, y: 7}
-  smoothFactor: 0.006
+  smoothFactor: 1
 --- !u!4 &851951288
 Transform:
   m_ObjectHideFlags: 0
