@@ -43,11 +43,29 @@ public class TeamManager : MonoBehaviour
         Teams [teamID].Score++;
     }
 
+    void ResetPaddles () {
+        int paddleCount = 0;
+        foreach (Team team in Teams) {
+            foreach (Paddle paddle in team.Paddles) {
+                paddle.transform.position = GameState.CurrentMode.PaddleDefaultPositions [paddleCount];
+                paddleCount++;
+                if (paddleCount >= GameState.CurrentMode.PaddleDefaultPositions.Count) {
+                    Debug.LogError ("Not enough paddle spawnpoints for paddle count");
+                    return;
+                }
+            }
+        }
+    }
+
     private void OnEnable () {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener (ScorePoint);
+        SingletonManager.EventSystemInstance.OnRoundRestart.AddListener (ResetPaddles);
+        SingletonManager.EventSystemInstance.OnGameRestart.AddListener (ResetPaddles);
     }
     
     private void OnDisable () {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (ScorePoint);
+        SingletonManager.EventSystemInstance.OnRoundRestart.RemoveListener (ResetPaddles);
+        SingletonManager.EventSystemInstance.OnGameRestart.RemoveListener (ResetPaddles);
     }
 }

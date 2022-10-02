@@ -12,4 +12,7 @@ public class GameMode : ScriptableObject
     public int BallStartCount;
     public bool UsePowerups;
     [ConditionalField ("UsePowerups")] public float PowerupSpawnDelay;
+
+    public List<Vector3> BallDefaultPositions;
+    public List<Vector3> PaddleDefaultPositions;
 }

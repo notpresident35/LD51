@@ -40,9 +40,9 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator RestartRound () {
+        SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
         yield return new WaitForSeconds (RestartTime);
         GameState.IsBallActive = true;
-        SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
     }
 
     void StopGame (int winTeam) {
