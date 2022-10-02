@@ -50,17 +50,17 @@ public class Ball : MonoBehaviour {
 
 	IEnumerator DeathEffects (float waitTime) {
 		yield return new WaitForSeconds (waitTime);
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.Invoke (transform.position);
+        SingletonManager.EventSystemInstance.OnBallExplode.Invoke (transform.position);
         Destroy (gameObject);
     }
 
 	void OnEnable () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener (explodeBall);
+        SingletonManager.EventSystemInstance.OnGoalHit.AddListener (explodeBall);
     }
 
     private void OnDisable() {
 		if (SingletonManager.Instance) {
-            SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (explodeBall);
+            SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
         }
     }
 }

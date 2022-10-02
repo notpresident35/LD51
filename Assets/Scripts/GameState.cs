@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : MonoBehaviour
+public static class GameState
 {
     // false, false: between rounds
     // false, true : game just ended
     // true,  false: game is running
     // true,  true : never
-    public bool IsBallActive;
-    public bool IsGameComplete;
+    public static bool IsBallActive = true;
+    public static bool IsGameComplete = false;
 
     // paused is independent of ball active and game complete. When unpaused, the game's behavior
     // determined by IsBallActive and IsGameComplete.
-    public bool paused;
-    
-    public GameState(bool IsBallActive, bool IsGameComplete)
-    {
-        this.IsBallActive = IsBallActive;
-        this.IsGameComplete = IsGameComplete;
-    }
+    public static bool Paused = false;
 }

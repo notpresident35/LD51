@@ -139,7 +139,7 @@ MonoBehaviour:
   strongHitStrength: 8
   nonoZoneSize: 0.3
   angleSpread: 60
-  chargeTime: 0.7
+  chargeTime: 0.5
   mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
