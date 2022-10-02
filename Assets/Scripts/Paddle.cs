@@ -100,12 +100,12 @@ public class Paddle : MonoBehaviour
 	}
 
 	private void OnEnable () {
-        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID - 1);
+        SingletonManager.TeamManagerInstance.RegisterPaddle (this, teamID - 1);
     }
 
 	private void OnDisable () {
 		if (SingletonManager.Instance) {
-			SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterPaddle (this, teamID - 1);
+			SingletonManager.TeamManagerInstance.DeregisterPaddle (this, teamID - 1);
 		}
 	}
 }

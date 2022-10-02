@@ -17,10 +17,10 @@ public class VFXManager : MonoBehaviour {
     }
 
     private void OnEnable () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.AddListener (createBallExplosion);
+        SingletonManager.EventSystemInstance.OnBallExplode.AddListener (createBallExplosion);
     }
 
     private void OnDisable () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.RemoveListener (createBallExplosion);
+        SingletonManager.EventSystemInstance.OnBallExplode.RemoveListener (createBallExplosion);
     }
 }
