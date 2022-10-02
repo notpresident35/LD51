@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
 
 	private Rigidbody2D body;
+	private float explosionDelayTime = 0.02f;
 
 	private Vector2 velocity;
 	[SerializeField] private float angle;
@@ -23,6 +24,9 @@ public class Ball : MonoBehaviour {
 
 		//hit ball in random direction at start
 		ballHit(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
+
+		EventSystem.Instance.goalHit.AddListener(explodeBall);
+
 	}
 
 	private void FixedUpdate() {
@@ -39,4 +43,18 @@ public class Ball : MonoBehaviour {
 		moveSpd = (startSpd * speedMultiplier) + hitStrength;
 		angle = newAngle;
 	}
+
+	public void explodeBall(int team, Vector3 endPos) {
+
+		float dist = Vector3.Distance(endPos, transform.position);
+		float waitTime = dist * explosionDelayTime;
+
+		Destroy(gameObject, waitTime);
+
+    }
+
+    private void OnDestroy() {
+		EventSystem.Instance.ballExplode.Invoke(transform.position);
+    }
+
 }
