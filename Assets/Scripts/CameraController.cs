@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public float WidthCompression;
     public float MinZoomSize;
+    public float InitialZoomSize;
     public Vector2 EdgePadding;
 
     [SerializeField]
@@ -19,6 +20,10 @@ public class CameraController : MonoBehaviour
 
     private void Awake() {
         cam = GetComponentInChildren<Camera> ();
+    }
+
+    private void Start () {
+        lastBounds = new Bounds (Vector3.zero, Vector3.one * InitialZoomSize);
     }
 
     void LateUpdate()

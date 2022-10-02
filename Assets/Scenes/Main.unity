@@ -423,7 +423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WidthCompression: 0.28
-  MinZoomSize: 4
+  MinZoomSize: 16
+  InitialZoomSize: 22
   EdgePadding: {x: 0, y: 7}
   smoothFactor: 1
 --- !u!4 &851951288
@@ -613,7 +614,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
