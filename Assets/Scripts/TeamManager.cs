@@ -35,11 +35,19 @@ public class TeamManager : MonoBehaviour
         Teams [teamID].Goals.Remove (goal);
     }
 
-    public void ScorePoint (int teamID) {
+    public void ScorePoint (int teamID, Vector3 pos) {
         if (Teams.Count <= teamID) {
             Debug.LogError ("Tried to score for a team that doesn't exist");
             return;
         }
         Teams [teamID].Score++;
+    }
+
+    private void OnEnable () {
+        SingletonManager.EventSystemInstance.OnGoalHit.AddListener (ScorePoint);
+    }
+    
+    private void OnDisable () {
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (ScorePoint);
     }
 }

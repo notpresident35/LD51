@@ -14,4 +14,6 @@ public static class GameState
     // paused is independent of ball active and game complete. When unpaused, the game's behavior
     // determined by IsBallActive and IsGameComplete.
     public static bool Paused = false;
+
+    public static GameMode CurrentMode;
 }
