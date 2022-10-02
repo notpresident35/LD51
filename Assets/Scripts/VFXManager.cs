@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class VFXManager : MonoBehaviour {
 
-    public GameObject ballExplosionPS;
+    public GameObject ballExplosionVFXPrefab;
 
     public static VFXManager Instance;
+
+    //private ObjectPool<GameObject> particlePool = new ObjectPool<GameObject>();
 
     private void Awake() {
         if (Instance == null) {
@@ -24,7 +26,7 @@ public class VFXManager : MonoBehaviour {
     }
 
     public void createBallExplosion(Vector3 coords) {
-        Instantiate(ballExplosionPS, coords, Quaternion.identity);
+        Instantiate(ballExplosionVFXPrefab, coords, Quaternion.identity);
     }
 
 }
