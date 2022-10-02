@@ -20,6 +20,8 @@ public class Paddle : MonoBehaviour
 
 	// TEMP FOR TESTING
 	[SerializeField] bool mustFullyCharge;
+	// TEMP FOR UNTIL WE HAVE ANIMATIONS
+	private SpriteRenderer sprite;
 
 	private Rigidbody2D rb;
 	private BoxCollider2D boxCollider;
@@ -29,17 +31,24 @@ public class Paddle : MonoBehaviour
 	KeyCode downKey;
 	KeyCode chargeKey;
 
+	public void Config() {
+		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
+		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
+		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
+	}
+
 	private void Awake () {
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
+
+		// TEMP FOR UNTIL WE HAVE ANIMATIONS
+		sprite = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	private void Start() {
 		// Get initial input config
-		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
-		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
-		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
+		Config();
 
 		chargeShotTimer = 0;
 
@@ -64,9 +73,14 @@ public class Paddle : MonoBehaviour
 		
 		if (!Input.GetKey(chargeKey)) {
 			velocity = new Vector2(0, moveSpeed * yMoveDir);
+
+			sprite.color = Color.white;
 		} else {
-			// DEBUG LINE TO SHOW YOURE CHARGING
-			Debug.DrawRay(transform.TransformPoint(Vector3.zero), Vector2.up, Color.green);
+			// DEBUG ANIM TO SHOW YOURE CHARGING
+			sprite.color = new Color(1, (1 - Mathf.Min(chargeShotTimer / chargeTime, 1)), 1);
+			if (mustFullyCharge && chargeShotTimer/chargeTime >= 1) {
+				sprite.color = new Color(0, .5f, .8f);
+			}
 		}
 
 		chargeShotTimer += Time.deltaTime;
@@ -87,7 +101,6 @@ public class Paddle : MonoBehaviour
 			if (mustFullyCharge) {
 				if (chargeShotTimer > chargeTime && Input.GetKey(chargeKey)) {
 					hitStrength = strongHitStrength;
-					print("yeeted");
 				}
 			} else if (Input.GetKey(chargeKey)) {
 				hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
@@ -101,11 +114,13 @@ public class Paddle : MonoBehaviour
 
 	private void OnEnable () {
         SingletonManager.TeamManagerInstance.RegisterPaddle (this, teamID - 1);
-    }
+		SingletonManager.EventSystemInstance.OnSettingsSaved.AddListener(Config);
+	}
 
 	private void OnDisable () {
 		if (SingletonManager.Instance) {
 			SingletonManager.TeamManagerInstance.DeregisterPaddle (this, teamID - 1);
+			SingletonManager.EventSystemInstance.OnSettingsSaved.RemoveListener(Config);
 		}
 	}
 }

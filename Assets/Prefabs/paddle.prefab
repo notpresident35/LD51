@@ -139,7 +139,7 @@ MonoBehaviour:
   strongHitStrength: 8
   nonoZoneSize: 0.3
   angleSpread: 60
-  chargeTime: 0.7
+  chargeTime: 0.5
   mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
@@ -201,7 +201,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
