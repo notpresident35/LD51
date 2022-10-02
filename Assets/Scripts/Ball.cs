@@ -9,11 +9,13 @@ public class Ball : MonoBehaviour {
 
 	[SerializeField] private float angle;
 	[SerializeField] private float initialSpeed;
-	[SerializeField] private float initialRotation;
-	[SerializeField] private bool useRandomInitialRotation;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
     [SerializeField] private float smoothFactor;
+
+	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
+	[SerializeField] private float initialRotation;
+	[SerializeField] private bool useRandomInitialRotation;
 
 	private void Awake () {
         rb = GetComponent<Rigidbody2D> ();
