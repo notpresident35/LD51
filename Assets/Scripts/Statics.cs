@@ -82,5 +82,5 @@ public class Statics
     public static string AudioFilePathPrefix = "SFX/";
     public static string EffectsFilePathPrefix = "VFX/";
 
-    public static int LosingScore = 5;
+    public static int WinningScore = 5;
 }

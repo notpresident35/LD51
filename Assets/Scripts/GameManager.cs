@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    void ScoreHandler (int teamID, Vector3 pos) {
-        TeamManager teamManager = SingletonManager.Instance.GetComponentInChildren<TeamManager> ();
-        teamManager.ScorePoint (teamID);
-        if (teamManager.Teams [teamID].Score >= Statics.LosingScore) {
-            // Other team wins!
+    public float RestartTime = 2;
 
+    void HandleGoalScored (int teamID, Vector3 pos) {
+        TeamManager teamManager = SingletonManager.TeamManagerInstance;
+        teamManager.ScorePoint (teamID);
+        if (teamManager.Teams [teamID].Score >= Statics.WinningScore) {
+            // This team wins!
+            StopGame (teamID);
+        } else {
+            GameState.IsBallActive = true;
+            StartCoroutine (RestartRound ());
         }
     }
 
     private void OnEnable () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener (ScoreHandler);
+        SingletonManager.EventSystemInstance.OnGoalHit.AddListener (HandleGoalScored);
     }
 
     private void OnDisable () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (ScoreHandler);
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (HandleGoalScored);
+    }
+
+    IEnumerator RestartRound () {
+        yield return new WaitForSeconds (RestartTime);
+        GameState.IsBallActive = true;
+    }
+
+    void StopGame (int winTeam) {
+
+    }
+
+    void RestartGame () {
+        SingletonManager.EventSystemInstance.OnGameRestart.Invoke ();
     }
 }
