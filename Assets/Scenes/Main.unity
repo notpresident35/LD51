@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d28ab441f5c5db04a96f9b7567547722, type: 2}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 1
@@ -841,6 +845,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Singletons
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1135925428069325439, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
