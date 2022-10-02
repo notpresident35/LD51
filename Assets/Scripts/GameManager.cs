@@ -6,16 +6,29 @@ public class GameManager : MonoBehaviour
 {
     public float RestartTime = 2;
 
+    private void Awake () {
+        // Load default game mode
+        if (GameState.CurrentMode == null) {
+            SetGameMode (Resources.Load (Statics.GameModeFilePathPrefix + "BaseGameMode") as GameMode);
+        }
+    }
+
+    // Note: Because GameManager is later in script execution order, it adds this as a listener after all other listeners
+    // This means that it can rely on the score being updated when that happens in another script before this is called
+    // This is quite precarious, but it gets the job done
     void HandleGoalScored (int teamID, Vector3 pos) {
-        TeamManager teamManager = SingletonManager.TeamManagerInstance;
-        teamManager.ScorePoint (teamID);
-        if (teamManager.Teams [teamID].Score >= Statics.WinningScore) {
+        GameState.IsBallActive = false;
+        if (SingletonManager.TeamManagerInstance.Teams [teamID].Score >= Statics.WinningScore) {
             // This team wins!
             StopGame (teamID);
         } else {
             GameState.IsBallActive = true;
             StartCoroutine (RestartRound ());
         }
+    }
+
+    private void Start () {
+        StartCoroutine (RestartRound ());
     }
 
     private void OnEnable () {
@@ -29,13 +42,20 @@ public class GameManager : MonoBehaviour
     IEnumerator RestartRound () {
         yield return new WaitForSeconds (RestartTime);
         GameState.IsBallActive = true;
+        SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
     }
 
     void StopGame (int winTeam) {
-
+        GameState.IsGameComplete = true;
     }
 
-    void RestartGame () {
+    public void RestartGame () {
+        GameState.IsGameComplete = false;
         SingletonManager.EventSystemInstance.OnGameRestart.Invoke ();
+        StartCoroutine (RestartRound ());
+    }
+
+    public void SetGameMode (GameMode newMode) {
+        GameState.CurrentMode = newMode;
     }
 }
