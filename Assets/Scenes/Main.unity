@@ -263,18 +263,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8518116054362194408, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8518116054362194410, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d28ab441f5c5db04a96f9b7567547722, type: 2}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 1
@@ -290,6 +290,10 @@ PrefabInstance:
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483570, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -394,6 +398,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
+    - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: initialSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428662059834263, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
@@ -427,10 +439,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WidthCompression: 0.28
-  MinZoomSize: 16
-  InitialZoomSize: 22
-  EdgePadding: {x: 0, y: 7}
-  smoothFactor: 1
+  MinZoomSize: 4
+  InitialZoomSize: 0
+  EdgePadding: {x: 0, y: 12}
+  ShakeAmplitude: 0
+  ShakeFrequency: 0
+  smoothFactor: 0.006
+  horizontalWiggleFactor: 20
+  perlinNoisePosition: 0
 --- !u!4 &851951288
 Transform:
   m_ObjectHideFlags: 0
@@ -618,7 +634,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -642,6 +658,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116054362194411, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_FlipY
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: teamID
       value: 2
@@ -869,7 +893,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Singletons
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1135925428069325439, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+    m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}

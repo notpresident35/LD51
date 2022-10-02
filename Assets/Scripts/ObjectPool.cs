@@ -7,30 +7,38 @@ using UnityEngine;
  * to always draw from and push to an object pool rather than use constructors and garbage
  * collection.
  *
- * Drawing from an object pool returns an object in an indeterminate state.
- * Drawing from an empty object pool calls its constructor with no parameters.
+ * Every object pool has a poster child reference of the same object type. If drawing from an
+ * empty pool, it returns an Object.Instantiate with the poster child as an argument.
  *
  */
  
-public class ObjectPool<ObjectType> where ObjectType : class, new()
+public class ObjectPool<ObjectType> where ObjectType : MonoBehaviour
 {
-    private static Queue<ObjectType> pool = new Queue<ObjectType>();
-    
-    public static void Push(ObjectType thing)
+    public ObjectType PosterChild;
+
+    private Queue<ObjectType> pool;
+
+    public ObjectPool(ObjectType posterChild)
+    {
+        this.PosterChild = posterChild;
+        this.pool = new Queue<ObjectType>();
+    }
+
+    public void Push(ObjectType thing)
     {
         pool.Enqueue(thing);
     }
     
-    public static bool IsEmpty()
+    public bool IsEmpty()
     {
         return pool.Count == 0;
     }
 
-    public static ObjectType Pop()
+    public ObjectType Pop()
     {
         if (pool.Count == 0)
         {
-            return new ObjectType();
+            return Object.Instantiate(PosterChild);
         }
         return pool.Dequeue();
     }

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
+
+    /*
+    public void Start()
+    {
+        AudioManager.PlaySound("testHit");
+    }
+    */
 
     // fileName is the name of a file in the SFX directory
     public static void PlaySound(string fileName)
