@@ -9,7 +9,7 @@ public class VFXManager : MonoBehaviour {
     //private ObjectPool<GameObject> particlePool = new ObjectPool<GameObject>();
 
     private void Start() {
-        ballExplosionVFXPrefab = Resources.Load (Statics.EffectsFilePathPrefix + "BallExplosionVFX") as GameObject;
+        ballExplosionVFXPrefab = Resources.Load (Statics.VFXFilePathPrefix + "BallExplosionVFX") as GameObject;
     }
 
     public void createBallExplosion(Vector3 coords) {
