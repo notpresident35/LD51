@@ -80,6 +80,7 @@ public class Statics
 
     // Relative file path to Resources directory for audio files
     public static string AudioFilePathPrefix = "SFX/";
+    public static string EffectsFilePathPrefix = "VFX/";
 
     public static int LosingScore = 5;
 }

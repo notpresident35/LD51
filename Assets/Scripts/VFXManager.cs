@@ -9,13 +9,18 @@ public class VFXManager : MonoBehaviour {
     //private ObjectPool<GameObject> particlePool = new ObjectPool<GameObject>();
 
     private void Start() {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.AddListener(createBallExplosion);
-
-        ballExplosionVFXPrefab = Resources.Load ("VFX/BallExplosionVFX") as GameObject;
+        ballExplosionVFXPrefab = Resources.Load (Statics.EffectsFilePathPrefix + "BallExplosionVFX") as GameObject;
     }
 
     public void createBallExplosion(Vector3 coords) {
         Instantiate(ballExplosionVFXPrefab, coords, Quaternion.identity);
     }
 
+    private void OnEnable () {
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.AddListener (createBallExplosion);
+    }
+
+    private void OnDisable () {
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.RemoveListener (createBallExplosion);
+    }
 }

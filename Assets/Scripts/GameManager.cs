@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private void Start () {
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener(ScoreHandler);
-    }
-
     void ScoreHandler (int teamID, Vector3 pos) {
         TeamManager teamManager = SingletonManager.Instance.GetComponentInChildren<TeamManager> ();
         teamManager.ScorePoint (teamID);
@@ -15,5 +11,13 @@ public class GameManager : MonoBehaviour
             // Other team wins!
 
         }
+    }
+
+    private void OnEnable () {
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener (ScoreHandler);
+    }
+
+    private void OnDisable () {
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (ScoreHandler);
     }
 }

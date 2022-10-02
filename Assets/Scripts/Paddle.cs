@@ -37,8 +37,6 @@ public class Paddle : MonoBehaviour
 			nonoZoneSize = 1-nonoZoneSize;
 		}
 		paddleHeight = 2 * boxCollider.bounds.extents.y;
-
-		SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID - 1);
 	}
 
 
@@ -57,10 +55,8 @@ public class Paddle : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision) {
 		if (collision.gameObject.tag == "ball") {
-			Debug.DrawRay(collision.GetContact(0).point, Vector2.right, Color.red, 1);
-
+			//Debug.DrawRay(collision.GetContact(0).point, Vector2.right, Color.red, 1);
 			float hitHeight = 0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight);
-			print(hitHeight);
 
 			float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
 			if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
@@ -68,7 +64,11 @@ public class Paddle : MonoBehaviour
 		}
 	}
 
-	void OnDestroy() {
+	private void OnEnable () {
+        SingletonManager.Instance.GetComponentInChildren<TeamManager> ().RegisterPaddle (this, teamID - 1);
+    }
+
+	private void OnDisable () {
 		if (SingletonManager.Instance) {
 			SingletonManager.Instance.GetComponentInChildren<TeamManager> ().DeregisterPaddle (this, teamID - 1);
 		}
