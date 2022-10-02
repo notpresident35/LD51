@@ -439,8 +439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WidthCompression: 0.28
-  MinZoomSize: 4
-  InitialZoomSize: 0
+  MinZoomSize: 16
+  InitialZoomSize: 22
   EdgePadding: {x: 0, y: 12}
   ShakeAmplitude: 0
   ShakeFrequency: 0
