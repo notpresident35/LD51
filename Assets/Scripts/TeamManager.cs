@@ -35,11 +35,37 @@ public class TeamManager : MonoBehaviour
         Teams [teamID].Goals.Remove (goal);
     }
 
-    public void ScorePoint (int teamID) {
+    public void ScorePoint (int teamID, Vector3 pos) {
         if (Teams.Count <= teamID) {
             Debug.LogError ("Tried to score for a team that doesn't exist");
             return;
         }
         Teams [teamID].Score++;
+    }
+
+    void ResetPaddles () {
+        int paddleCount = 0;
+        foreach (Team team in Teams) {
+            foreach (Paddle paddle in team.Paddles) {
+                if (paddleCount >= GameState.CurrentMode.PaddleDefaultPositions.Count) {
+                    Debug.LogError ("Not enough paddle spawnpoints for paddle count");
+                    return;
+                }
+                paddle.transform.position = GameState.CurrentMode.PaddleDefaultPositions [paddleCount];
+                paddleCount++;
+            }
+        }
+    }
+
+    private void OnEnable () {
+        SingletonManager.EventSystemInstance.OnGoalHit.AddListener (ScorePoint);
+        SingletonManager.EventSystemInstance.OnRoundRestart.AddListener (ResetPaddles);
+        SingletonManager.EventSystemInstance.OnGameRestart.AddListener (ResetPaddles);
+    }
+    
+    private void OnDisable () {
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (ScorePoint);
+        SingletonManager.EventSystemInstance.OnRoundRestart.RemoveListener (ResetPaddles);
+        SingletonManager.EventSystemInstance.OnGameRestart.RemoveListener (ResetPaddles);
     }
 }

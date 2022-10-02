@@ -6,20 +6,20 @@ public class CameraController : MonoBehaviour
 {
     public float WidthCompression;
     public float MinZoomSize;
+    public float InitialZoomSize;
     public Vector2 EdgePadding;
+    [Range(0.0f, 0.13f)]
     public float ShakeAmplitude;
+    [Range(0.0f, 0.017f)]
     public float ShakeFrequency;
 
     [SerializeField]
+    [Range(0.0f, 0.012f)]
     private float smoothFactor; 
-    // sorry for the magic number, hopefully hazel never reads this code
-    // i'm also incredibly sorry about this variable name
-    private float smoothFactorReasonabilityConstant = 0.006f;
     [SerializeField]
+    [Range(0.0f, 20)]
     private float horizontalWiggleFactor;
     
-    // the actual amplitude: this gets lerped with shakeAmplitude
-    private float intermediateShakeAmplitude;
     [SerializeField]
     private float perlinNoisePosition = 0.0f;
 
@@ -31,6 +31,10 @@ public class CameraController : MonoBehaviour
         cam = GetComponentInChildren<Camera> ();
     }
 
+    private void Start () {
+        lastBounds = new Bounds (Vector3.zero, Vector3.one * InitialZoomSize);
+    }
+
     void LateUpdate()
     {
         perlinNoisePosition += ShakeFrequency;
@@ -40,12 +44,14 @@ public class CameraController : MonoBehaviour
 
     float GetNoiseFactor(float offset)
     {
-        return 1.0f + GameState.ShakeJuice * ShakeAmplitude * Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f);
+        return 1.0f + GameState.ShakeJuice * (ShakeAmplitude)
+                * Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f);
     }
 
     float GetNoiseAdder(float offset)
     {
-        return GameState.ShakeJuice * ShakeAmplitude * (-0.5f + Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f));
+        return GameState.ShakeJuice * (ShakeAmplitude)
+                * (-0.5f + Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f));
     }
 
     Bounds GetTargetedBounds() {
@@ -69,8 +75,8 @@ public class CameraController : MonoBehaviour
         bounds.Expand (new Vector2 (-bounds.extents.x * cam.aspect * WidthCompression, 0));
         bounds.Expand (EdgePadding);
         // lerpity lerpity
-        Vector3 newCenter = Vector3.Lerp(lastBounds.center, bounds.center, smoothFactorReasonabilityConstant / smoothFactor);
-        Vector3 newSize = Vector3.Lerp(lastBounds.size, bounds.size, smoothFactorReasonabilityConstant / smoothFactor);
+        Vector3 newCenter = Vector3.Lerp(lastBounds.center, bounds.center, smoothFactor);
+        Vector3 newSize = Vector3.Lerp(lastBounds.size, bounds.size, smoothFactor);
 
         lastBounds = new Bounds(newCenter, newSize);
         

@@ -424,10 +424,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WidthCompression: 0.28
   MinZoomSize: 4
-  EdgePadding: {x: 0, y: 7}
-  ShakeAmplitude: 0.002
-  ShakeFrequency: 0.01
-  smoothFactor: 1
+  InitialZoomSize: 0
+  EdgePadding: {x: 0, y: 12}
+  ShakeAmplitude: 0
+  ShakeFrequency: 0
+  smoothFactor: 0.006
   horizontalWiggleFactor: 20
   perlinNoisePosition: 0
 --- !u!4 &851951288
