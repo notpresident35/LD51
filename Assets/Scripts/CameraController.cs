@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
         cam = GetComponentInChildren<Camera> ();
     }
 
-    void Update()
+    void LateUpdate()
     {
         FocusOnBounds(GetTargetedBounds());
     }

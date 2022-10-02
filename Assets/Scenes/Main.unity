@@ -175,10 +175,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4069176752746549634, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
-      propertyPath: teamID
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4069176752746549663, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_Name
       value: Goal
@@ -246,10 +242,6 @@ PrefabInstance:
     - target: {fileID: 4069176752746549633, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4069176752746549634, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
-      propertyPath: teamID
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4069176752746549663, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_Name
@@ -433,6 +425,7 @@ MonoBehaviour:
   WidthCompression: 0.28
   MinZoomSize: 4
   EdgePadding: {x: 0, y: 7}
+  smoothFactor: 0.006
 --- !u!4 &851951288
 Transform:
   m_ObjectHideFlags: 0
@@ -535,6 +528,10 @@ PrefabInstance:
     - target: {fileID: 4069176752746549633, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069176752746549634, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
+      propertyPath: teamID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4069176752746549663, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_Name
@@ -688,6 +685,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483571, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483573, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: m_Name
       value: paddle (1)
@@ -778,6 +779,10 @@ PrefabInstance:
     - target: {fileID: 4069176752746549633, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069176752746549634, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
+      propertyPath: teamID
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4069176752746549663, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
       propertyPath: m_Name
