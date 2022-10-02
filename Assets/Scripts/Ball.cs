@@ -4,57 +4,53 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 
-	private Rigidbody2D body;
+	private Rigidbody2D rb;
 	private float explosionDelayTime = 0.02f;
 
-	private Vector2 velocity;
 	[SerializeField] private float angle;
-	[SerializeField] private float startSpd;
-	[SerializeField] private float moveSpd;
-	[SerializeField] private float speedMultiplier;
-	[SerializeField] private float smoothFactor;
+	[SerializeField] private float initialSpeed;
+	[SerializeField] private float initialRotation;
+	[SerializeField] private bool useRandomInitialRotation;
+	[SerializeField] private float moveSpeed;
+	[SerializeField] private float speedMultiplier = 1;
+    [SerializeField] private float smoothFactor;
 
-	private void Start() {
-		//get references
-		body = GetComponent<Rigidbody2D>();
+	private void Awake () {
+        rb = GetComponent<Rigidbody2D> ();
+    }
 
-		//defaults
-		speedMultiplier = 1;
-		moveSpd = startSpd;
+    private void Start() {
+		moveSpeed = initialSpeed;
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener(explodeBall);
 
-		//hit ball in random direction at start
-		ballHit(false, Random.Range(0, 2 * Mathf.PI), moveSpd);
-
-		EventSystem.Instance.goalHit.AddListener(explodeBall);
-
-	}
+		// Hit ball at start
+		ballHit (false, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
+    }
 
 	private void FixedUpdate() {
-		velocity = body.velocity;
+		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
+        Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle), moveSpeed * Mathf.Sin(angle));
 
-		moveSpd = Mathf.Lerp(moveSpd, startSpd * speedMultiplier, smoothFactor);
-		velocity = new Vector2(moveSpd * Mathf.Cos(angle), moveSpd * Mathf.Sin(angle));
-
-		body.velocity = velocity;
+		rb.velocity = velocity;
 	}
 
 
 	public void ballHit(bool isCurveBall, float newAngle, float hitStrength = 0) {
-		moveSpd = (startSpd * speedMultiplier) + hitStrength;
+		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
 	}
 
 	public void explodeBall(int team, Vector3 endPos) {
-
-		float dist = Vector3.Distance(endPos, transform.position);
+		float dist = Vector3.Distance (endPos, transform.position);
 		float waitTime = dist * explosionDelayTime;
 
 		Destroy(gameObject, waitTime);
-
     }
 
     private void OnDestroy() {
-		EventSystem.Instance.ballExplode.Invoke(transform.position);
+		if (SingletonManager.Instance) {
+			SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.Invoke (transform.position);
+			SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (explodeBall);
+		}
     }
-
 }

@@ -4,25 +4,14 @@ using UnityEngine;
 
 public class VFXManager : MonoBehaviour {
 
-    public GameObject ballExplosionVFXPrefab;
-
-    public static VFXManager Instance;
+    private GameObject ballExplosionVFXPrefab;
 
     //private ObjectPool<GameObject> particlePool = new ObjectPool<GameObject>();
 
-    private void Awake() {
-        if (Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-            return;
-        }
-
-    }
-
     private void Start() {
-        EventSystem.Instance.ballExplode.AddListener(createBallExplosion);
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.AddListener(createBallExplosion);
+
+        ballExplosionVFXPrefab = Resources.Load ("VFX/BallExplosionVFX") as GameObject;
     }
 
     public void createBallExplosion(Vector3 coords) {
