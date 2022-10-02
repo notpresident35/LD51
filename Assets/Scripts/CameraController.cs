@@ -8,11 +8,20 @@ public class CameraController : MonoBehaviour
     public float MinZoomSize;
     public float InitialZoomSize;
     public Vector2 EdgePadding;
+    [Range(0.0f, 0.13f)]
+    public float ShakeAmplitude;
+    [Range(0.0f, 0.017f)]
+    public float ShakeFrequency;
 
     [SerializeField]
+    [Range(0.0f, 0.012f)]
     private float smoothFactor; 
-    // sorry for the magic number, hopefully hazel never reads this code
-    private float smoothFactorRationalizationConstant = 0.006f;
+    [SerializeField]
+    [Range(0.0f, 20)]
+    private float horizontalWiggleFactor;
+    
+    [SerializeField]
+    private float perlinNoisePosition = 0.0f;
 
     private Bounds lastBounds;
 
@@ -28,7 +37,21 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        perlinNoisePosition += ShakeFrequency;
+        if (perlinNoisePosition > 10000) perlinNoisePosition = 0;
         FocusOnBounds(GetTargetedBounds());
+    }
+
+    float GetNoiseFactor(float offset)
+    {
+        return 1.0f + GameState.ShakeJuice * (ShakeAmplitude)
+                * Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f);
+    }
+
+    float GetNoiseAdder(float offset)
+    {
+        return GameState.ShakeJuice * (ShakeAmplitude)
+                * (-0.5f + Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f));
     }
 
     Bounds GetTargetedBounds() {
@@ -48,21 +71,24 @@ public class CameraController : MonoBehaviour
     }
     
     
-    Vector3 Interpolate(Vector3 a, Vector3 b)
-    {
-        return Vector3.Lerp(a, b, smoothFactorRationalizationConstant / smoothFactor);
-    }
-
     void FocusOnBounds (Bounds bounds) {
         bounds.Expand (new Vector2 (-bounds.extents.x * cam.aspect * WidthCompression, 0));
         bounds.Expand (EdgePadding);
-        bounds = new Bounds(Interpolate(lastBounds.center, bounds.center), Interpolate(lastBounds.size, bounds.size));
+        // lerpity lerpity
+        Vector3 newCenter = Vector3.Lerp(lastBounds.center, bounds.center, smoothFactor);
+        Vector3 newSize = Vector3.Lerp(lastBounds.size, bounds.size, smoothFactor);
+
+        lastBounds = new Bounds(newCenter, newSize);
+        
+        newSize *= GetNoiseFactor(0.0f);
+        newCenter.x += horizontalWiggleFactor * GetNoiseAdder(100.0f);
+
+        bounds = new Bounds(newCenter, newSize);
 
         // Position camera
         transform.position = bounds.center;
 
         // Size to focus on bounds
         cam.orthographicSize = Mathf.Max (bounds.extents.x, bounds.extents.y);
-        lastBounds = bounds;
     }
 }
