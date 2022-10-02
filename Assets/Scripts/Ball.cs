@@ -23,7 +23,6 @@ public class Ball : MonoBehaviour {
 
     private void Start() {
 		moveSpeed = initialSpeed;
-        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener(explodeBall);
 
 		// Hit ball at start
 		ballHit (false, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
@@ -46,13 +45,22 @@ public class Ball : MonoBehaviour {
 		float dist = Vector3.Distance (endPos, transform.position);
 		float waitTime = dist * explosionDelayTime;
 
-		Destroy(gameObject, waitTime);
+		StartCoroutine(DeathEffects(waitTime));
     }
 
-    private void OnDestroy() {
+	IEnumerator DeathEffects (float waitTime) {
+		yield return new WaitForSeconds (waitTime);
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.Invoke (transform.position);
+        Destroy (gameObject);
+    }
+
+	void OnEnable () {
+        SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.AddListener (explodeBall);
+    }
+
+    private void OnDisable() {
 		if (SingletonManager.Instance) {
-			SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnBallExplode.Invoke (transform.position);
-			SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (explodeBall);
-		}
+            SingletonManager.Instance.GetComponentInChildren<EventSystem> ().OnGoalHit.RemoveListener (explodeBall);
+        }
     }
 }
