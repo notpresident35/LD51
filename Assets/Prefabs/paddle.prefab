@@ -135,11 +135,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamID: 1
   facingRight: 0
-  moveSpeed: 25
+  moveSpeed: 15
+  inputSmoothFactor: 0.25
   strongHitStrength: 8
   nonoZoneSize: 0.3
   angleSpread: 60
   chargeTime: 0.5
+  dashSpeed: 90
+  dashCooldown: 0.17
+  dashFalloff: 0.25
   mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
