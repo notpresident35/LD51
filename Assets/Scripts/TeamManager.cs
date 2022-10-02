@@ -47,12 +47,12 @@ public class TeamManager : MonoBehaviour
         int paddleCount = 0;
         foreach (Team team in Teams) {
             foreach (Paddle paddle in team.Paddles) {
-                paddle.transform.position = GameState.CurrentMode.PaddleDefaultPositions [paddleCount];
-                paddleCount++;
                 if (paddleCount >= GameState.CurrentMode.PaddleDefaultPositions.Count) {
                     Debug.LogError ("Not enough paddle spawnpoints for paddle count");
                     return;
                 }
+                paddle.transform.position = GameState.CurrentMode.PaddleDefaultPositions [paddleCount];
+                paddleCount++;
             }
         }
     }
