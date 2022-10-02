@@ -14,4 +14,7 @@ public static class GameState
     // paused is independent of ball active and game complete. When unpaused, the game's behavior
     // determined by IsBallActive and IsGameComplete.
     public static bool Paused = false;
+
+    // like when you put the fruit in the blender it becomes shake juice or something idk
+    public static float ShakeJuice = 1.0f;
 }

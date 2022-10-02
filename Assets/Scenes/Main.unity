@@ -425,7 +425,11 @@ MonoBehaviour:
   WidthCompression: 0.28
   MinZoomSize: 4
   EdgePadding: {x: 0, y: 7}
+  ShakeAmplitude: 0.002
+  ShakeFrequency: 0.01
   smoothFactor: 1
+  horizontalWiggleFactor: 20
+  perlinNoisePosition: 0
 --- !u!4 &851951288
 Transform:
   m_ObjectHideFlags: 0
