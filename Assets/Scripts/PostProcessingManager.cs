@@ -29,12 +29,12 @@ public class PostProcessingManager : MonoBehaviour {
 
     private void OnEnable() {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalJuice);
-        SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleJuice);
+        //SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleJuice);
     }
 
     private void OnDisable() {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalJuice);
-        SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleJuice);
+        //SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleJuice);
     }
 
     private void Start() {
