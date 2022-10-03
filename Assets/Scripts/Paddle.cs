@@ -15,6 +15,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
+	[SerializeField] private float chargeShotInputBuffer;
 	[SerializeField] private float dashSpeed;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
@@ -23,10 +24,11 @@ public class Paddle : MonoBehaviour
 	private Vector2 velocity;
 	private int yInputDir;
 	private float yMoveDir;
+	private float chargeShotInputTimer;
 	private float chargeShotTimer;
 	private bool isCharged;
 	private float dashInterpolationTimer;
-	private float dashTimer; 
+	private float dashTimer;
 	private float curveBallInputTimer;
 	private bool curveBallShotDue;
 
@@ -63,6 +65,8 @@ public class Paddle : MonoBehaviour
 		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
 		dashKey = inputHandler.GetKeycodeForInput($"P{teamID}Dash");
+
+		//useDedicatedCharge = PlayerPrefHandler.GetBool(Statics.DedicatedChargeP1);
 	}
 
 	private void Awake () {
