@@ -11,9 +11,9 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float initialSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
-    [SerializeField] private float smoothFactor;
+    [SerializeField] private float speedSmoothFactor;
 	[SerializeField] private float curveBallInitialAngle;
-	[SerializeField] private float initialCurve;
+	[SerializeField] private float curveSpeedInitial;
 	[SerializeField] private float curveFalloff;
 	private float angleBias;
 	private float curveDir;
@@ -31,15 +31,20 @@ public class Ball : MonoBehaviour {
 		moveSpeed = initialSpeed;
 		curveDir = 0;
 
+		curveBallInitialAngle *= Mathf.Deg2Rad;
+		curveSpeedInitial *= Mathf.Deg2Rad;
+
 		// Hit ball at start
 		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
 	private void Update() {
-		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
+		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, speedSmoothFactor * Time.deltaTime);
 
-		curveSpeed = Mathf.Lerp(curveSpeed, 0, curveFalloff);
-		angleBias += curveDir * curveSpeed * Time.deltaTime;
+		if (curveDir != 0) {
+			curveSpeed = Mathf.Lerp(curveSpeed, 0, curveFalloff * Time.deltaTime);
+			angleBias += curveDir * curveSpeed * Time.deltaTime;
+		}
 		
 		Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle + angleBias), moveSpeed * Mathf.Sin(angle + angleBias));
 
@@ -53,7 +58,12 @@ public class Ball : MonoBehaviour {
 
 		if (_curveDir != 0) {
 			curveDir = _curveDir;
-			angleBias = -_curveDir * initialCurve;
+			curveSpeed = curveSpeedInitial;
+			angleBias = -_curveDir * curveBallInitialAngle;
+		} else {
+			curveDir = 0;
+			curveSpeed = 0;
+			angleBias = 0;
 		}
 	}
 
