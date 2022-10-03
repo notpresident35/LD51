@@ -63,6 +63,9 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame () {
         GameState.IsGameComplete = false;
+        foreach (Team team in SingletonManager.TeamManagerInstance.Teams) {
+            team.Score = 0;
+        }
         StartCoroutine (StartRound ());
     }
 
