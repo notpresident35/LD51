@@ -152,8 +152,7 @@ public class Paddle : MonoBehaviour
 		}
 		chargeShotTimer = 0;
 
-			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
-		}
+		collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
 	}
 
 	private void OnEnable () {
