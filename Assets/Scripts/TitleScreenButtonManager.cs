@@ -13,6 +13,7 @@ public class TitleScreenButtonManager : MonoBehaviour
     [SerializeField] SoundEffect buttonSound;
     public GameObject credits;
     public GameObject main;
+    public GameObject settings;
 
     public void PlayPressed()
     {
@@ -23,13 +24,13 @@ public class TitleScreenButtonManager : MonoBehaviour
     public void SettingsPressed()
     {
         AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
-        Debug.Log("Settings button pressed in menu.");
+        main.SetActive(false);
+        settings.SetActive(true);
     }
 
     public void CreditsPressed()
     {
         AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
-        Debug.Log("Credits button pressed in menu.");
         main.SetActive(false);
         credits.SetActive(true);
         

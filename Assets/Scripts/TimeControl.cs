@@ -29,7 +29,7 @@ public class TimeControl : MonoBehaviour
             return;
         }
 
-        float currentTimeScale = timeScale * (1 - JuiceManager.TimeFreezeJuice);
+        float currentTimeScale = timeScale * (JuiceManager.TimeFreezeJuice > 0 ? 0 : 1);
 
         Time.timeScale = currentTimeScale;
     }

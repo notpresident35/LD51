@@ -373,10 +373,6 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4293358197
       objectReference: {fileID: 0}
-    - target: {fileID: 2640655965242617289, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.00012207031
-      objectReference: {fileID: 0}
     - target: {fileID: 2640655965539880826, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
       propertyPath: m_Name
       value: Scoreboard
@@ -473,10 +469,6 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4293358197
       objectReference: {fileID: 0}
-    - target: {fileID: 2640655966178097137, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.00012207031
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
@@ -501,8 +493,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
-      propertyPath: angleSpread
-      value: 0
+      propertyPath: dash.volume
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: facingRight
@@ -1337,6 +1329,22 @@ PrefabInstance:
     - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: paddleJuice
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: goalFreezeTime
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleSoftTimeJuice
+      value: 0.304
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleHardFreezeTime
+      value: 0.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleSoftFreezeTime
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 3740742398880682730, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_RootOrder
