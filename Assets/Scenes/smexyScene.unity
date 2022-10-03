@@ -1045,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1392924446}
+    - target: {fileID: 2640655965539880831, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
