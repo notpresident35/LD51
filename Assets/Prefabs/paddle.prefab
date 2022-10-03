@@ -178,6 +178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamID: 1
   facingRight: 0
+  minYPos: -30
+  maxYPos: 30
   moveSpeed: 15
   inputSmoothFactor: 0.25
   strongHitStrength: 8
