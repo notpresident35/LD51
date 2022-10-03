@@ -11,6 +11,8 @@ using UnityEngine;
 public class TitleScreenButtonManager : MonoBehaviour
 {
     [SerializeField] SoundEffect buttonSound;
+    public GameObject credits;
+    public GameObject main;
 
     public void PlayPressed()
     {
@@ -28,5 +30,17 @@ public class TitleScreenButtonManager : MonoBehaviour
     {
         AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
         Debug.Log("Credits button pressed in menu.");
+        main.SetActive(false);
+        credits.SetActive(true);
+        
     }
+
+    public void BackPressed() {
+
+        AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
+        credits.SetActive(false);
+        main.SetActive(true);
+
+    }
+
 }
