@@ -282,10 +282,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b0b9fca4804824bae58b77a313522c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  juiceFalloff: 4
-  goalJuice: 2
-  paddleJuice: 1
-  ballExplodeJuice: 1
+  juiceFalloff: 3.2
+  goalJuice: 1
+  paddleSoftJuice: 0.3
+  paddleHardJuice: 0.5
+  ballExplodeJuice: 0.5
 --- !u!1 &4793256052516078890
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,9 +480,12 @@ MonoBehaviour:
   goalBloomIntensity: 24
   goalChromAbIntensity: 0.65
   goalLensDistortIntensity: -18
-  paddleBloomIntensity: 18
-  paddleChromAbIntensity: 0.5
-  paddleLensDistortIntensity: -25
+  paddleSoftBloomIntensity: 20
+  paddleSoftChromAbIntensity: 0.5
+  paddleSoftLensDistortIntensity: -20
+  paddleHardBloomIntensity: 20
+  paddleHardChromAbIntensity: 0.5
+  paddleHardLensDistortIntensity: -20
   juiceEffectCurve:
     serializedVersion: 2
     m_Curve:
