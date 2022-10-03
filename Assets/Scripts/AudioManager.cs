@@ -14,14 +14,13 @@ public class AudioManager : MonoBehaviour
     private int nextMusicIndex = 1;
     private bool isFading = false;
     private bool changingSong = false;
-    [SerializeField] private float maxVolume = 0.2f;
     [SerializeField] private float fadeTime = 5;
 
     // fileName is the name of a file in the SFX directory
     public static void PlaySound(AudioClip clip, float volume = 1)
     {
         //AudioClip clip = (AudioClip)Resources.Load(Statics.AudioFilePathPrefix + fileName);
-        AudioSource.PlayClipAtPoint(clip, new Vector3(0, 0, 0), volume);
+        AudioSource.PlayClipAtPoint(clip, new Vector3(0, 0, 0), volume * PlayerPrefHandler.GetFloat (Statics.AudioSFXVolumePPD) * PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD));
     }
 
     private void Start() {
@@ -96,14 +95,14 @@ public class AudioManager : MonoBehaviour
 
             if (isFading == false) {
                 isFading = true;
-                StartCoroutine(Fade(oneMusicSource, fadeTime, maxVolume));
+                StartCoroutine(Fade(oneMusicSource, fadeTime, PlayerPrefHandler.GetFloat (Statics.AudioMusicVolumePPD) * PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD)));
             }
 
         } else if (twoMusicSource.isPlaying == true && twoMusicSource.time < fadeTime) {
 
             if (isFading == false) {
                 isFading = true;
-                StartCoroutine(Fade(twoMusicSource, fadeTime, maxVolume));
+                StartCoroutine(Fade(twoMusicSource, fadeTime, PlayerPrefHandler.GetFloat (Statics.AudioMusicVolumePPD) * PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD)));
             }
 
         }
