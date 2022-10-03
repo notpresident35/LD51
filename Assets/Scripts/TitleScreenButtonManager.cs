@@ -21,6 +21,11 @@ public class TitleScreenButtonManager : MonoBehaviour
         SceneLoader.LoadMainScene();
     }
 
+    public void PlayAIPressed () {
+        AudioManager.PlaySound (buttonSound.clip, buttonSound.volume);
+        SceneLoader.LoadMainAIScene ();
+    }
+
     public void SettingsPressed()
     {
         AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);

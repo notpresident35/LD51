@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
         if (GameState.CurrentMode == null) {
             SetGameMode (Resources.Load (Statics.GameModeFilePathPrefix + "BaseGameMode") as GameMode);
         }
+
+        GameState.IsGameComplete = false;
+        foreach (Team team in SingletonManager.TeamManagerInstance.Teams) {
+            team.Score = 0;
+        }
     }
 
     // Note: Because GameManager is later in script execution order, it adds this as a listener after all other listeners

@@ -1285,6 +1285,22 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 144253308523350352, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 290.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 144253308523350352, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.0000038147
+      objectReference: {fileID: 0}
+    - target: {fileID: 144253308523350352, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -177
+      objectReference: {fileID: 0}
+    - target: {fileID: 255886272032127685, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayPressed
+      objectReference: {fileID: 0}
     - target: {fileID: 866245368391101038, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1556,6 +1572,10 @@ PrefabInstance:
     - target: {fileID: 2891927295834010211, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -70
+      objectReference: {fileID: 0}
+    - target: {fileID: 2962237777033187498, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_text
+      value: Play 2-Player
       objectReference: {fileID: 0}
     - target: {fileID: 2974966785631374197, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1992,10 +2012,6 @@ PrefabInstance:
     - target: {fileID: 6771980228116331426, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -263.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 7136183981130125537, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7373494505623217048, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_fontSize

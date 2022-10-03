@@ -10,6 +10,10 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(Statics.MainSceneFileName);
     }
 
+    public static void LoadMainAIScene () {
+        SceneManager.LoadScene (Statics.MainAISceneFileName);
+    }
+
     public static void LoadGameOverScreen(int winningTeamID)
     {
         // I"M SO SORRY THAT I WROTE THIS LINE OF CODE OH GOD OH FRICK
