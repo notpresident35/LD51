@@ -24,7 +24,7 @@ public class Paddle : MonoBehaviour
 	private Vector2 velocity;
 	private int yInputDir;
 	private float yMoveDir;
-	private float chargeShotInputTimer;
+	private float chargeShotCoyoteTimer;
 	private float chargeShotTimer;
 	private bool isCharged;
 	private float dashInterpolationTimer;
@@ -138,7 +138,7 @@ public class Paddle : MonoBehaviour
 
 			//full charge
 			if (chargeAmount >= 1) {
-				chargeShotInputTimer = chargeShotInputBuffer;
+				chargeShotCoyoteTimer = chargeShotInputBuffer;
 
 				if (!isCharged) {
 					isCharged = true;
@@ -192,7 +192,7 @@ public class Paddle : MonoBehaviour
 
 		// Timers
 		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer - Time.deltaTime);
-		chargeShotInputTimer = Mathf.Clamp01(chargeShotInputTimer - Time.deltaTime);
+		chargeShotCoyoteTimer = Mathf.Clamp01(chargeShotCoyoteTimer - Time.deltaTime);
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
