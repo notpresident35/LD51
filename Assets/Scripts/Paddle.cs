@@ -15,6 +15,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
+	[SerializeField] private float chargeShotInputBuffer;
 	[SerializeField] private float dashSpeed;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
@@ -23,10 +24,11 @@ public class Paddle : MonoBehaviour
 	private Vector2 velocity;
 	private int yInputDir;
 	private float yMoveDir;
+	private float chargeShotInputTimer;
 	private float chargeShotTimer;
 	private bool isCharged;
 	private float dashInterpolationTimer;
-	private float dashTimer; 
+	private float dashTimer;
 	private float curveBallInputTimer;
 	private bool curveBallShotDue;
 
@@ -63,6 +65,12 @@ public class Paddle : MonoBehaviour
 		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
 		dashKey = inputHandler.GetKeycodeForInput($"P{teamID}Dash");
+
+		if (teamID == 1) {
+			useDedicatedCharge = PlayerPrefHandler.GetBool(Statics.DedicatedChargeP1PPD);
+		} else if (teamID == 2) {
+			useDedicatedCharge = PlayerPrefHandler.GetBool(Statics.DedicatedChargeP2PPD);
+		}
 	}
 
 	private void Awake () {
@@ -108,7 +116,7 @@ public class Paddle : MonoBehaviour
         yMoveDir = Mathf.Lerp(yMoveDir, yInputDir, inputSmoothFactor);
 
         // DEBUG NONO ZONE LINE UNTIL WE GET ART
-        Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+        //Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
 
         // Charge input
         if (useDedicatedCharge) {
@@ -130,9 +138,7 @@ public class Paddle : MonoBehaviour
 
 			//full charge
 			if (chargeAmount >= 1) {
-				if (!curveBallShotDue) {
-					curveBallInputTimer = 0;
-				}
+				chargeShotInputTimer = chargeShotInputBuffer;
 
 				if (!isCharged) {
 					isCharged = true;
@@ -164,10 +170,10 @@ public class Paddle : MonoBehaviour
 			}
 		}
 		//clear due curveball shot
-		if (curveBallInputTimer > curveBallInputBuffer) {
+		/*if (curveBallInputTimer > curveBallInputBuffer) {
 			curveBallShotDue = false;
 			lastHitBall = null;
-		}
+		}*/
 
         // Dashing
         bool dashInputDown = Input.GetKeyDown (dashKey);
@@ -185,7 +191,8 @@ public class Paddle : MonoBehaviour
 		transform.position = new Vector2(transform.position.x, Mathf.Clamp(transform.position.y, minYPos, maxYPos));
 
 		// Timers
-		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer + Time.deltaTime);
+		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer - Time.deltaTime);
+		chargeShotInputTimer = Mathf.Clamp01(chargeShotInputTimer - Time.deltaTime);
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
