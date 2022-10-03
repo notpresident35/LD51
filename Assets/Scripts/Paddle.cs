@@ -19,13 +19,15 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float curveBallInputBuffer;
 	[SerializeField] private PaddleVisuals paddleVisuals;
 	private Vector2 velocity;
+	private int yInputDir;
 	private float yMoveDir;
 	private float chargeShotTimer;
 	private float dashInterpolationTimer;
 	private float dashTimer;
 	private float curveBallInputTimer;
+	private bool curveBallShotDue;
 
-	private Ball ball;
+	private Ball lastHitBall;
 
 	private float paddleHeight;
 
@@ -57,7 +59,7 @@ public class Paddle : MonoBehaviour
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
 
-		ball = null;
+		lastHitBall = null;
 
 		// TEMP FOR UNTIL WE HAVE ANIMATIONS
 		sprite = GetComponentInChildren<SpriteRenderer>();
@@ -83,7 +85,7 @@ public class Paddle : MonoBehaviour
 
 	private void Update () {
 		// Move input
-		float yInputDir = 0;
+		yInputDir = 0;
 		if (Input.GetKey (upKey)) {
 			yInputDir++;
         }
@@ -112,20 +114,34 @@ public class Paddle : MonoBehaviour
             paddleVisuals.SetCharge (1 - Mathf.Min(chargeAmount, 1));
 
 			//allow curveballs to be input early
-			if (chargeAmount >= 1) {
-				curveBallInputTimer = -curveBallInputBuffer;
+			if (chargeAmount >= 1 && !curveBallShotDue) {
+				curveBallInputTimer = 0;
 			}
         } else {
             chargeShotTimer = 0;
         }
 
 		// Execute a curveball that's due, OR buffer one to be redeemed later
-		if (yInputDir != 0 && !chargeInput) {
-			if (curveBallInputTimer < 0) {
-				curveBallInputTimer = 0;
-			} else if (curveBallInputTimer < curveBallInputBuffer) {
-				// do a late curveball with,, hopefully saved last hit ball??
+		if (yInputDir != 0 && !chargeInput && curveBallInputTimer <= curveBallInputBuffer) {
+			if (!curveBallShotDue) {
+				curveBallShotDue = true;
+			} else if (lastHitBall != null) {
+				// do a late curveball with the hopefully saved last hit ball??
+				float hitHeight = 0.5f + (transform.InverseTransformPoint(lastHitBall.transform.position).y / paddleHeight);
+				float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
+				if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
+
+				lastHitBall.ballHit(-yInputDir * (facingRight ? 1 : -1), hitAngle, strongHitStrength);
+
+				lastHitBall = null;
+				curveBallShotDue = false;
+				curveBallInputTimer = curveBallInputBuffer + 1;
 			}
+		}
+		//clear due curveball shot
+		if (curveBallInputTimer > curveBallInputBuffer) {
+			curveBallShotDue = false;
+			lastHitBall = null;
 		}
 
         // Dashing
@@ -141,7 +157,7 @@ public class Paddle : MonoBehaviour
 
 		// Timers
 		chargeShotTimer += Time.deltaTime;
-		curveBallInputTimer += Time.deltaTime;
+		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer + Time.deltaTime);
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
@@ -164,11 +180,23 @@ public class Paddle : MonoBehaviour
 		float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
 		if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
 
-		//if ()
-		if (chargeShotTimer > chargeTime && chargeInput) {
-			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
+		if (curveBallShotDue) {
+			//do a previously buffered curveball
+			collision.gameObject.GetComponent<Ball>().ballHit(-yInputDir * (facingRight ? 1 : -1), hitAngle, strongHitStrength);
+
+			lastHitBall = null;
+			curveBallShotDue = false;
 		} else {
-			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
+			if (chargeShotTimer > chargeTime && chargeInput) {
+				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
+
+				//allow a late curveball shot to be redeemed later
+				lastHitBall = collision.gameObject.GetComponent<Ball>();
+				curveBallInputTimer = 0;
+				curveBallShotDue = true;
+			} else {
+				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
+			}
 		}
 		chargeShotTimer = 0;
 	}

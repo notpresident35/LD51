@@ -159,10 +159,9 @@ MonoBehaviour:
   dashSpeed: 90
   dashCooldown: 0.17
   dashFalloff: 1
-  curveBallInputBuffer: 0
+  curveBallInputBuffer: 0.2
   paddleVisuals: {fileID: 3460503981111327842}
   useDedicatedCharge: 1
-  mustFullyCharge: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
   m_ObjectHideFlags: 0
