@@ -831,6 +831,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Singletons
       objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: juiceSpeed
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: juiceEffectSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: goalChromAbIntensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: juiceEffectPauseTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: goalLensDistortIntensity
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleLensDistortIntensity
+      value: -25
+      objectReference: {fileID: 0}
     - target: {fileID: 7049715014904778391, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_Enabled
       value: 1

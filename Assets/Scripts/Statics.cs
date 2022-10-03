@@ -83,5 +83,8 @@ public class Statics
     public static string VFXFilePathPrefix = "VFX/";
     public static string GameModeFilePathPrefix = "GameModes/";
 
+    // scene names
+    public static string MainSceneFileName = "Main";
+
     public static int WinningScore = 5;
 }
