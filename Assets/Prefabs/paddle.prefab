@@ -162,6 +162,24 @@ MonoBehaviour:
   curveBallInputBuffer: 0.2
   paddleVisuals: {fileID: 3460503981111327842}
   useDedicatedCharge: 1
+  paddleHit:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
+  paddleHitHard:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
+  paddleHitCurveball:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
+  dash:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
+  chargeUp:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
+  chargeComplete:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:
   m_ObjectHideFlags: 0

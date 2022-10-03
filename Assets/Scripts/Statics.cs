@@ -79,7 +79,7 @@ public class Statics
     public static FloatPlayerPrefData AudioMusicVolumePPD = new FloatPlayerPrefData ("Music Volume", 1.0f);
 
     // Relative file path to Resources directory for audio files
-    public static string AudioFilePathPrefix = "SFX/";
+    //public static string AudioFilePathPrefix = "SFX/";
     public static string VFXFilePathPrefix = "VFX/";
     public static string GameModeFilePathPrefix = "GameModes/";
 

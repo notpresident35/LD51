@@ -20,6 +20,9 @@ public class Ball : MonoBehaviour {
 	private float curveDir;
 	private float curveSpeed;
 
+	//sfx
+	[SerializeField] SoundEffect explode;
+
 	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
 	[SerializeField] private float initialRotation;
 	[SerializeField] private bool useRandomInitialRotation;
@@ -83,6 +86,7 @@ public class Ball : MonoBehaviour {
 	IEnumerator DeathEffects (float waitTime) {
 		yield return new WaitForSeconds (waitTime);
         SingletonManager.EventSystemInstance.OnBallExplode.Invoke (transform.position);
+		AudioManager.PlaySound(explode.clip, explode.volume);
         Destroy (gameObject);
     }
 
