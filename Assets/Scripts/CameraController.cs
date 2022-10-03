@@ -8,13 +8,10 @@ public class CameraController : MonoBehaviour
     public float MinZoomSize;
     public float InitialZoomSize;
     public Vector2 EdgePadding;
-    [Range(0.0f, 0.13f)]
     public float ShakeAmplitude;
-    [Range(0.0f, 0.017f)]
     public float ShakeFrequency;
 
     [SerializeField]
-    [Range(0.0f, 0.012f)]
     private float smoothFactor; 
     [SerializeField]
     [Range(0.0f, 20)]
@@ -37,20 +34,20 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        perlinNoisePosition += ShakeFrequency;
+        perlinNoisePosition += ShakeFrequency * Time.deltaTime;
         if (perlinNoisePosition > 10000) perlinNoisePosition = 0;
         FocusOnBounds(GetTargetedBounds());
     }
 
     float GetNoiseFactor(float offset)
     {
-        return 1.0f + GameState.ShakeJuice * (ShakeAmplitude)
+        return 1.0f + JuiceManager.ShakeJuice * ShakeAmplitude * Time.deltaTime
                 * Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f);
     }
 
     float GetNoiseAdder(float offset)
     {
-        return GameState.ShakeJuice * (ShakeAmplitude)
+        return JuiceManager.ShakeJuice * ShakeAmplitude * Time.deltaTime
                 * (-0.5f + Mathf.PerlinNoise(perlinNoisePosition + offset, 0.0f));
     }
 
@@ -75,8 +72,8 @@ public class CameraController : MonoBehaviour
         bounds.Expand (new Vector2 (-bounds.extents.x * cam.aspect * WidthCompression, 0));
         bounds.Expand (EdgePadding);
         // lerpity lerpity
-        Vector3 newCenter = Vector3.Lerp(lastBounds.center, bounds.center, smoothFactor);
-        Vector3 newSize = Vector3.Lerp(lastBounds.size, bounds.size, smoothFactor);
+        Vector3 newCenter = Vector3.Lerp(lastBounds.center, bounds.center, smoothFactor * Time.deltaTime);
+        Vector3 newSize = Vector3.Lerp(lastBounds.size, bounds.size, smoothFactor * Time.deltaTime);
 
         lastBounds = new Bounds(newCenter, newSize);
         

@@ -20,8 +20,9 @@ public class PostProcessingManager : MonoBehaviour {
     [SerializeField] private float paddleBloomIntensity = 20f;
     [SerializeField] private float paddleChromAbIntensity = 0.5f;
     [SerializeField] private float paddleLensDistortIntensity = -20f;
-    [SerializeField] private float juiceEffectSpeed = 0.5f;
-    [SerializeField] private float juiceEffectPauseTime = 0.5f;
+
+    [SerializeField] private AnimationCurve juiceEffectCurve;
+    [SerializeField] private float juiceEffectSpeed = 0.5f;    
 
     private void OnEnable() {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalJuice);
@@ -58,23 +59,10 @@ public class PostProcessingManager : MonoBehaviour {
     }
 
     IEnumerator LerpEffects (float bloomIntensity, float chromAbIntensity, float lensDistortIntensity) {
-        for (float i = 0; i < 1; i += Time.deltaTime * juiceEffectSpeed * 2) {
-            bloomComp.intensity.value = Mathf.Lerp(defaultBloomIntensity, bloomIntensity, i);
-            chromAbComp.intensity.value = Mathf.Lerp(defaultChromAbIntensity, chromAbIntensity, i);
-            lensDistortComp.intensity.value = Mathf.Lerp(defaultLensDistortIntensity, lensDistortIntensity, i);
-            yield return null;
-        }
-
-        bloomComp.intensity.value = bloomIntensity;
-        chromAbComp.intensity.value = chromAbIntensity;
-        lensDistortComp.intensity.value = lensDistortIntensity;
-
-        yield return new WaitForSeconds(juiceEffectPauseTime);
-
-        for (float i = 0; i < 1; i += Time.deltaTime * juiceEffectSpeed * 2) {
-            bloomComp.intensity.value = Mathf.Lerp(bloomIntensity, defaultBloomIntensity, i);
-            chromAbComp.intensity.value = Mathf.Lerp(chromAbIntensity, defaultChromAbIntensity, i);
-            lensDistortComp.intensity.value = Mathf.Lerp(lensDistortIntensity, defaultLensDistortIntensity, i);
+        for (float i = 0; i < 1; i += Time.deltaTime * juiceEffectSpeed) {
+            bloomComp.intensity.value = Mathf.Lerp(defaultBloomIntensity, bloomIntensity, juiceEffectCurve.Evaluate(i));
+            chromAbComp.intensity.value = Mathf.Lerp(defaultChromAbIntensity, chromAbIntensity, juiceEffectCurve.Evaluate (i));
+            lensDistortComp.intensity.value = Mathf.Lerp(defaultLensDistortIntensity, lensDistortIntensity, juiceEffectCurve.Evaluate (i));
             yield return null;
         }
 
