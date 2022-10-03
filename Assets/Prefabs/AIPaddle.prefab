@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamID: 2
   facingRight: 0
-  canMoveDuringCharge: 0
+  canMoveDuringCharge: 1
   minYPos: -61
   maxYPos: 61
   moveSpeed: 16
@@ -202,16 +202,16 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 7.6450105
-      inSlope: -30.804676
-      outSlope: -30.804676
+      value: 12.117727
+      inSlope: -42.341908
+      outSlope: -42.341908
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.11796525
+      outWeight: 0.13922743
     - serializedVersion: 3
-      time: 0.3680983
-      value: 4.1200013
+      time: 0.281642
+      value: 6.2355137
       inSlope: 0.05711509
       outSlope: 0.05711509
       tangentMode: 0
@@ -219,17 +219,17 @@ MonoBehaviour:
       inWeight: 0.19024764
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6281873
-      value: 4.1702886
+      time: 0.6118909
+      value: 6.285801
       inSlope: 0.22538476
-      outSlope: 0.22538476
-      tangentMode: 0
+      outSlope: -22.84456
+      tangentMode: 1
       weightedMode: 0
       inWeight: 0.101444095
-      outWeight: 0.33333334
+      outWeight: 0.10290184
     - serializedVersion: 3
       time: 1
-      value: 2.0826416
+      value: 2.1621704
       inSlope: 1
       outSlope: 1
       tangentMode: 0
@@ -269,15 +269,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0.04857254
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.8858979
+      outSlope: 0.8858979
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.119384944
     - serializedVersion: 3
       time: 1
-      value: 0.40571594
+      value: 0.80046904
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -266,6 +266,7 @@ public class Paddle : MonoBehaviour
             if (newDir != 0) {
                 curveDir = newDir;
                 i = curveBallInputDetectionTime;
+                JuiceManager.TimeFreezeJuice = 0;
             }
             yield return null;
 		}

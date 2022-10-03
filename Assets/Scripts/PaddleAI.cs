@@ -63,7 +63,9 @@ public class PaddleAI : Paddle
 
     protected override void HandleHitBall (Collision2D ballCollision) {
         base.HandleHitBall (ballCollision);
-        chargeCooldownTimer = ChargeCooldownByDifficulty.Evaluate (difficulty);
+        if (chargeCooldownTimer <= Mathf.Epsilon) {
+            chargeCooldownTimer = ChargeCooldownByDifficulty.Evaluate (difficulty);
+        }
     }
 
 
