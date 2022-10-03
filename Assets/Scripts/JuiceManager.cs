@@ -28,19 +28,19 @@ public class JuiceManager : MonoBehaviour
 
     private void Update () {
         ShakeJuice = Mathf.Clamp01 (ShakeJuice -= Time.deltaTime * shakeJuiceFalloff);
-        TimeFreezeJuice = Mathf.Clamp01 (ShakeJuice -= Time.deltaTime * timeFreezeJuiceFalloff);
+        TimeFreezeJuice = Mathf.Clamp01 (TimeFreezeJuice -= Time.deltaTime * timeFreezeJuiceFalloff);
     }
 
     private void OnEnable() {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalShake);
         SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleShake);
-        SingletonManager.EventSystemInstance.OnBallExplode.AddListener(ballExplodeShake);
+        //SingletonManager.EventSystemInstance.OnBallExplode.AddListener(ballExplodeShake);
     }
 
     private void OnDisable() {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalShake);
         SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleShake);
-        SingletonManager.EventSystemInstance.OnBallExplode.RemoveListener(ballExplodeShake);
+        //SingletonManager.EventSystemInstance.OnBallExplode.RemoveListener(ballExplodeShake);
     }
 
     private void goalShake(int team, Vector3 location) {
@@ -54,9 +54,9 @@ public class JuiceManager : MonoBehaviour
             AddShake(paddleHardJuice);
         }
     }
-
+    /*
     private void ballExplodeShake(Vector3 location) {
         AddShake(ballExplodeJuice);
-    }
+    }*/
     
 }
