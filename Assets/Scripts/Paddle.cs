@@ -12,6 +12,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float inputSmoothFactor;
 	[SerializeField] private float strongHitStrength;
+	[SerializeField] private float curveHitStrength;
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
@@ -87,12 +88,25 @@ public class Paddle : MonoBehaviour
 			nonoZoneSize = 1-nonoZoneSize;
 		}
 		paddleHeight = 2 * boxCollider.bounds.extents.y;
-	}
+
+        paddleVisuals.SetupCurveIndicators (facingRight);
+    }
 
 
 	private void Update () {
-		// Move input
-		yInputDir = 0;
+        if (!GameState.IsBallActive) {
+            yInputDir = 0;
+            paddleVisuals.SetCharge (0);
+			chargeShotTimer = 0;
+            curveBallInputTimer = 0;
+            chargeShotActiveBuffer = 0;
+			dashTimer = 0;
+            dashInterpolationTimer = 0;
+            return;
+        }
+
+        // Move input
+        yInputDir = 0;
 		if (Input.GetKey (upKey)) {
 			yInputDir++;
         }
@@ -201,7 +215,9 @@ public class Paddle : MonoBehaviour
 	IEnumerator WaitForCurveInput (Collision2D collision, float hitAngle) {
 		int curveDir = 0;
 
-		for (float i = 0; i < curveBallInputDetectionTime; i += Time.unscaledDeltaTime) {
+        paddleVisuals.ShowCurveIndicators ();
+
+        for (float i = 0; i < curveBallInputDetectionTime; i += Time.unscaledDeltaTime) {
             if (Input.GetKeyDown (upKey)) {
 				curveDir = facingRight ? -1 : 1;
             } else if (Input.GetKeyDown (downKey)) {
@@ -210,11 +226,15 @@ public class Paddle : MonoBehaviour
             yield return null;
 		}
 
-        collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, strongHitStrength);
-
 		if (curveDir != 0) {
-            AudioManager.PlaySound (paddleHitCurveball.clip, paddleHitCurveball.volume);
+			AudioManager.PlaySound (paddleHitCurveball.clip, paddleHitCurveball.volume);
+			collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, curveHitStrength);
+		} else {
+            AudioManager.PlaySound (paddleHitHard.clip, paddleHitHard.volume);
+            collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, strongHitStrength);
         }
+
+		paddleVisuals.HideCurveIndicators ();
     }
 
 	private void OnEnable () {
