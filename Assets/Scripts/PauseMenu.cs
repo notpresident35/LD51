@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
 
+    [SerializeField] SoundEffect buttonSound;
+
     public void Start()
     {
         Resume();
@@ -36,6 +38,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         TimeControl.Unpause();
         GameState.Paused = false;
+        AudioManager.PlaySound(buttonSound.clip,buttonSound.volume);
     }
 
     public void Quit()
