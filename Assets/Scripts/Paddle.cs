@@ -36,8 +36,15 @@ public class Paddle : MonoBehaviour
 
 	// TEMP - MAKE AN OPTION IN SETTINGS LATER
 	[SerializeField] bool useDedicatedCharge;
-	// TEMP FOR UNTIL WE HAVE ANIMATIONS
 	private SpriteRenderer sprite;
+
+	//sfx
+	[SerializeField] SoundEffect paddleHit;
+	[SerializeField] SoundEffect paddleHitHard;
+	[SerializeField] SoundEffect paddleHitCurveball;
+	[SerializeField] SoundEffect dash;
+	[SerializeField] SoundEffect chargeUp;
+	[SerializeField] SoundEffect chargeComplete;
 
 	private Rigidbody2D rb;
 	private BoxCollider2D boxCollider;
@@ -114,9 +121,17 @@ public class Paddle : MonoBehaviour
 			float chargeAmount = chargeShotTimer / chargeTime;
             paddleVisuals.SetCharge (1 - Mathf.Min(chargeAmount, 1));
 
-			//allow curveballs to be input early
-			if (chargeAmount >= 1 && !curveBallShotDue) {
-				curveBallInputTimer = 0;
+			if (chargeShotTimer == 0) {
+				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
+			}
+
+			//full charge
+			if (chargeAmount >= 1) {
+				if (!curveBallShotDue) {
+					curveBallInputTimer = 0;
+				}
+				
+				AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
 			}
         } else {
             chargeShotTimer = 0;
@@ -130,6 +145,8 @@ public class Paddle : MonoBehaviour
 			} else if (lastHitBall != null) {
 				// do a late curveball with the hopefully saved last hit ball??
 				lastHitBall.ballHit(-yInputDir * (facingRight ? 1 : -1), storedHitAngle, strongHitStrength);
+
+				AudioManager.PlaySound(paddleHitCurveball.clip, paddleHitCurveball.volume);
 
 				lastHitBall = null;
 				curveBallShotDue = false;
@@ -148,6 +165,8 @@ public class Paddle : MonoBehaviour
 			velocity.y = yMoveDir * dashSpeed;
 			dashInterpolationTimer = 1;
 			dashTimer = dashCooldown;
+
+			AudioManager.PlaySound(dash.clip, dash.volume);
 		}
 		
 		// Merge movement and dash
@@ -182,11 +201,15 @@ public class Paddle : MonoBehaviour
 			//do a previously buffered curveball
 			collision.gameObject.GetComponent<Ball>().ballHit(-yInputDir * (facingRight ? 1 : -1), hitAngle, strongHitStrength);
 
+			AudioManager.PlaySound(paddleHitCurveball.clip, paddleHitCurveball.volume);
+
 			lastHitBall = null;
 			curveBallShotDue = false;
 		} else {
 			if (chargeShotTimer > chargeTime && chargeInput) {
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
+
+				AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
 
 				//allow a late curveball shot to be redeemed later
 				lastHitBall = collision.gameObject.GetComponent<Ball>();
@@ -195,6 +218,8 @@ public class Paddle : MonoBehaviour
 				curveBallShotDue = true;
 			} else {
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
+
+				AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
 			}
 		}
 		chargeShotTimer = 0;
