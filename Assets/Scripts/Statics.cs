@@ -64,7 +64,7 @@ public class PlayerPrefHandler {
         PlayerPrefs.SetInt (PPD.Name, val);
     }
     public static void SetFloat (FloatPlayerPrefData PPD, float val) {
-        PlayerPrefs.GetFloat (PPD.Name, val);
+        PlayerPrefs.SetFloat (PPD.Name, val);
     }
     public static void GetKeycode (KeycodePlayerPrefData PPD, KeyCode val) {
         PlayerPrefs.SetString (PPD.Name, val.ToString ());

@@ -1748,6 +1748,30 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294946496
       objectReference: {fileID: 0}
+    - target: {fileID: 6638982618968205444, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 104
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638982619234166086, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -110
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638982619460692824, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638982619460692824, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638982619460692824, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6638982619460692824, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6638982619460692825, guid: 84fba5cacf9ce9945beb69a2dc75779c, type: 3}
       propertyPath: m_IsActive
       value: 0
