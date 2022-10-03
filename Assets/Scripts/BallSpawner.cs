@@ -21,7 +21,7 @@ public class BallSpawner : MonoBehaviour
             if (GameState.CurrentMode.ballStartsGoingLeft) {
                 ballAngle = -(ballAngle + Mathf.PI);
             }
-            newBall.ballHit(false, ballAngle);
+            newBall.ballHit(0, ballAngle);
         }
     }
 

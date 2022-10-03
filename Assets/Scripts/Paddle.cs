@@ -17,18 +17,12 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
 	[SerializeField] private float curveBallInputBuffer;
-	[SerializeField] private float curveBallInitialAngle;
-	[SerializeField] private float initialCurve;
-	[SerializeField] private float curveFalloff;
-	[SerializeField] private PaddleVisuals paddleVisuals;
 	private Vector2 velocity;
 	private float yMoveDir;
 	private float chargeShotTimer;
 	private float dashInterpolationTimer;
 	private float dashTimer;
 	private float curveBallInputTimer;
-	private float angleBias;
-	private float curveSpeed;
 
 	private float paddleHeight;
 
@@ -158,7 +152,8 @@ public class Paddle : MonoBehaviour
 		}
 		chargeShotTimer = 0;
 
-		collision.gameObject.GetComponent<Ball>().ballHit(false, hitAngle, hitStrength);
+			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
+		}
 	}
 
 	private void OnEnable () {
