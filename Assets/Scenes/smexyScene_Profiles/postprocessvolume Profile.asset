@@ -62,7 +62,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: -13.5
+    value: -12
   intensityX:
     overrideState: 0
     value: 1
@@ -131,10 +131,10 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: -6.5
+    value: 17
   tint:
     overrideState: 1
-    value: 16
+    value: 26
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -1430,7 +1430,7 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.364
+    value: 0.264
   fastMode:
     overrideState: 0
     value: 0
