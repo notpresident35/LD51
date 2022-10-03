@@ -28,6 +28,7 @@ public class Paddle : MonoBehaviour
 	private bool curveBallShotDue;
 
 	private Ball lastHitBall;
+	private float storedHitAngle;
 
 	private float paddleHeight;
 
@@ -119,7 +120,8 @@ public class Paddle : MonoBehaviour
 			}
         } else {
             chargeShotTimer = 0;
-        }
+			paddleVisuals.SetCharge(0);
+		}
 
 		// Execute a curveball that's due, OR buffer one to be redeemed later
 		if (yInputDir != 0 && !chargeInput && curveBallInputTimer <= curveBallInputBuffer) {
@@ -127,11 +129,7 @@ public class Paddle : MonoBehaviour
 				curveBallShotDue = true;
 			} else if (lastHitBall != null) {
 				// do a late curveball with the hopefully saved last hit ball??
-				float hitHeight = 0.5f + (transform.InverseTransformPoint(lastHitBall.transform.position).y / paddleHeight);
-				float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
-				if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
-
-				lastHitBall.ballHit(-yInputDir * (facingRight ? 1 : -1), hitAngle, strongHitStrength);
+				lastHitBall.ballHit(-yInputDir * (facingRight ? 1 : -1), storedHitAngle, strongHitStrength);
 
 				lastHitBall = null;
 				curveBallShotDue = false;
@@ -193,6 +191,7 @@ public class Paddle : MonoBehaviour
 				//allow a late curveball shot to be redeemed later
 				lastHitBall = collision.gameObject.GetComponent<Ball>();
 				curveBallInputTimer = 0;
+				storedHitAngle = hitAngle;
 				curveBallShotDue = true;
 			} else {
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
