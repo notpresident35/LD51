@@ -18,9 +18,9 @@ MonoBehaviour:
   BallStartCount: 1
   UsePowerups: 0
   PowerupSpawnDelay: 0
-  ballStartAngleSpread: 20
+  ballStartAngleSpread: 0
   ballStartsWithRandomDirection: 1
-  ballStartsGoingLeft: 1
+  ballStartsGoingLeft: 0
   BallDefaultPositions:
   - {x: 0, y: 0, z: 0}
   PaddleDefaultPositions:
