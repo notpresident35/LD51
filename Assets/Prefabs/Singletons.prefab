@@ -407,7 +407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63225f6b6fba6dd429d853ca77942442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RestartTime: 1.5
+  BeginWaitTime: 1.3
+  RestartWaitTime: 1.8
 --- !u!1 &9017735313227495467
 GameObject:
   m_ObjectHideFlags: 0
