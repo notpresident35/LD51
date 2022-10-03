@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(InputHandler))]
 public class Paddle : MonoBehaviour
 {
 	[SerializeField] private int teamID;
 	[SerializeField] private bool facingRight;
+	[SerializeField] private bool canMoveDuringCharge;
 	[SerializeField] private float minYPos;
 	[SerializeField] private float maxYPos;
-	[SerializeField] private float moveSpeed;
+	[SerializeField] protected float moveSpeed;
 	[SerializeField] private float inputSmoothFactor;
 	[SerializeField] private float strongHitStrength;
 	[SerializeField] private float curveHitStrength;
@@ -54,7 +54,7 @@ public class Paddle : MonoBehaviour
 	KeyCode chargeKey;
 	KeyCode dashKey;
 
-	public void Config() {
+	protected virtual void Config() {
 		upKey = inputHandler.GetKeycodeForInput($"P{teamID}Up");
 		downKey = inputHandler.GetKeycodeForInput($"P{teamID}Down");
 		chargeKey = inputHandler.GetKeycodeForInput($"P{teamID}Charge");
@@ -67,7 +67,7 @@ public class Paddle : MonoBehaviour
 		}
 	}
 
-	private void Awake () {
+    protected virtual void Awake () {
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
@@ -105,75 +105,100 @@ public class Paddle : MonoBehaviour
             return;
         }
 
-        // Move input
+		// Movement
+		Move(HandleMovementInput ());
+        // Charging
+        Charge(HandleChargingInput ());
+        // Dashing
+        Dash(HandleDashInput ());
+
+		ApplyMovement ();
+
+        // Timers
+        curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer - Time.deltaTime);
+		chargeShotActiveBuffer = Mathf.Clamp01(chargeShotActiveBuffer - Time.deltaTime);
+		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
+		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
+
+        // DEBUG NONO ZONE LINE UNTIL WE GET ART
+        //Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+    }
+
+    protected virtual float HandleMovementInput () {
         yInputDir = 0;
-		if (Input.GetKey (upKey)) {
-			yInputDir++;
+        if (Input.GetKey (upKey)) {
+            yInputDir++;
         }
         if (Input.GetKey (downKey)) {
             yInputDir--;
         }
 
-		// Movement
-        yMoveDir = Mathf.Lerp(yMoveDir, yInputDir, inputSmoothFactor);
+		return yInputDir;
+    }
 
-		// DEBUG NONO ZONE LINE UNTIL WE GET ART
-		//Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+	void Move (float yInputDir) {
+        yMoveDir = Mathf.Lerp (yMoveDir, yInputDir, inputSmoothFactor);
+    }
 
-		// Charge input
-		bool chargeInput;
+    protected virtual bool HandleDashInput () {
+		return Input.GetKeyDown (dashKey);
+	}
+
+	void Dash (bool dashInput) {
+        if (dashInput && dashTimer <= Mathf.Epsilon) {
+            velocity.y = yMoveDir * dashSpeed;
+            dashInterpolationTimer = 1;
+            dashTimer = dashCooldown;
+
+            AudioManager.PlaySound (dash.clip, dash.volume);
+        }
+    }
+
+	void ApplyMovement () {
+        // Merge movement and dash
+        velocity.y = Mathf.Lerp (velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolationTimer);
+
+		// Clamp paddle to bounds
+        transform.position = new Vector2 (transform.position.x, Mathf.Clamp (transform.position.y, minYPos, maxYPos));
+    }
+
+    protected virtual bool HandleChargingInput () {
+        bool chargeInput;
         if (useDedicatedCharge) {
             chargeInput = Input.GetKey (chargeKey);
-		} else {
-			chargeInput = Input.GetKey(upKey) && Input.GetKey(downKey);
-		}
+        } else {
+            chargeInput = Input.GetKey (upKey) && Input.GetKey (downKey);
+        }
 
-		// Charging behavior
-		if (chargeInput) {
-			yMoveDir = 0;
+		return chargeInput;
+    }
 
-			paddleVisuals.SetCharge(chargeShotTimer);
+	void Charge (bool charging) {
+        if (charging) {
+            if (!canMoveDuringCharge) {
+                yMoveDir = 0;
+            }
 
-			if (chargeShotTimer <= Mathf.Epsilon) {
-				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
-			}
+            paddleVisuals.SetCharge (chargeShotTimer);
 
-			//full charge
-			if (chargeShotTimer >= 1) {
-				if (chargeShotActiveBuffer <= Mathf.Epsilon) {
-					AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
-				}
+            if (chargeShotTimer <= Mathf.Epsilon) {
+                AudioManager.PlaySound (chargeUp.clip, chargeUp.volume);
+            }
+
+            //full charge
+            if (chargeShotTimer >= 1) {
+                if (chargeShotActiveBuffer <= Mathf.Epsilon) {
+                    AudioManager.PlaySound (chargeComplete.clip, chargeComplete.volume);
+                }
                 chargeShotActiveBuffer = chargeShotInputBuffer;
-			}
+            }
 
-			chargeShotTimer = Mathf.Clamp01 (chargeShotTimer + Time.deltaTime / chargeTime);
-
+            chargeShotTimer = Mathf.Clamp01 (chargeShotTimer + Time.deltaTime / chargeTime);
         } else {
             chargeShotTimer = 0;
-			paddleVisuals.SetCharge(0);
-		}
-
-        // Dashing
-        bool dashInputDown = Input.GetKeyDown (dashKey);
-        if (dashInputDown && dashTimer <= Mathf.Epsilon) {
-			velocity.y = yMoveDir * dashSpeed;
-			dashInterpolationTimer = 1;
-			dashTimer = dashCooldown;
-
-			AudioManager.PlaySound(dash.clip, dash.volume);
-		}
-		
-		// Merge movement and dash
-		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolationTimer);
-
-		transform.position = new Vector2(transform.position.x, Mathf.Clamp(transform.position.y, minYPos, maxYPos));
-
-		// Timers
-		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer - Time.deltaTime);
-		chargeShotActiveBuffer = Mathf.Clamp01(chargeShotActiveBuffer - Time.deltaTime);
-		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
-		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
-	}
+            paddleVisuals.SetCharge (0);
+        }
+    }
 
 	private void FixedUpdate() {
         if (!GameState.IsBallActive) {
@@ -188,64 +213,84 @@ public class Paddle : MonoBehaviour
 			return;
 		}
 
-        // Find y position of the ball relative to the paddle, from 0-1 (0 is bottom of paddle, 1 is top, regardless of flipping)
-        float hitHeight = Mathf.Clamp01(0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight));
-
-		// Find angle ball should be hit at
-		float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
-		// Flip if facing right
-		if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
-
-		// If can hit charged shot, prefer to do so
-		if (chargeShotActiveBuffer >= Mathf.Epsilon) {
-			AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
-			SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true, collision.transform.position);
-
-			StartCoroutine (WaitForCurveInput (collision, hitAngle));
-		} else {
-			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
-			SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false, collision.transform.position);
-			AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
-		}
-
-		chargeShotActiveBuffer = 0;
-        chargeShotTimer = 0;
+		HandleHitBall (collision);
 	}
 
-	IEnumerator WaitForCurveInput (Collision2D collision, float hitAngle) {
+	protected virtual void HandleHitBall (Collision2D ballCollision) {
+
+        // Find y position of the ball relative to the paddle, from 0-1 (0 is bottom of paddle, 1 is top, regardless of flipping)
+        float hitHeight = Mathf.Clamp01 (0.5f + (transform.InverseTransformPoint (ballCollision.GetContact (0).point).y / paddleHeight));
+
+        // Find angle ball should be hit at
+        float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
+        // Flip if facing right
+        if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
+
+        // If can hit charged shot, prefer to do so
+        if (chargeShotActiveBuffer >= Mathf.Epsilon) {
+            AudioManager.PlaySound (paddleHitHard.clip, paddleHitHard.volume);
+            SingletonManager.EventSystemInstance.OnPaddleHit.Invoke (true, ballCollision.transform.position);
+
+            StartCoroutine (WaitForCurveInput (ballCollision.gameObject.GetComponent<Ball> (), hitAngle));
+        } else {
+            ballCollision.gameObject.GetComponent<Ball> ().ballHit (0, hitAngle);
+            SingletonManager.EventSystemInstance.OnPaddleHit.Invoke (false, ballCollision.transform.position);
+            AudioManager.PlaySound (paddleHit.clip, paddleHit.volume);
+        }
+
+        chargeShotActiveBuffer = 0;
+        chargeShotTimer = 0;
+    }
+
+    protected virtual int HandleCurveDir () {
+        int curveDir = 0;
+
+        if (Input.GetKeyDown (upKey)) {
+            curveDir = -1;
+        } else if (Input.GetKeyDown (downKey)) {
+            curveDir = 1;
+        }
+
+        curveDir *= facingRight ? 1 : -1;
+
+        return curveDir;
+    }
+
+    IEnumerator WaitForCurveInput (Ball ball, float hitAngle) {
 		int curveDir = 0;
 
         paddleVisuals.ShowCurveIndicators ();
 
         for (float i = 0; i < curveBallInputDetectionTime; i += Time.unscaledDeltaTime) {
-            if (Input.GetKeyDown (upKey)) {
-				curveDir = facingRight ? -1 : 1;
-            } else if (Input.GetKeyDown (downKey)) {
-				curveDir = facingRight ? 1 : -1;
+            int newDir = HandleCurveDir ();
+            if (newDir != 0) {
+                curveDir = newDir;
+                i = curveBallInputDetectionTime;
+                JuiceManager.TimeFreezeJuice = 0;
             }
             yield return null;
 		}
 
 		if (curveDir != 0) {
 			AudioManager.PlaySound (paddleHitCurveball.clip, paddleHitCurveball.volume);
-			collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, curveHitStrength);
+            ball.ballHit (curveDir, hitAngle, curveHitStrength);
 		} else {
             AudioManager.PlaySound (paddleHitHard.clip, paddleHitHard.volume);
-            collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, strongHitStrength);
+            ball.ballHit (curveDir, hitAngle, strongHitStrength);
         }
 
 		paddleVisuals.HideCurveIndicators ();
     }
 
-	private void OnEnable () {
+	protected virtual void OnEnable () {
         SingletonManager.TeamManagerInstance.RegisterPaddle (this, teamID - 1);
-		SingletonManager.EventSystemInstance.OnSettingsSaved.AddListener(Config);
-	}
+        SingletonManager.EventSystemInstance.OnSettingsSaved.AddListener (Config);
+    }
 
-	private void OnDisable () {
+    protected virtual void OnDisable () {
 		if (SingletonManager.Instance) {
 			SingletonManager.TeamManagerInstance.DeregisterPaddle (this, teamID - 1);
-			SingletonManager.EventSystemInstance.OnSettingsSaved.RemoveListener(Config);
-		}
+            SingletonManager.EventSystemInstance.OnSettingsSaved.RemoveListener (Config);
+        }
 	}
 }
