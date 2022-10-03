@@ -10,8 +10,11 @@ using UnityEngine;
 
 public class TitleScreenButtonManager : MonoBehaviour
 {
+    [SerializeField] SoundEffect buttonSound;
+
     public void PlayPressed()
     {
+        AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
         SceneLoader.LoadMainScene();
     }
 
