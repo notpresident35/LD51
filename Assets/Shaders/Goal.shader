@@ -49,7 +49,7 @@ Shader "Unlit/Goal"
             fixed4 frag (v2f i) : SV_Target
             {
                 float wave = abs(frac(i.uv.x * 6 + (_Time.y * 0.5)) * 2 - 1);
-                wave *= (i.uv.x * 0.2);
+                wave *= (i.uv.x);
                 return _TeamColor * wave;
             }
             ENDCG
