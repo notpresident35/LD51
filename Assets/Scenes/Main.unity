@@ -419,8 +419,20 @@ PrefabInstance:
       value: Ball
       objectReference: {fileID: 0}
     - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
-      propertyPath: initialSpeed
-      value: 5
+      propertyPath: curveFalloff
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: curveSpeedInitial
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: speedSmoothFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
+      propertyPath: curveBallInitialAngle
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5152428662059834263, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
       propertyPath: m_Layer
