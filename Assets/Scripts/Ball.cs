@@ -42,9 +42,6 @@ public class Ball : MonoBehaviour {
         if (!GameState.IsBallActive) {
             return;
         }
-        moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
-        Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle), moveSpeed * Mathf.Sin(angle));
-	private void Update() {
 		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, speedSmoothFactor * Time.deltaTime);
 
 		if (curveDir != 0) {
