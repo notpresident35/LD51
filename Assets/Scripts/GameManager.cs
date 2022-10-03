@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public float RestartTime = 2;
+    public float BeginWaitTime = 2;
+    public float RestartWaitTime = 2;
 
     private void Awake () {
         // Load default game mode
@@ -22,13 +23,12 @@ public class GameManager : MonoBehaviour
             // This team wins!
             StopGame (teamID);
         } else {
-            GameState.IsBallActive = true;
             StartCoroutine (RestartRound ());
         }
     }
 
     private void Start () {
-        StartCoroutine (RestartRound ());
+        StartCoroutine (StartRound ());
     }
 
     private void OnEnable () {
@@ -39,9 +39,18 @@ public class GameManager : MonoBehaviour
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (HandleGoalScored);
     }
 
-    IEnumerator RestartRound () {
+    IEnumerator StartRound () {
         SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
-        yield return new WaitForSeconds (RestartTime);
+        yield return new WaitForSeconds (BeginWaitTime);
+        SingletonManager.EventSystemInstance.OnRoundBegin.Invoke ();
+        GameState.IsBallActive = true;
+    }
+
+    IEnumerator RestartRound () {
+        yield return new WaitForSeconds (RestartWaitTime);
+        SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
+        yield return new WaitForSeconds (BeginWaitTime);
+        SingletonManager.EventSystemInstance.OnRoundBegin.Invoke ();
         GameState.IsBallActive = true;
     }
 

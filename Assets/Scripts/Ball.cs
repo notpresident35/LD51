@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float initialSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
+	[SerializeField] private float speedAccPerHit;
     [SerializeField] private float speedSmoothFactor;
 	[SerializeField] private float curveBallInitialAngle;
 	[SerializeField] private float curveSpeedInitial;
@@ -38,7 +39,10 @@ public class Ball : MonoBehaviour {
 		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
-	private void Update() {
+	private void FixedUpdate() {
+        if (!GameState.IsBallActive) {
+            return;
+        }
 		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, speedSmoothFactor * Time.deltaTime);
 
 		if (curveDir != 0) {
@@ -55,6 +59,8 @@ public class Ball : MonoBehaviour {
 	public void ballHit(int _curveDir, float newAngle, float hitStrength = 0) {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
+
+		speedMultiplier += speedAccPerHit;
 
 		if (_curveDir != 0) {
 			curveDir = _curveDir;
@@ -85,8 +91,6 @@ public class Ball : MonoBehaviour {
     }
 
     private void OnDisable() {
-		if (SingletonManager.Instance) {
-            SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
-        }
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
     }
 }

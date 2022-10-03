@@ -85,6 +85,7 @@ public class Statics
 
     // scene names
     public static string MainSceneFileName = "Main";
+    public static string GameOverSceneFileName = "GameOver";
 
     public static int WinningScore = 5;
 }

@@ -141,6 +141,9 @@ MonoBehaviour:
   OnSettingsSaved:
     m_PersistentCalls:
       m_Calls: []
+  OnRoundBegin:
+    m_PersistentCalls:
+      m_Calls: []
   OnRoundRestart:
     m_PersistentCalls:
       m_Calls: []
@@ -187,6 +190,8 @@ Transform:
   - {fileID: 5732363517134373194}
   - {fileID: 4537118453962503517}
   - {fileID: 6281680994195878693}
+  - {fileID: 1182678314861083505}
+  - {fileID: 7931788666951266035}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -233,6 +238,95 @@ Transform:
   m_Father: {fileID: 3740742398880682730}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3955017294736305430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7931788666951266035}
+  - component: {fileID: 652732143739257927}
+  m_Layer: 0
+  m_Name: JuiceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7931788666951266035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955017294736305430}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3740742398880682730}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &652732143739257927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955017294736305430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b0b9fca4804824bae58b77a313522c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4793256052516078890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1182678314861083505}
+  - component: {fileID: 4299841877196605442}
+  m_Layer: 0
+  m_Name: BallSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1182678314861083505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793256052516078890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3740742398880682730}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4299841877196605442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793256052516078890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105a9ac0cfa7942428ed245b2de96bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BallPrefab: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
 --- !u!1 &5321006529065821594
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +478,49 @@ MonoBehaviour:
   paddleBloomIntensity: 20
   paddleChromAbIntensity: 0.5
   paddleLensDistortIntensity: -25
-  juiceEffectSpeed: 7
-  juiceEffectPauseTime: 0.3
+  juiceEffectCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.0028381348
+      inSlope: 9.0099745
+      outSlope: 9.0099745
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.08888609
+    - serializedVersion: 3
+      time: 0.21855603
+      value: 0.6678011
+      inSlope: 0.648278
+      outSlope: 0.648278
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.110363
+      outWeight: 0.1436581
+    - serializedVersion: 3
+      time: 0.7490509
+      value: 0.9779003
+      inSlope: 0.27804706
+      outSlope: 0.27804706
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10636003
+      outWeight: 0.15763636
+    - serializedVersion: 3
+      time: 1.0000048
+      value: 0.001515761
+      inSlope: 0.06443235
+      outSlope: 0.06443235
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  juiceEffectSpeed: 1.2
 --- !u!1 &7349464879547558686
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,4 +565,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63225f6b6fba6dd429d853ca77942442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RestartTime: 2
+  BeginWaitTime: 2
+  RestartWaitTime: 2
