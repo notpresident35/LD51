@@ -9,4 +9,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(Statics.MainSceneFileName);
     }
+
+    public static void LoadGameOverScreen(bool teamOneWon)
+    {
+        SceneManager.LoadScene(Statics.GameOverSceneFileName);
+    }
 }
