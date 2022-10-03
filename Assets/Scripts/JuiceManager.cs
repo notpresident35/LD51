@@ -27,14 +27,12 @@ public class JuiceManager : MonoBehaviour
     private void OnEnable() {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalShake);
         SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleShake);
-        //SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalShake);
         SingletonManager.EventSystemInstance.OnBallExplode.AddListener(ballExplodeShake);
     }
 
     private void OnDisable() {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalShake);
         SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleShake);
-        //SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalShake);
         SingletonManager.EventSystemInstance.OnBallExplode.RemoveListener(ballExplodeShake);
     }
 
