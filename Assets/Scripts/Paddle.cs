@@ -17,6 +17,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
 	[SerializeField] private float curveBallInputBuffer;
+	[SerializeField] private PaddleVisuals paddleVisuals;
 	private Vector2 velocity;
 	private float yMoveDir;
 	private float chargeShotTimer;
