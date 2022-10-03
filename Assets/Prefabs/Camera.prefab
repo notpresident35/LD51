@@ -133,7 +133,7 @@ MonoBehaviour:
   WidthCompression: 0.28
   MinZoomSize: 16
   InitialZoomSize: 24
-  EdgePadding: {x: 0, y: 9}
+  EdgePadding: {x: 3, y: 10}
   ShakeAmplitude: 90
   ShakeFrequency: 11
   smoothFactor: 15
