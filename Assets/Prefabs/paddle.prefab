@@ -193,11 +193,11 @@ MonoBehaviour:
   paddleVisuals: {fileID: 3460503981111327842}
   useDedicatedCharge: 1
   paddleHit:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: ed3b878d78c7acf44a1074db548baa4b, type: 3}
+    volume: 2
   paddleHitHard:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: ed3b878d78c7acf44a1074db548baa4b, type: 3}
+    volume: 3
   paddleHitCurveball:
     clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
     volume: 1
