@@ -970,6 +970,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleJuice
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3740742398880682730, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_RootOrder
       value: 0

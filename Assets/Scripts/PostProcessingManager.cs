@@ -17,9 +17,12 @@ public class PostProcessingManager : MonoBehaviour {
     [SerializeField] private float goalBloomIntensity = 35f;
     [SerializeField] private float goalChromAbIntensity = 1f;
     [SerializeField] private float goalLensDistortIntensity = -40f;
-    [SerializeField] private float paddleBloomIntensity = 20f;
-    [SerializeField] private float paddleChromAbIntensity = 0.5f;
-    [SerializeField] private float paddleLensDistortIntensity = -20f;
+    [SerializeField] private float paddleSoftBloomIntensity = 20f;
+    [SerializeField] private float paddleSoftChromAbIntensity = 0.5f;
+    [SerializeField] private float paddleSoftLensDistortIntensity = -20f;
+    [SerializeField] private float paddleHardBloomIntensity = 20f;
+    [SerializeField] private float paddleHardChromAbIntensity = 0.5f;
+    [SerializeField] private float paddleHardLensDistortIntensity = -20f;
 
     [SerializeField] private AnimationCurve juiceEffectCurve;
     [SerializeField] private float juiceEffectSpeed = 0.5f;    
@@ -54,8 +57,12 @@ public class PostProcessingManager : MonoBehaviour {
         StartCoroutine(LerpEffects(goalBloomIntensity,goalChromAbIntensity,goalLensDistortIntensity));
     }
 
-    private void paddleJuice(Vector3 unused) {
-        StartCoroutine(LerpEffects(paddleBloomIntensity, paddleChromAbIntensity, paddleLensDistortIntensity));
+    private void paddleJuice(bool isHard) {
+        if (isHard == false) {
+            StartCoroutine(LerpEffects(paddleSoftBloomIntensity, paddleSoftChromAbIntensity, paddleSoftLensDistortIntensity));
+        } else {
+            StartCoroutine(LerpEffects(paddleHardBloomIntensity, paddleHardChromAbIntensity, paddleHardLensDistortIntensity));
+        }
     }
 
     IEnumerator LerpEffects (float bloomIntensity, float chromAbIntensity, float lensDistortIntensity) {
