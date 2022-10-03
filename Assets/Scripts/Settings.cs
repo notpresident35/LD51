@@ -32,6 +32,8 @@ public class Settings : MonoBehaviour
         PlayerPrefHandler.SetBool (Statics.DedicatedChargeP1PPD, DedicatedChargeToggleP1.isOn);
         PlayerPrefHandler.SetBool (Statics.DedicatedChargeP2PPD, DedicatedChargeToggleP2.isOn);
 
-        SingletonManager.EventSystemInstance.OnSettingsSaved.Invoke ();
+        if (SingletonManager.EventSystemInstance) {
+            SingletonManager.EventSystemInstance.OnSettingsSaved.Invoke();
+        }
     }
 }

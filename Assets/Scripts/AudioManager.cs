@@ -22,15 +22,14 @@ public class AudioManager : MonoBehaviour
     public static void PlaySound(AudioClip clip, float volume = 1)
     {
         //AudioClip clip = (AudioClip)Resources.Load(Statics.AudioFilePathPrefix + fileName);
+        if (!sfxObject || !sfxSource) {
+            sfxObject = new GameObject("SFX Object");
+            sfxSource = sfxObject.AddComponent<AudioSource>();
+            sfxSource.rolloffMode = AudioRolloffMode.Linear;
+        }
         sfxSource.clip = clip;
         sfxSource.volume = volume;
         sfxSource.Play();
-    }
-
-    private void OnEnable() {
-        sfxObject = new GameObject("SFX Object");
-        sfxSource = sfxObject.AddComponent<AudioSource>();
-        sfxSource.rolloffMode = AudioRolloffMode.Linear;
     }
 
     private void Start() {
