@@ -11,11 +11,11 @@ public class EventSystem : MonoBehaviour {
     [Tooltip("Passes location of ball that was hit")]
     [HideInInspector] public UnityEvent<Vector3> OnPaddleHit = new UnityEvent<Vector3> ();
     [HideInInspector] public UnityEvent OnSettingsSaved;
-    [Tooltip("Called when the round resets (note that this is *not* when play begins)")]
-    [HideInInspector] public UnityEvent OnRoundRestart = new UnityEvent ();
     [Tooltip ("Called when the round begins")]
     [HideInInspector] public UnityEvent OnRoundBegin = new UnityEvent ();
-    [Tooltip ("Called when the game resets (note that this is *not* when play begins)")]
+    [Tooltip("Called when the round resets")]
+    [HideInInspector] public UnityEvent OnRoundRestart = new UnityEvent ();
+    [Tooltip ("Called when the game resets")]
     [HideInInspector] public UnityEvent OnGameRestart = new UnityEvent ();
 
     // VFX Handovers
