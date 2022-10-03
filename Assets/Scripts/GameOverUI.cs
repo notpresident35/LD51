@@ -16,6 +16,6 @@ public class GameOverUI : MonoBehaviour
 
     private void Update () {
         UI.SetActive (GameState.IsGameComplete);
-        teamNameText.text = "Player 1 Wins";
+        teamNameText.text = $"Player {GameState.WinTeam} Wins!";
     }
 }
