@@ -432,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5152428661723124846, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
       propertyPath: curveBallInitialAngle
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5152428662059834263, guid: 39b63dc067e5f82439b188a3423feff0, type: 3}
       propertyPath: m_Layer
