@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     private int nextMusicIndex = 1;
     private bool isFading = false;
     private bool changingSong = false;
+    [SerializeField] private float maxVolume = 0.2f;
     [SerializeField] private float fadeTime = 5;
 
     // fileName is the name of a file in the SFX directory
@@ -95,14 +96,14 @@ public class AudioManager : MonoBehaviour
 
             if (isFading == false) {
                 isFading = true;
-                StartCoroutine(Fade(oneMusicSource, fadeTime, 1f));
+                StartCoroutine(Fade(oneMusicSource, fadeTime, maxVolume));
             }
 
         } else if (twoMusicSource.isPlaying == true && twoMusicSource.time < fadeTime) {
 
             if (isFading == false) {
                 isFading = true;
-                StartCoroutine(Fade(twoMusicSource, fadeTime, 1f));
+                StartCoroutine(Fade(twoMusicSource, fadeTime, maxVolume));
             }
 
         }

@@ -1361,6 +1361,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 6638982619460692825}
+  buttonSound:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
 --- !u!114 &7582743583319744928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1375,6 +1378,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI: {fileID: 7136183981130125537}
   teamNameText: {fileID: 7373494505623217048}
+  buttonSound:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
 --- !u!1 &6638982618514192345
 GameObject:
   m_ObjectHideFlags: 0

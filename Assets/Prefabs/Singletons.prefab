@@ -282,7 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b0b9fca4804824bae58b77a313522c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  juiceFalloff: 3.2
+  shakeJuiceFalloff: 3.4
+  timeFreezeJuiceFalloff: 4
   goalJuice: 1
   paddleSoftJuice: 0.2
   paddleHardJuice: 0.55
@@ -383,6 +384,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e9251ec61a9ec742bc0f011def6109d, type: 3}
   - {fileID: 8300000, guid: 5ae82dc86f5ebbf41a7c39ed7c065538, type: 3}
   - {fileID: 8300000, guid: fa7a3010e3550bc4a96487f1ef7fadea, type: 3}
+  maxVolume: 0.25
   fadeTime: 2
 --- !u!1 &5678396530033448226
 GameObject:
