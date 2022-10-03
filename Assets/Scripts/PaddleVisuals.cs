@@ -9,6 +9,7 @@ public class PaddleVisuals : MonoBehaviour
     private Gradient ChargingColorGradient;
     [SerializeField]
     private Color FullChargedColor;
+    [SerializeField] GameObject CurveArrows;
 
     private float charge = 0;
     private SpriteRenderer sprite;
@@ -35,17 +36,17 @@ public class PaddleVisuals : MonoBehaviour
         charge = newCharge;
     }
 
-    public void StrikeBall (bool hardHit, bool curved) {
-        if (hardHit) {
+    public void SetupCurveIndicators (bool facingRight) {
+        Vector3 pos = CurveArrows.transform.localPosition;
+        pos.x = pos.x * (facingRight ? 1.0f : -1.0f);
+        CurveArrows.transform.localPosition = pos;
+    }
 
-        } else {
+    public void ShowCurveIndicators () {
+        CurveArrows.SetActive (true);
+    }
 
-        }
-
-        if (curved) {
-
-        } else {
-
-        }
+    public void HideCurveIndicators () {
+        CurveArrows.SetActive (false);
     }
 }

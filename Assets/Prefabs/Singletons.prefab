@@ -283,11 +283,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeJuiceFalloff: 3.4
-  timeFreezeJuiceFalloff: 4
   goalJuice: 1
+  goalFreezeTime: 0.11
   paddleSoftJuice: 0.2
+  paddleSoftFreezeTime: 0.04
   paddleHardJuice: 0.55
-  ballExplodeJuice: 0.5
+  paddleHardFreezeTime: 0.45
 --- !u!1 &4793256052516078890
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +385,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e9251ec61a9ec742bc0f011def6109d, type: 3}
   - {fileID: 8300000, guid: 5ae82dc86f5ebbf41a7c39ed7c065538, type: 3}
   - {fileID: 8300000, guid: fa7a3010e3550bc4a96487f1ef7fadea, type: 3}
-  maxVolume: 0.25
   fadeTime: 2
 --- !u!1 &5678396530033448226
 GameObject:
@@ -589,4 +589,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BeginWaitTime: 2
-  RestartWaitTime: 2
+  RestartWaitTime: 1.5

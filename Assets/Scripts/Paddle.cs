@@ -12,6 +12,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float inputSmoothFactor;
 	[SerializeField] private float strongHitStrength;
+	[SerializeField] private float curveHitStrength;
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
@@ -19,29 +20,22 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float dashSpeed;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
-	[SerializeField] private float curveBallInputBuffer;
+	[SerializeField] private float curveBallInputDetectionTime;
 	[SerializeField] private PaddleVisuals paddleVisuals;
+
 	private Vector2 velocity;
 	private int yInputDir;
 	private float yMoveDir;
-	private float chargeShotInputTimer;
+
+	private float chargeShotActiveBuffer;
 	private float chargeShotTimer;
-	private bool isCharged;
 	private float dashInterpolationTimer;
 	private float dashTimer;
 	private float curveBallInputTimer;
 
-	private Ball lastHitBall;
-	private float storedHitAngle;
-
 	private float paddleHeight;
 
-	private bool chargeInput;
-	private bool chargeInputDown;
-
-	// TEMP - MAKE AN OPTION IN SETTINGS LATER
-	[SerializeField] bool useDedicatedCharge;
-	private SpriteRenderer sprite;
+	private bool useDedicatedCharge;
 
 	//sfx
 	[SerializeField] SoundEffect paddleHit;
@@ -77,11 +71,6 @@ public class Paddle : MonoBehaviour
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
-
-		lastHitBall = null;
-
-		// TEMP FOR UNTIL WE HAVE ANIMATIONS
-		sprite = GetComponentInChildren<SpriteRenderer>();
 	}
 
 	private void Start() {
@@ -99,12 +88,25 @@ public class Paddle : MonoBehaviour
 			nonoZoneSize = 1-nonoZoneSize;
 		}
 		paddleHeight = 2 * boxCollider.bounds.extents.y;
-	}
+
+        paddleVisuals.SetupCurveIndicators (facingRight);
+    }
 
 
 	private void Update () {
-		// Move input
-		yInputDir = 0;
+        if (!GameState.IsBallActive) {
+            yInputDir = 0;
+            paddleVisuals.SetCharge (0);
+			chargeShotTimer = 0;
+            curveBallInputTimer = 0;
+            chargeShotActiveBuffer = 0;
+			dashTimer = 0;
+            dashInterpolationTimer = 0;
+            return;
+        }
+
+        // Move input
+        yInputDir = 0;
 		if (Input.GetKey (upKey)) {
 			yInputDir++;
         }
@@ -115,64 +117,41 @@ public class Paddle : MonoBehaviour
 		// Movement
         yMoveDir = Mathf.Lerp(yMoveDir, yInputDir, inputSmoothFactor);
 
-        // DEBUG NONO ZONE LINE UNTIL WE GET ART
-        //Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+		// DEBUG NONO ZONE LINE UNTIL WE GET ART
+		//Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
 
-        // Charge input
+		// Charge input
+		bool chargeInput;
         if (useDedicatedCharge) {
             chargeInput = Input.GetKey (chargeKey);
-			chargeInputDown = Input.GetKeyDown(chargeKey);
 		} else {
 			chargeInput = Input.GetKey(upKey) && Input.GetKey(downKey);
-			chargeInputDown = (Input.GetKeyDown(upKey) && Input.GetKey(downKey)) || (Input.GetKeyDown(downKey) && Input.GetKey(upKey));
 		}
 
 		// Charging behavior
-		if (chargeInputDown) {
-			chargeShotTimer = 0;
-			isCharged = false;
-			AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
-		}
 		if (chargeInput) {
 			yMoveDir = 0;
 
-			if (!isCharged) {
-				float chargeAmount = chargeShotTimer / chargeTime;
-				paddleVisuals.SetCharge(Mathf.Min(chargeAmount, 1));
+			paddleVisuals.SetCharge(chargeShotTimer);
 
-				//full charge
-				if (chargeAmount >= 1) {
-					chargeShotInputTimer = chargeShotInputBuffer;
-					isCharged = true;
+			if (chargeShotTimer <= Mathf.Epsilon) {
+				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
+			}
+
+			//full charge
+			if (chargeShotTimer >= 1) {
+				if (chargeShotActiveBuffer <= Mathf.Epsilon) {
 					AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
 				}
-
-				//charge timer
-				chargeShotTimer += Time.deltaTime;
+                chargeShotActiveBuffer = chargeShotInputBuffer;
 			}
-		} else {
-			isCharged = false;
+
+			chargeShotTimer = Mathf.Clamp01 (chargeShotTimer + Time.deltaTime / chargeTime);
+
+        } else {
             chargeShotTimer = 0;
 			paddleVisuals.SetCharge(0);
 		}
-
-		// Execute a curveball that's due, OR buffer one to be redeemed later
-		if (yInputDir != 0 && !chargeInput && curveBallInputTimer <= curveBallInputBuffer) {
-			if (lastHitBall != null) {
-				// do a late curveball with the hopefully saved last hit ball??
-				//lastHitBall.ballHit(-yInputDir * (facingRight ? 1 : -1), storedHitAngle, strongHitStrength);
-
-				AudioManager.PlaySound(paddleHitCurveball.clip, paddleHitCurveball.volume);
-
-				lastHitBall = null;
-				curveBallInputTimer = curveBallInputBuffer + 1;
-			}
-		}
-		//clear due curveball shot
-		/*if (curveBallInputTimer > curveBallInputBuffer) {
-			curveBallShotDue = false;
-			lastHitBall = null;
-		}*/
 
         // Dashing
         bool dashInputDown = Input.GetKeyDown (dashKey);
@@ -191,7 +170,7 @@ public class Paddle : MonoBehaviour
 
 		// Timers
 		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer - Time.deltaTime);
-		chargeShotInputTimer = Mathf.Clamp01(chargeShotInputTimer - Time.deltaTime);
+		chargeShotActiveBuffer = Mathf.Clamp01(chargeShotActiveBuffer - Time.deltaTime);
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
@@ -209,38 +188,54 @@ public class Paddle : MonoBehaviour
 			return;
 		}
 
-		float hitHeight = 0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight);
+        // Find y position of the ball relative to the paddle, from 0-1 (0 is bottom of paddle, 1 is top, regardless of flipping)
+        float hitHeight = Mathf.Clamp01(0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight));
 
+		// Find angle ball should be hit at
 		float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
+		// Flip if facing right
 		if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
 
-		/*if (true) {
-			//do a previously buffered curveball
-			//collision.gameObject.GetComponent<Ball>().ballHit(-yInputDir * (facingRight ? 1 : -1), hitAngle, strongHitStrength);
+		// If can hit charged shot, prefer to do so
+		if (chargeShotActiveBuffer >= Mathf.Epsilon) {
+			AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
+			SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true, collision.transform.position);
 
-			//AudioManager.PlaySound(paddleHitCurveball.clip, paddleHitCurveball.volume);
+			StartCoroutine (WaitForCurveInput (collision, hitAngle));
+		} else {
+			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
+			SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false, collision.transform.position);
+			AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
+		}
 
-			lastHitBall = null;
-		} else {*/
-			if (chargeShotTimer > chargeTime && chargeInput) {
-				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
-				
-				paddleVisuals.SetCharge(0);
-				AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true, collision.transform.position);
-
-				//allow a late curveball shot to be redeemed later
-				lastHitBall = collision.gameObject.GetComponent<Ball>();
-				curveBallInputTimer = 0;
-				storedHitAngle = hitAngle;
-			} else {
-				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false, collision.transform.position);
-				AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
-			}
-		//}
-		chargeShotTimer = 0;
+		chargeShotActiveBuffer = 0;
+        chargeShotTimer = 0;
 	}
+
+	IEnumerator WaitForCurveInput (Collision2D collision, float hitAngle) {
+		int curveDir = 0;
+
+        paddleVisuals.ShowCurveIndicators ();
+
+        for (float i = 0; i < curveBallInputDetectionTime; i += Time.unscaledDeltaTime) {
+            if (Input.GetKeyDown (upKey)) {
+				curveDir = facingRight ? -1 : 1;
+            } else if (Input.GetKeyDown (downKey)) {
+				curveDir = facingRight ? 1 : -1;
+            }
+            yield return null;
+		}
+
+		if (curveDir != 0) {
+			AudioManager.PlaySound (paddleHitCurveball.clip, paddleHitCurveball.volume);
+			collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, curveHitStrength);
+		} else {
+            AudioManager.PlaySound (paddleHitHard.clip, paddleHitHard.volume);
+            collision.gameObject.GetComponent<Ball> ().ballHit (curveDir, hitAngle, strongHitStrength);
+        }
+
+		paddleVisuals.HideCurveIndicators ();
+    }
 
 	private void OnEnable () {
         SingletonManager.TeamManagerInstance.RegisterPaddle (this, teamID - 1);
