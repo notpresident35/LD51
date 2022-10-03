@@ -9,7 +9,7 @@ public class EventSystem : MonoBehaviour {
     [Tooltip("Passes team that scored and location of ball that scored")]
     [HideInInspector] public UnityEvent<int, Vector3> OnGoalHit = new UnityEvent<int, Vector3> ();
     [Tooltip("Passes location of ball that was hit")]
-    [HideInInspector] public UnityEvent<bool> OnPaddleHit = new UnityEvent<bool> ();
+    [HideInInspector] public UnityEvent<bool, Vector3> OnPaddleHit = new UnityEvent<bool, Vector3> ();
     [HideInInspector] public UnityEvent OnSettingsSaved;
     [Tooltip ("Called when the round begins")]
     [HideInInspector] public UnityEvent OnRoundBegin = new UnityEvent ();

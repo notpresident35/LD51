@@ -221,7 +221,7 @@ public class Paddle : MonoBehaviour
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
 
 				AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true);
+				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true, collision.transform.position);
 
 				//allow a late curveball shot to be redeemed later
 				lastHitBall = collision.gameObject.GetComponent<Ball>();
@@ -231,7 +231,7 @@ public class Paddle : MonoBehaviour
 			} else {
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
 
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false);
+				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false, collision.transform.position);
 				AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
 			}
 		}
