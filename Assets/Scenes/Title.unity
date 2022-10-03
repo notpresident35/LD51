@@ -1305,8 +1305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound:
-    clip: {fileID: 0}
-    volume: 0
+    clip: {fileID: 8300000, guid: 2bcac6ebd49458b419e9266b74114b0c, type: 3}
+    volume: 1
 --- !u!1 &1237688030
 GameObject:
   m_ObjectHideFlags: 0

@@ -193,22 +193,22 @@ MonoBehaviour:
   paddleVisuals: {fileID: 3460503981111327842}
   useDedicatedCharge: 1
   paddleHit:
-    clip: {fileID: 8300000, guid: ed3b878d78c7acf44a1074db548baa4b, type: 3}
+    clip: {fileID: 8300000, guid: 811360a3724bcd440b5c2e831a5d18ae, type: 3}
     volume: 2
   paddleHitHard:
-    clip: {fileID: 8300000, guid: ed3b878d78c7acf44a1074db548baa4b, type: 3}
-    volume: 3
+    clip: {fileID: 8300000, guid: ac81be70feee3604db6aa1e613e37602, type: 3}
+    volume: 5
   paddleHitCurveball:
     clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
-    volume: 1
+    volume: 1.5
   dash:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 18df82994270f8f499105dc50e9e1300, type: 3}
+    volume: 5
   chargeUp:
-    clip: {fileID: 8300000, guid: ed3b878d78c7acf44a1074db548baa4b, type: 3}
+    clip: {fileID: 8300000, guid: 36a66389385988b4699e95b984dbea3b, type: 3}
     volume: 1
   chargeComplete:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    clip: {fileID: 8300000, guid: 60088065d2414104d92f2b5a53af5399, type: 3}
     volume: 1
 --- !u!114 &8518116055070483582
 MonoBehaviour:

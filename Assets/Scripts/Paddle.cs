@@ -36,6 +36,7 @@ public class Paddle : MonoBehaviour
 	private float paddleHeight;
 
 	private bool chargeInput;
+	private bool chargeInputDown;
 
 	// TEMP - MAKE AN OPTION IN SETTINGS LATER
 	[SerializeField] bool useDedicatedCharge;
@@ -113,38 +114,39 @@ public class Paddle : MonoBehaviour
         // Charge input
         if (useDedicatedCharge) {
             chargeInput = Input.GetKey (chargeKey);
+			chargeInputDown = Input.GetKeyDown(chargeKey);
         } else {
             chargeInput = Input.GetKey (upKey) && Input.GetKey (downKey);
+			chargeInputDown = (Input.GetKeyDown(upKey) && Input.GetKey(downKey)) || (Input.GetKeyDown(downKey) && Input.GetKey(upKey));
         }
 
-        // Charging behavior
-        if (chargeInput) {
-            yMoveDir = 0;
+		// Charging behavior
+		if (chargeInputDown) {
+			chargeShotTimer = 0;
+			isCharged = false;
+			AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
+		}
+		if (chargeInput) {
+			yMoveDir = 0;
 
-			float chargeAmount = chargeShotTimer / chargeTime;
-            paddleVisuals.SetCharge (Mathf.Min(chargeAmount, 1));
+			if (!isCharged) {
+				float chargeAmount = chargeShotTimer / chargeTime;
+				paddleVisuals.SetCharge(Mathf.Min(chargeAmount, 1));
 
-			if (chargeShotTimer < Mathf.Epsilon) {
-				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
-			}
+				//full charge
+				if (chargeAmount >= 1) {
+					if (!curveBallShotDue) {
+						curveBallInputTimer = 0;
+					}
 
-			//full charge
-			if (chargeAmount >= 1) {
-				if (!curveBallShotDue) {
-					curveBallInputTimer = 0;
-				}
-
-				if (!isCharged) {
 					isCharged = true;
 					AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
 				}
+
+				chargeShotTimer += Time.deltaTime;
 			}
-			
-			//charge timer
-			chargeShotTimer += Time.deltaTime;
 		} else {
 			isCharged = false;
-            chargeShotTimer = 0;
 			paddleVisuals.SetCharge(0);
 		}
 
@@ -222,6 +224,7 @@ public class Paddle : MonoBehaviour
 
 				AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
 				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true);
+				paddleVisuals.SetCharge(0);
 
 				//allow a late curveball shot to be redeemed later
 				lastHitBall = collision.gameObject.GetComponent<Ball>();
