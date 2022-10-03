@@ -16,6 +16,7 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float initialCurve;
 	[SerializeField] private float curveFalloff;
 	private float angleBias;
+	private float curveDir;
 	private float curveSpeed;
 
 	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
@@ -28,22 +29,32 @@ public class Ball : MonoBehaviour {
 
     private void Start() {
 		moveSpeed = initialSpeed;
+		curveDir = 0;
 
 		// Hit ball at start
 		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
-	private void FixedUpdate() {
+	private void Update() {
 		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
-        Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle), moveSpeed * Mathf.Sin(angle));
+
+		curveSpeed = Mathf.Lerp(curveSpeed, 0, curveFalloff);
+		angleBias += curveDir * curveSpeed * Time.deltaTime;
+		
+		Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle + angleBias), moveSpeed * Mathf.Sin(angle + angleBias));
 
 		rb.velocity = velocity;
 	}
 
 
-	public void ballHit(int curveDir, float newAngle, float hitStrength = 0) {
+	public void ballHit(int _curveDir, float newAngle, float hitStrength = 0) {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
+
+		if (_curveDir != 0) {
+			curveDir = _curveDir;
+			angleBias = -_curveDir * initialCurve;
+		}
 	}
 
 	public void explodeBall(int team, Vector3 endPos) {
