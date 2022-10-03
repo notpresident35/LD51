@@ -17,10 +17,11 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
 	[SerializeField] private float curveBallInputBuffer;
+	[SerializeField] private PaddleVisuals paddleVisuals;
 	private Vector2 velocity;
 	private float yMoveDir;
 	private float chargeShotTimer;
-	private float dashInterpolation;
+	private float dashInterpolationTimer;
 	private float dashTimer;
 	private float curveBallInputTimer;
 
@@ -66,7 +67,7 @@ public class Paddle : MonoBehaviour
 		Config();
 
 		chargeShotTimer = 0;
-		dashInterpolation = 0;
+		dashInterpolationTimer = 0;
 		curveBallInputTimer = 0;
 
 		yMoveDir = 0;
@@ -80,51 +81,52 @@ public class Paddle : MonoBehaviour
 
 
 	private void Update () {
-		if (useDedicatedCharge) {
-			chargeInput = Input.GetKey(chargeKey);
-			chargeInputDown = Input.GetKeyDown(chargeKey);
-		} else {
-			chargeInput = Input.GetKey(upKey) && Input.GetKey(downKey);
+		// Move input
+		float yInputDir = 0;
+		if (Input.GetKey (upKey)) {
+			yInputDir++;
+        }
+        if (Input.GetKey (downKey)) {
+            yInputDir--;
+        }
 
-			chargeInputDown = (Input.GetKeyDown(upKey) && Input.GetKey(downKey)) || (Input.GetKeyDown(downKey) && Input.GetKey(upKey));
-		}
+		// Movement
+        yMoveDir = Mathf.Lerp(yMoveDir, yInputDir, inputSmoothFactor);
 
-		yMoveDir = Mathf.Lerp(yMoveDir, (Input.GetKey(upKey) ? 1 : 0) - (Input.GetKey(downKey) ? 1 : 0), inputSmoothFactor);
+        // DEBUG NONO ZONE LINE UNTIL WE GET ART
+        //Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
 
-		if (chargeInput) {
-			yMoveDir = 0;
+        // Charge input
+        if (useDedicatedCharge) {
+            chargeInput = Input.GetKey (chargeKey);
+        } else {
+            chargeInput = Input.GetKey (upKey) && Input.GetKey (downKey);
+        }
 
-			// DEBUG ANIM TO SHOW YOURE CHARGING
-			sprite.color = new Color(1, (1 - Mathf.Min(chargeShotTimer / chargeTime, 1)), 1);
-			if (mustFullyCharge && chargeShotTimer / chargeTime >= 1) {
-				sprite.color = new Color(0, .5f, .8f);
-			}
-		} else {
-			sprite.color = Color.white;
-		}
+        // Charging behavior
+        if (chargeInput) {
+            yMoveDir = 0;
+            paddleVisuals.SetCharge (1 - Mathf.Min (chargeShotTimer / chargeTime, 1));
+        } else {
+            chargeShotTimer = 0;
+        }
 
-			// DEBUG NONO ZONE LINE UNTIL WE GET ART
-			//Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
-
-		//start charging
-		if (chargeInputDown) {
-			chargeShotTimer = 0;
-		}
-
-		//dash
-		if (Input.GetKeyDown(dashKey) && dashTimer <= Mathf.Epsilon) {
+        // Dashing
+        bool dashInputDown = Input.GetKeyDown (dashKey);
+        if (dashInputDown && dashTimer <= Mathf.Epsilon) {
 			velocity.y = yMoveDir * dashSpeed;
-			dashInterpolation = 1;
+			dashInterpolationTimer = 1;
 			dashTimer = dashCooldown;
 		}
+		
+		// Merge movement and dash
+		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolationTimer);
 
-		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolation);
-
-		chargeShotTimer += Time.deltaTime;
-		curveBallInputTimer += Time.deltaTime;
-		dashTimer = Mathf.Max(0, dashTimer - Time.deltaTime);
-
-		dashInterpolation = Mathf.Max(0, dashInterpolation - (dashFalloff * Time.deltaTime));
+		// Timers
+		chargeShotTimer = Mathf.Clamp01 (chargeShotTimer + Time.deltaTime);
+		curveBallInputTimer = Mathf.Clamp01 (curveBallInputTimer + Time.deltaTime);
+		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
+		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
 
 	private void FixedUpdate() {
@@ -132,24 +134,26 @@ public class Paddle : MonoBehaviour
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
-		if (collision.gameObject.tag == "ball") {
-			float hitHeight = 0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight);
-
-			float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
-			if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
-			
-			float hitStrength = 0;
-			if (mustFullyCharge) {
-				if (chargeShotTimer > chargeTime && chargeInput) {
-					hitStrength = strongHitStrength;
-				}
-			} else if (chargeInput) {
-				hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
-			}
-			chargeShotTimer = 0;
-
-			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
+		if (collision.gameObject.tag != "ball") {
+			return;
 		}
+
+		float hitHeight = 0.5f + (transform.InverseTransformPoint(collision.GetContact(0).point).y / paddleHeight);
+
+		float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
+		if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
+			
+		float hitStrength = 0;
+		if (mustFullyCharge) {
+			if (chargeShotTimer > chargeTime && chargeInput) {
+				hitStrength = strongHitStrength;
+			}
+		} else if (chargeInput) {
+			hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
+		}
+		chargeShotTimer = 0;
+
+		collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
 	}
 
 	private void OnEnable () {

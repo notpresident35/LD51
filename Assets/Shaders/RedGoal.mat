@@ -32,5 +32,5 @@ Material:
     - _Direction: 1
     - _DirectionSpeed: 1
     m_Colors:
-    - _TeamColor: {r: 0.9811321, g: 0.2082592, b: 0.5488168, a: 1}
+    - _TeamColor: {r: 0.9528302, g: 0.3460751, b: 0.75159883, a: 1}
   m_BuildTextureStacks: []
