@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class JuiceManager : MonoBehaviour
 {
-    public static float ShakeJuice;
-    public float juiceFalloff = 4f;
+    public static float ShakeJuice = 0;
+    public static float TimeFreezeJuice = 0;
+    public float shakeJuiceFalloff = 3.4f;
+    public float timeFreezeJuiceFalloff = 4f;
 
     [Range(0,1)]
     public float goalJuice = 1f;
@@ -15,11 +17,16 @@ public class JuiceManager : MonoBehaviour
     public float ballExplodeJuice = 0.5f;
 
     public static void AddShake (float shake) {
-        ShakeJuice = Mathf.Clamp01(ShakeJuice + shake);
+        ShakeJuice = Mathf.Clamp01 (ShakeJuice + shake);
+    }
+
+    public static void AddTimeFreeze (float freeze) {
+        TimeFreezeJuice = Mathf.Clamp01 (TimeFreezeJuice + freeze);
     }
 
     private void Update () {
-        ShakeJuice = Mathf.Clamp01 (ShakeJuice -= Time.deltaTime * juiceFalloff);
+        ShakeJuice = Mathf.Clamp01 (ShakeJuice -= Time.deltaTime * shakeJuiceFalloff);
+        TimeFreezeJuice = Mathf.Clamp01 (ShakeJuice -= Time.deltaTime * timeFreezeJuiceFalloff);
     }
 
     private void OnEnable() {

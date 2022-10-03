@@ -23,7 +23,7 @@ public class Paddle : MonoBehaviour
 	private float yMoveDir;
 	private float chargeShotTimer;
 	private float dashInterpolationTimer;
-	private float dashTimer;
+	private float dashTimer; 
 	private float curveBallInputTimer;
 	private bool curveBallShotDue;
 
@@ -119,7 +119,7 @@ public class Paddle : MonoBehaviour
             yMoveDir = 0;
 
 			float chargeAmount = chargeShotTimer / chargeTime;
-            paddleVisuals.SetCharge (1 - Mathf.Min(chargeAmount, 1));
+            paddleVisuals.SetCharge (Mathf.Min(chargeAmount, 1));
 
 			if (chargeShotTimer == 0) {
 				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);

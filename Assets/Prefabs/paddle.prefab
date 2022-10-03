@@ -97,8 +97,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2ebddb948ec4c439de26f89e57d8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChargingLerpColor: {r: 0.322313, g: 0.14951938, b: 0.9056604, a: 1}
-  FullChargedColor: {r: 1, g: 0, b: 0.4404335, a: 1}
+  ChargingColorGradient:
+    serializedVersion: 2
+    key0: {r: 0.8862745, g: 0.22352941, b: 0.5686275, a: 1}
+    key1: {r: 0.98039216, g: 0.4117647, b: 1, a: 1}
+    key2: {r: 1, g: 0.7490196, b: 0.53333336, a: 0}
+    key3: {r: 1, g: 0.7500117, b: 0.5330188, a: 0}
+    key4: {r: 1, g: 0.47928727, b: 0.25, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 13300
+    ctime2: 58596
+    ctime3: 61873
+    ctime4: 65535
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+  FullChargedColor: {r: 1, g: 0.47843137, b: 0.2509804, a: 1}
 --- !u!1 &8518116055070483573
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,7 +183,7 @@ MonoBehaviour:
   strongHitStrength: 8
   nonoZoneSize: 0.12
   angleSpread: 60
-  chargeTime: 0.5
+  chargeTime: 0.65
   dashSpeed: 90
   dashCooldown: 0.17
   dashFalloff: 1

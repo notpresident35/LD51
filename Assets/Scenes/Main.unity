@@ -287,17 +287,9 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 2640655965539880824, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640655965539880824, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1280
-      objectReference: {fileID: 0}
-    - target: {fileID: 2640655965539880824, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 720
+    - target: {fileID: 2640655965242617288, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293358197
       objectReference: {fileID: 0}
     - target: {fileID: 2640655965539880826, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
       propertyPath: m_Name
@@ -391,6 +383,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 898105587595558482}
+    - target: {fileID: 2640655966178097136, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293358197
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5418f29509d4ad04f9b80f6fff08bb60, type: 3}
@@ -910,14 +906,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 898105588371325158, guid: db4aae3d4415cc540854ae47cd2b0226, type: 3}
-      propertyPath: ShakeAmplitude
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 898105588371325158, guid: db4aae3d4415cc540854ae47cd2b0226, type: 3}
-      propertyPath: ShakeFrequency
-      value: 11
-      objectReference: {fileID: 0}
     - target: {fileID: 898105588371325159, guid: db4aae3d4415cc540854ae47cd2b0226, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -982,22 +970,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: goalJuice
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: paddleJuice
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: juiceFalloff
-      value: 3.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: ballExplodeJuice
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3740742398880682730, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_RootOrder
       value: 0

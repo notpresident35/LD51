@@ -6,7 +6,7 @@ public class PaddleVisuals : MonoBehaviour
 {
     private Color BaseColor;
     [SerializeField]
-    private Color ChargingLerpColor;
+    private Gradient ChargingColorGradient;
     [SerializeField]
     private Color FullChargedColor;
 
@@ -22,8 +22,10 @@ public class PaddleVisuals : MonoBehaviour
     }
 
     private void Update () {
-        if (charge < 1f) {
-            sprite.color = Color.Lerp (BaseColor, ChargingLerpColor, charge);
+        if (charge < Mathf.Epsilon) {
+            sprite.color = BaseColor;
+        } else if (charge < 1f) {
+            sprite.color = ChargingColorGradient.Evaluate (charge);
         } else {
             sprite.color = FullChargedColor;
         }
