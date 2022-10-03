@@ -47,7 +47,7 @@ public class JuiceManager : MonoBehaviour
         AddShake(goalJuice);
     }
 
-    private void paddleShake(bool isHard) {
+    private void paddleShake(bool isHard, Vector3 pos) {
         if (isHard == false) {
             AddShake(paddleSoftJuice);
         } else {
