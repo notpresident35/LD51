@@ -11,11 +11,12 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float initialSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
-    [SerializeField] private float smoothFactor;
+    [SerializeField] private float speedSmoothFactor;
 	[SerializeField] private float curveBallInitialAngle;
-	[SerializeField] private float initialCurve;
+	[SerializeField] private float curveSpeedInitial;
 	[SerializeField] private float curveFalloff;
 	private float angleBias;
+	private float curveDir;
 	private float curveSpeed;
 
 	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
@@ -28,6 +29,10 @@ public class Ball : MonoBehaviour {
 
     private void Start() {
 		moveSpeed = initialSpeed;
+		curveDir = 0;
+
+		curveBallInitialAngle *= Mathf.Deg2Rad;
+		curveSpeedInitial *= Mathf.Deg2Rad;
 
 		// Hit ball at start
 		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
@@ -39,14 +44,33 @@ public class Ball : MonoBehaviour {
         }
         moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
         Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle), moveSpeed * Mathf.Sin(angle));
+	private void Update() {
+		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, speedSmoothFactor * Time.deltaTime);
+
+		if (curveDir != 0) {
+			curveSpeed = Mathf.Lerp(curveSpeed, 0, curveFalloff * Time.deltaTime);
+			angleBias += curveDir * curveSpeed * Time.deltaTime;
+		}
+		
+		Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle + angleBias), moveSpeed * Mathf.Sin(angle + angleBias));
 
 		rb.velocity = velocity;
 	}
 
 
-	public void ballHit(int curveDir, float newAngle, float hitStrength = 0) {
+	public void ballHit(int _curveDir, float newAngle, float hitStrength = 0) {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
+
+		if (_curveDir != 0) {
+			curveDir = _curveDir;
+			curveSpeed = curveSpeedInitial;
+			angleBias = -_curveDir * curveBallInitialAngle;
+		} else {
+			curveDir = 0;
+			curveSpeed = 0;
+			angleBias = 0;
+		}
 	}
 
 	public void explodeBall(int team, Vector3 endPos) {

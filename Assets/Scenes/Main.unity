@@ -716,6 +716,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4069176752746549633, guid: ae3988f4739c0d84599a0fc56a9d681f, type: 3}
   m_PrefabInstance: {fileID: 1557700671}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2080392796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5678396530033448226, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+  m_PrefabInstance: {fileID: 3740742398948343290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2080392799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080392796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d171feeb2a84347ba7524445ac76ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &898105587595558481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -830,30 +847,6 @@ PrefabInstance:
     - target: {fileID: 3740742398880682741, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_Name
       value: Singletons
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: juiceSpeed
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: juiceEffectSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: goalChromAbIntensity
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: juiceEffectPauseTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: goalLensDistortIntensity
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5142220867518741863, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
-      propertyPath: paddleLensDistortIntensity
-      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 7049715014904778391, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_Enabled

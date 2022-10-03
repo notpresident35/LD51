@@ -52,7 +52,10 @@ MonoBehaviour:
   initialSpeed: 5
   moveSpeed: 0
   speedMultiplier: 1
-  smoothFactor: 0.012
+  speedSmoothFactor: 0.012
+  curveBallInitialAngle: 40
+  curveSpeedInitial: 10
+  curveFalloff: 0.02
   initialRotation: 0
   useRandomInitialRotation: 0
 --- !u!50 &5152428661723124844

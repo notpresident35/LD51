@@ -25,15 +25,14 @@ public class Paddle : MonoBehaviour
 	private float dashTimer;
 	private float curveBallInputTimer;
 
+	private Ball ball;
+
 	private float paddleHeight;
 
 	private bool chargeInput;
-	private bool chargeInputDown;
 
 	// TEMP - MAKE AN OPTION IN SETTINGS LATER
 	[SerializeField] bool useDedicatedCharge;
-	// TEMP FOR TESTING
-	[SerializeField] bool mustFullyCharge;
 	// TEMP FOR UNTIL WE HAVE ANIMATIONS
 	private SpriteRenderer sprite;
 
@@ -57,6 +56,8 @@ public class Paddle : MonoBehaviour
 		rb = GetComponent<Rigidbody2D> ();
 		boxCollider = GetComponent<BoxCollider2D>();
 		inputHandler = GetComponent<InputHandler> ();
+
+		ball = null;
 
 		// TEMP FOR UNTIL WE HAVE ANIMATIONS
 		sprite = GetComponentInChildren<SpriteRenderer>();
@@ -106,10 +107,26 @@ public class Paddle : MonoBehaviour
         // Charging behavior
         if (chargeInput) {
             yMoveDir = 0;
-            paddleVisuals.SetCharge (1 - Mathf.Min (chargeShotTimer / chargeTime, 1));
+
+			float chargeAmount = chargeShotTimer / chargeTime;
+            paddleVisuals.SetCharge (1 - Mathf.Min(chargeAmount, 1));
+
+			//allow curveballs to be input early
+			if (chargeAmount >= 1) {
+				curveBallInputTimer = -curveBallInputBuffer;
+			}
         } else {
             chargeShotTimer = 0;
         }
+
+		// Execute a curveball that's due, OR buffer one to be redeemed later
+		if (yInputDir != 0 && !chargeInput) {
+			if (curveBallInputTimer < 0) {
+				curveBallInputTimer = 0;
+			} else if (curveBallInputTimer < curveBallInputBuffer) {
+				// do a late curveball with,, hopefully saved last hit ball??
+			}
+		}
 
         // Dashing
         bool dashInputDown = Input.GetKeyDown (dashKey);
@@ -123,8 +140,8 @@ public class Paddle : MonoBehaviour
 		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolationTimer);
 
 		// Timers
-		chargeShotTimer = Mathf.Clamp01 (chargeShotTimer + Time.deltaTime);
-		curveBallInputTimer = Mathf.Clamp01 (curveBallInputTimer + Time.deltaTime);
+		chargeShotTimer += Time.deltaTime;
+		curveBallInputTimer += Time.deltaTime;
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
 	}
@@ -146,18 +163,14 @@ public class Paddle : MonoBehaviour
 
 		float hitAngle = Mathf.Deg2Rad * angleSpread * (hitHeight - nonoZoneSize);
 		if (!facingRight) { hitAngle = -(hitAngle + Mathf.PI); }
-			
-		float hitStrength = 0;
-		if (mustFullyCharge) {
-			if (chargeShotTimer > chargeTime && chargeInput) {
-				hitStrength = strongHitStrength;
-			}
-		} else if (chargeInput) {
-			hitStrength = Mathf.Min(chargeShotTimer / chargeTime, 1) * strongHitStrength;
+
+		//if ()
+		if (chargeShotTimer > chargeTime && chargeInput) {
+			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
+		} else {
+			collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
 		}
 		chargeShotTimer = 0;
-
-		collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, hitStrength);
 	}
 
 	private void OnEnable () {
