@@ -196,13 +196,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 811360a3724bcd440b5c2e831a5d18ae, type: 3}
     volume: 2
   paddleHitHard:
-    clip: {fileID: 8300000, guid: ac81be70feee3604db6aa1e613e37602, type: 3}
+    clip: {fileID: 8300000, guid: 2a56bc48e50a0ad42a3f4bbe0d08f152, type: 3}
     volume: 5
   paddleHitCurveball:
     clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
     volume: 1.5
   dash:
-    clip: {fileID: 8300000, guid: 18df82994270f8f499105dc50e9e1300, type: 3}
+    clip: {fileID: 8300000, guid: b8cdb4b861000854caa5b45b990e5b4c, type: 3}
     volume: 5
   chargeUp:
     clip: {fileID: 8300000, guid: 36a66389385988b4699e95b984dbea3b, type: 3}
