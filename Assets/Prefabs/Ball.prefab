@@ -58,7 +58,7 @@ MonoBehaviour:
   curveSpeedInitial: 60
   curveFalloff: 0.6
   explode:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    clip: {fileID: 8300000, guid: 08be6d57db3989f44bcb762713da4475, type: 3}
     volume: 1
 --- !u!50 &5152428661723124844
 Rigidbody2D:
