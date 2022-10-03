@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
             // This team wins!
             StopGame (teamID);
         } else {
-            GameState.IsBallActive = true;
             StartCoroutine (RestartRound ());
         }
     }
@@ -42,6 +41,7 @@ public class GameManager : MonoBehaviour
     IEnumerator RestartRound () {
         SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
         yield return new WaitForSeconds (RestartTime);
+        SingletonManager.EventSystemInstance.OnRoundBegin.Invoke ();
         GameState.IsBallActive = true;
     }
 

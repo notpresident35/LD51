@@ -34,7 +34,10 @@ public class Ball : MonoBehaviour {
     }
 
 	private void FixedUpdate() {
-		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
+        if (!GameState.IsBallActive) {
+            return;
+        }
+        moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, smoothFactor);
         Vector2 velocity = new Vector2(moveSpeed * Mathf.Cos(angle), moveSpeed * Mathf.Sin(angle));
 
 		rb.velocity = velocity;
@@ -64,8 +67,6 @@ public class Ball : MonoBehaviour {
     }
 
     private void OnDisable() {
-		if (SingletonManager.Instance) {
-            SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
-        }
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
     }
 }

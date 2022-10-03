@@ -130,7 +130,11 @@ public class Paddle : MonoBehaviour
 	}
 
 	private void FixedUpdate() {
-		rb.velocity = velocity;
+        if (!GameState.IsBallActive) {
+			rb.velocity = Vector2.zero;
+            return;
+        }
+        rb.velocity = velocity;
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision) {
