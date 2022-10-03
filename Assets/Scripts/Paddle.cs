@@ -36,7 +36,6 @@ public class Paddle : MonoBehaviour
 	private float paddleHeight;
 
 	private bool chargeInput;
-	private bool chargeInputDown;
 
 	// TEMP - MAKE AN OPTION IN SETTINGS LATER
 	[SerializeField] bool useDedicatedCharge;
@@ -114,39 +113,38 @@ public class Paddle : MonoBehaviour
         // Charge input
         if (useDedicatedCharge) {
             chargeInput = Input.GetKey (chargeKey);
-			chargeInputDown = Input.GetKeyDown(chargeKey);
         } else {
             chargeInput = Input.GetKey (upKey) && Input.GetKey (downKey);
-			chargeInputDown = (Input.GetKeyDown(upKey) && Input.GetKey(downKey)) || (Input.GetKeyDown(downKey) && Input.GetKey(upKey));
         }
 
-		// Charging behavior
-		if (chargeInputDown) {
-			chargeShotTimer = 0;
-			isCharged = false;
-			AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
-		}
-		if (chargeInput) {
-			yMoveDir = 0;
+        // Charging behavior
+        if (chargeInput) {
+            yMoveDir = 0;
 
-			if (!isCharged) {
-				float chargeAmount = chargeShotTimer / chargeTime;
-				paddleVisuals.SetCharge(Mathf.Min(chargeAmount, 1));
+			float chargeAmount = chargeShotTimer / chargeTime;
+            paddleVisuals.SetCharge (Mathf.Min(chargeAmount, 1));
 
-				//full charge
-				if (chargeAmount >= 1) {
-					if (!curveBallShotDue) {
-						curveBallInputTimer = 0;
-					}
+			if (chargeShotTimer < Mathf.Epsilon) {
+				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
+			}
 
+			//full charge
+			if (chargeAmount >= 1) {
+				if (!curveBallShotDue) {
+					curveBallInputTimer = 0;
+				}
+
+				if (!isCharged) {
 					isCharged = true;
 					AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
 				}
-
-				chargeShotTimer += Time.deltaTime;
 			}
+			
+			//charge timer
+			chargeShotTimer += Time.deltaTime;
 		} else {
 			isCharged = false;
+            chargeShotTimer = 0;
 			paddleVisuals.SetCharge(0);
 		}
 
@@ -223,8 +221,7 @@ public class Paddle : MonoBehaviour
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle, strongHitStrength);
 
 				AudioManager.PlaySound(paddleHitHard.clip, paddleHitHard.volume);
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true);
-				paddleVisuals.SetCharge(0);
+				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(true, collision.transform.position);
 
 				//allow a late curveball shot to be redeemed later
 				lastHitBall = collision.gameObject.GetComponent<Ball>();
@@ -234,7 +231,7 @@ public class Paddle : MonoBehaviour
 			} else {
 				collision.gameObject.GetComponent<Ball>().ballHit(0, hitAngle);
 
-				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false);
+				SingletonManager.EventSystemInstance.OnPaddleHit.Invoke(false, collision.transform.position);
 				AudioManager.PlaySound(paddleHit.clip, paddleHit.volume);
 			}
 		}
