@@ -277,6 +277,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64951bdcada042f408503121bced2222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicClips:
+  - {fileID: 8300000, guid: ddec88a625225564db27d02987c3386a, type: 3}
+  - {fileID: 8300000, guid: e8b5c065cee53c54f827c7b46e804160, type: 3}
+  - {fileID: 8300000, guid: a74def62ca81be84e8aeda489192fcc6, type: 3}
+  - {fileID: 8300000, guid: 4e9251ec61a9ec742bc0f011def6109d, type: 3}
+  - {fileID: 8300000, guid: 5ae82dc86f5ebbf41a7c39ed7c065538, type: 3}
+  - {fileID: 8300000, guid: fa7a3010e3550bc4a96487f1ef7fadea, type: 3}
+  fadeTime: 2
 --- !u!1 &5678396530033448226
 GameObject:
   m_ObjectHideFlags: 0
