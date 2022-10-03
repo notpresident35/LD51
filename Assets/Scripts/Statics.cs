@@ -94,6 +94,8 @@ public class Statics
     public static BoolPlayerPrefData DedicatedChargeP1PPD = new BoolPlayerPrefData ("Dedicated Charge P1", false);
     public static BoolPlayerPrefData DedicatedChargeP2PPD = new BoolPlayerPrefData ("Dedicated Charge P2", false);
 
+    public static FloatPlayerPrefData AIDifficultyPPD = new FloatPlayerPrefData ("AI Difficulty", 0.5f);
+
     // Relative file path to Resources directory for audio files
     //public static string AudioFilePathPrefix = "SFX/";
     public static string VFXFilePathPrefix = "VFX/";
