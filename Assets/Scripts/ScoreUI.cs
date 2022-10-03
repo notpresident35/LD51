@@ -14,8 +14,12 @@ public class ScoreUI : MonoBehaviour
     }
 
     void Refresh (int teamID, Vector3 pos) {
+        Refresh ();
+    }
+
+    void Refresh() {
         for (int i = 0; i < ScoreTexts.Count; i++) {
-            ScoreTexts [i].text = SingletonManager.TeamManagerInstance.Teams [i].Score.ToString ();
+            ScoreTexts[i].text = SingletonManager.TeamManagerInstance.Teams[i].Score.ToString();
         }
     }
 
@@ -33,12 +37,14 @@ public class ScoreUI : MonoBehaviour
 
     private void OnEnable () {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(Refresh);
+        SingletonManager.EventSystemInstance.OnRoundRestart.AddListener(Refresh);
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(EnableUI);
         SingletonManager.EventSystemInstance.OnRoundBegin.AddListener(DisableUI);
     }
 
     private void OnDisable () {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (Refresh);
+        SingletonManager.EventSystemInstance.OnRoundRestart.RemoveListener (Refresh);
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (EnableUI);
         SingletonManager.EventSystemInstance.OnRoundBegin.RemoveListener (DisableUI);
     }
