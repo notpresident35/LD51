@@ -12,6 +12,11 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
     [SerializeField] private float smoothFactor;
+	[SerializeField] private float curveBallInitialAngle;
+	[SerializeField] private float initialCurve;
+	[SerializeField] private float curveFalloff;
+	private float angleBias;
+	private float curveSpeed;
 
 	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
 	[SerializeField] private float initialRotation;
@@ -25,7 +30,7 @@ public class Ball : MonoBehaviour {
 		moveSpeed = initialSpeed;
 
 		// Hit ball at start
-		ballHit(false, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
+		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
 	private void FixedUpdate() {
@@ -36,7 +41,7 @@ public class Ball : MonoBehaviour {
 	}
 
 
-	public void ballHit(bool isCurveBall, float newAngle, float hitStrength = 0) {
+	public void ballHit(int curveDir, float newAngle, float hitStrength = 0) {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
 	}
