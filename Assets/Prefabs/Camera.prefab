@@ -48,10 +48,10 @@ MonoBehaviour:
   WidthCompression: 0.28
   MinZoomSize: 16
   InitialZoomSize: 22
-  EdgePadding: {x: 0, y: 12}
-  ShakeAmplitude: 0
-  ShakeFrequency: 0
-  smoothFactor: 0.006
+  EdgePadding: {x: 0, y: 9}
+  ShakeAmplitude: 4
+  ShakeFrequency: 6
+  smoothFactor: 15
   horizontalWiggleFactor: 20
   perlinNoisePosition: 0
 --- !u!1 &898105588928281055
