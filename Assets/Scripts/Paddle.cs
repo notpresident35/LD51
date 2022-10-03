@@ -26,7 +26,7 @@ public class Paddle : MonoBehaviour
 	private float chargeShotTimer;
 	private bool isCharged;
 	private float dashInterpolationTimer;
-	private float dashTimer;
+	private float dashTimer; 
 	private float curveBallInputTimer;
 	private bool curveBallShotDue;
 
@@ -108,7 +108,7 @@ public class Paddle : MonoBehaviour
         yMoveDir = Mathf.Lerp(yMoveDir, yInputDir, inputSmoothFactor);
 
         // DEBUG NONO ZONE LINE UNTIL WE GET ART
-        //Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+        Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
 
         // Charge input
         if (useDedicatedCharge) {

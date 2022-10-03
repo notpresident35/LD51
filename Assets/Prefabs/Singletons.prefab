@@ -282,6 +282,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92b0b9fca4804824bae58b77a313522c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  juiceFalloff: 3.2
+  goalJuice: 1
+  paddleSoftJuice: 0.2
+  paddleHardJuice: 0.55
+  ballExplodeJuice: 0.5
 --- !u!1 &4793256052516078890
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6281680994195878693}
+  - component: {fileID: 2974743729361487910}
   m_Layer: 0
   m_Name: TimeController
   m_TagString: Untagged
@@ -410,6 +416,18 @@ Transform:
   m_Father: {fileID: 3740742398880682730}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2974743729361487910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678396530033448226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d171feeb2a84347ba7524445ac76ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7165048705170082877
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,12 +490,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd410ae91eae24f862acb9347107ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalBloomIntensity: 35
-  goalChromAbIntensity: 1
-  goalLensDistortIntensity: -30
-  paddleBloomIntensity: 20
-  paddleChromAbIntensity: 0.5
-  paddleLensDistortIntensity: -25
+  goalBloomIntensity: 24
+  goalChromAbIntensity: 0.65
+  goalLensDistortIntensity: -18
+  paddleSoftBloomIntensity: 19
+  paddleSoftChromAbIntensity: 0.32
+  paddleSoftLensDistortIntensity: -13
+  paddleHardBloomIntensity: 21
+  paddleHardChromAbIntensity: 0.45
+  paddleHardLensDistortIntensity: -15
   juiceEffectCurve:
     serializedVersion: 2
     m_Curve:
@@ -491,23 +512,23 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.08888609
     - serializedVersion: 3
-      time: 0.21855603
-      value: 0.6678011
-      inSlope: 0.648278
-      outSlope: 0.648278
+      time: 0.13521808
+      value: 0.99416006
+      inSlope: 0.04141437
+      outSlope: 0.04141437
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.110363
-      outWeight: 0.1436581
+      outWeight: 0.4991274
     - serializedVersion: 3
-      time: 0.7490509
-      value: 0.9779003
-      inSlope: 0.27804706
-      outSlope: 0.27804706
+      time: 0.36704502
+      value: 0.3256805
+      inSlope: -1.5261911
+      outSlope: -1.5261911
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10636003
-      outWeight: 0.15763636
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1.0000048
       value: 0.001515761
@@ -520,7 +541,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  juiceEffectSpeed: 1.2
+  juiceEffectSpeed: 3.5
 --- !u!1 &7349464879547558686
 GameObject:
   m_ObjectHideFlags: 0
