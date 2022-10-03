@@ -1778,8 +1778,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound:
-    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
-    volume: 0.8
+    clip: {fileID: 8300000, guid: 2bcac6ebd49458b419e9266b74114b0c, type: 3}
+    volume: 1
   credits: {fileID: 487780182}
   main: {fileID: 982684680}
 --- !u!1 &1237500665
