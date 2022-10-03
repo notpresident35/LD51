@@ -20,11 +20,13 @@ public class TitleScreenButtonManager : MonoBehaviour
 
     public void SettingsPressed()
     {
+        AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
         Debug.Log("Settings button pressed in menu.");
     }
 
     public void CreditsPressed()
     {
+        AudioManager.PlaySound(buttonSound.clip, buttonSound.volume);
         Debug.Log("Credits button pressed in menu.");
     }
 }
