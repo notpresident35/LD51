@@ -15,6 +15,16 @@ public class Settings : MonoBehaviour
         Load ();
     }
 
+    public void Update () {
+        if (Input.GetKeyDown (KeyCode.Escape)) {
+            if (!GameState.Paused) {
+                Save ();
+                gameObject.SetActive (false);
+            }
+        }
+    }
+
+
     public void Load () {
         MasterVolumeSlider.value = PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD);
         SFXVolumeSlider.value = PlayerPrefHandler.GetFloat (Statics.AudioSFXVolumePPD);
