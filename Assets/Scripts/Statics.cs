@@ -41,6 +41,12 @@ public class PlayerPrefHandler {
         }
     }
 
+    [Serializable]
+    public class BoolPlayerPrefData : PlayerPrefData<bool> {
+        public BoolPlayerPrefData (string name, bool defaultVal) : base (name, defaultVal) {
+        }
+    }
+
     // Getters
     public static string GetString (StringPlayerPrefData PPD) {
         return PlayerPrefs.GetString (PPD.Name, PPD.DefaultValue);
@@ -55,6 +61,10 @@ public class PlayerPrefHandler {
         string val = PlayerPrefs.GetString (PPD.Name, PPD.DefaultValue.ToString());
         return (KeyCode) Enum.Parse (typeof (KeyCode), val);
     }
+    public static bool GetBool (BoolPlayerPrefData PPD) {
+        int val = PlayerPrefs.GetInt (PPD.Name, PPD.DefaultValue ? 1 : 0);
+        return val != 0;
+    }
 
     // Setters
     public static void SetString (StringPlayerPrefData PPD, string val) {
@@ -66,8 +76,11 @@ public class PlayerPrefHandler {
     public static void SetFloat (FloatPlayerPrefData PPD, float val) {
         PlayerPrefs.SetFloat (PPD.Name, val);
     }
-    public static void GetKeycode (KeycodePlayerPrefData PPD, KeyCode val) {
+    public static void SetKeycode (KeycodePlayerPrefData PPD, KeyCode val) {
         PlayerPrefs.SetString (PPD.Name, val.ToString ());
+    }
+    public static void SetBool (BoolPlayerPrefData PPD, bool val) {
+        PlayerPrefs.SetInt (PPD.Name, val ? 1 : 0);
     }
 }
 
@@ -77,6 +90,9 @@ public class Statics
     public static FloatPlayerPrefData AudioMasterVolumePPD = new FloatPlayerPrefData ("Master Volume", 1.0f);
     public static FloatPlayerPrefData AudioSFXVolumePPD = new FloatPlayerPrefData ("SFX Volume", 1.0f);
     public static FloatPlayerPrefData AudioMusicVolumePPD = new FloatPlayerPrefData ("Music Volume", 0.2f);
+
+    public static BoolPlayerPrefData DedicatedChargeP1PPD = new BoolPlayerPrefData ("Dedicated Charge P1", false);
+    public static BoolPlayerPrefData DedicatedChargeP2PPD = new BoolPlayerPrefData ("Dedicated Charge P2", false);
 
     // Relative file path to Resources directory for audio files
     //public static string AudioFilePathPrefix = "SFX/";
