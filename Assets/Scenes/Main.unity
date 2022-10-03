@@ -1334,6 +1334,22 @@ PrefabInstance:
       propertyPath: paddleJuice
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: goalFreezeTime
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleSoftTimeJuice
+      value: 0.304
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleHardFreezeTime
+      value: 0.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 652732143739257927, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
+      propertyPath: paddleSoftFreezeTime
+      value: 0.04
+      objectReference: {fileID: 0}
     - target: {fileID: 3740742398880682730, guid: c03a64ee60649144ebe3965a18b0a1e5, type: 3}
       propertyPath: m_RootOrder
       value: 0
