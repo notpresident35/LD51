@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour {
 	[SerializeField] private float initialSpeed;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float speedMultiplier = 1;
+	[SerializeField] private float speedAccPerHit;
     [SerializeField] private float speedSmoothFactor;
 	[SerializeField] private float curveBallInitialAngle;
 	[SerializeField] private float curveSpeedInitial;
@@ -58,6 +59,8 @@ public class Ball : MonoBehaviour {
 	public void ballHit(int _curveDir, float newAngle, float hitStrength = 0) {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
+
+		speedMultiplier += speedAccPerHit;
 
 		if (_curveDir != 0) {
 			curveDir = _curveDir;
