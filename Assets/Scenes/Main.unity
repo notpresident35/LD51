@@ -501,6 +501,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
+      propertyPath: angleSpread
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8518116055070483569, guid: ffe87a4c6d063264782e2560b6a175dd, type: 3}
       propertyPath: facingRight
       value: 1
       objectReference: {fileID: 0}

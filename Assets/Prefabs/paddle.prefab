@@ -186,6 +186,7 @@ MonoBehaviour:
   nonoZoneSize: 0.12
   angleSpread: 60
   chargeTime: 0.35
+  chargeShotInputBuffer: 0
   dashSpeed: 110
   dashCooldown: 0.14
   dashFalloff: 0.85
