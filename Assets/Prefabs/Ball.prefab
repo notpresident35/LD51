@@ -57,6 +57,9 @@ MonoBehaviour:
   curveBallInitialAngle: 30
   curveSpeedInitial: 50
   curveFalloff: 0.8
+  explode:
+    clip: {fileID: 8300000, guid: 98717ea64407c85458940bdf147ecf90, type: 3}
+    volume: 1
   initialRotation: 0
   useRandomInitialRotation: 0
 --- !u!50 &5152428661723124844
