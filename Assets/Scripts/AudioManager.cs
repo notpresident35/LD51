@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
     private static GameObject twoMusicSourceObject;
     private static AudioSource oneMusicSource;
     private static AudioSource twoMusicSource;
+    private static GameObject sfxObject;
+    private static AudioSource sfxSource;
 
     public List<AudioClip> musicClips;
     private int currentMusicIndex = 0;
@@ -20,7 +22,14 @@ public class AudioManager : MonoBehaviour
     public static void PlaySound(AudioClip clip, float volume = 1)
     {
         //AudioClip clip = (AudioClip)Resources.Load(Statics.AudioFilePathPrefix + fileName);
-        AudioSource.PlayClipAtPoint(clip, new Vector3(0, 0, 0), volume * PlayerPrefHandler.GetFloat (Statics.AudioSFXVolumePPD) * PlayerPrefHandler.GetFloat (Statics.AudioMasterVolumePPD));
+        if (!sfxObject || !sfxSource) {
+            sfxObject = new GameObject("SFX Object");
+            sfxSource = sfxObject.AddComponent<AudioSource>();
+            sfxSource.rolloffMode = AudioRolloffMode.Linear;
+        }
+        sfxSource.clip = clip;
+        sfxSource.volume = volume;
+        sfxSource.Play();
     }
 
     private void Start() {
