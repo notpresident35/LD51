@@ -27,9 +27,11 @@ public class BallSpawner : MonoBehaviour
 
     private void OnEnable () {
         SingletonManager.EventSystemInstance.OnRoundRestart.AddListener (SpawnBalls);
+        SingletonManager.EventSystemInstance.OnGameRestart.AddListener (SpawnBalls);
     }
 
     private void OnDisable () {
-        SingletonManager.EventSystemInstance.OnRoundRestart.AddListener (SpawnBalls);
+        SingletonManager.EventSystemInstance.OnRoundRestart.RemoveListener (SpawnBalls);
+        SingletonManager.EventSystemInstance.OnGameRestart.RemoveListener (SpawnBalls);
     }
 }

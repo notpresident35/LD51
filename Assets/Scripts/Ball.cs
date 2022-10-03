@@ -38,7 +38,10 @@ public class Ball : MonoBehaviour {
 		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
-	private void Update() {
+	private void FixedUpdate() {
+        if (!GameState.IsBallActive) {
+            return;
+        }
 		moveSpeed = Mathf.Lerp(moveSpeed, initialSpeed * speedMultiplier, speedSmoothFactor * Time.deltaTime);
 
 		if (curveDir != 0) {
@@ -85,8 +88,6 @@ public class Ball : MonoBehaviour {
     }
 
     private void OnDisable() {
-		if (SingletonManager.Instance) {
-            SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
-        }
+        SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener (explodeBall);
     }
 }
