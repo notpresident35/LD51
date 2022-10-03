@@ -9,20 +9,26 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private bool facingRight;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float inputSmoothFactor;
-	[SerializeField] private float strongHitStrength = 6;
+	[SerializeField] private float strongHitStrength;
 	[SerializeField][Range(0, 1)] private float nonoZoneSize;
 	[SerializeField][Range(0, 80)] private float angleSpread;
 	[SerializeField] private float chargeTime;
 	[SerializeField] private float dashSpeed;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
+	[SerializeField] private float curveBallInitialAngle;
+	[SerializeField] private float initialCurve;
+	[SerializeField] private float curveFalloff;
 	private Vector2 velocity;
 	private float yMoveDir;
-	private float paddleHeight;
 	private float chargeShotTimer;
 	private float dashInterpolation;
 	private float dashTimer;
-	private float curveBallTimer;
+	private float curveBallInputTimer;
+	private float angleBias;
+	private float curveSpeed;
+
+	private float paddleHeight;
 
 	private bool chargeInput;
 	private bool chargeInputDown;
@@ -65,7 +71,7 @@ public class Paddle : MonoBehaviour
 
 		chargeShotTimer = 0;
 		dashInterpolation = 0;
-		curveBallTimer = 0;
+		curveBallInputTimer = 0;
 
 		yMoveDir = 0;
 
@@ -119,7 +125,7 @@ public class Paddle : MonoBehaviour
 		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolation);
 
 		chargeShotTimer += Time.deltaTime;
-		curveBallTimer += Time.deltaTime;
+		curveBallInputTimer += Time.deltaTime;
 		dashTimer = Mathf.Max(0, dashTimer - Time.deltaTime);
 
 		dashInterpolation = Mathf.Max(0, dashInterpolation - (dashFalloff * Time.deltaTime));
