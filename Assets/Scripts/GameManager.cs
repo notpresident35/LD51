@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static TeamManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,11 +20,15 @@ public class GameManager : MonoBehaviour
     // This is quite precarious, but it gets the job done
     void HandleGoalScored (int teamID, Vector3 pos) {
         GameState.IsBallActive = false;
+        StartCoroutine (CompleteRound (teamID));
+    }
+
+    void HandleRoundEnd (int teamID) {
         if (SingletonManager.TeamManagerInstance.Teams [teamID].Score >= Statics.WinningScore) {
             // This team wins!
             StopGame (teamID);
         } else {
-            StartCoroutine (RestartRound ());
+            StartCoroutine (StartRound ());
         }
     }
 
@@ -46,22 +51,22 @@ public class GameManager : MonoBehaviour
         GameState.IsBallActive = true;
     }
 
-    IEnumerator RestartRound () {
+    IEnumerator CompleteRound (int teamID) {
         yield return new WaitForSeconds (RestartWaitTime);
-        SingletonManager.EventSystemInstance.OnRoundRestart.Invoke ();
-        yield return new WaitForSeconds (BeginWaitTime);
-        SingletonManager.EventSystemInstance.OnRoundBegin.Invoke ();
-        GameState.IsBallActive = true;
+        HandleRoundEnd (teamID);
     }
 
     void StopGame (int winTeam) {
         GameState.IsGameComplete = true;
+        GameState.WinTeam = winTeam + 1;
     }
 
     public void RestartGame () {
         GameState.IsGameComplete = false;
-        SingletonManager.EventSystemInstance.OnGameRestart.Invoke ();
-        StartCoroutine (RestartRound ());
+        foreach (Team team in SingletonManager.TeamManagerInstance.Teams) {
+            team.Score = 0;
+        }
+        StartCoroutine (StartRound ());
     }
 
     public void SetGameMode (GameMode newMode) {
