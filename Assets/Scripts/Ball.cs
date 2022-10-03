@@ -23,23 +23,15 @@ public class Ball : MonoBehaviour {
 	//sfx
 	[SerializeField] SoundEffect explode;
 
-	// TEMP FOR TESTING - REPLACE WITH REGULAR STARTING STATE LATER
-	[SerializeField] private float initialRotation;
-	[SerializeField] private bool useRandomInitialRotation;
-
 	private void Awake () {
         rb = GetComponent<Rigidbody2D> ();
     }
 
     private void Start() {
-		moveSpeed = initialSpeed;
 		curveDir = 0;
 
 		curveBallInitialAngle *= Mathf.Deg2Rad;
 		curveSpeedInitial *= Mathf.Deg2Rad;
-
-		// Hit ball at start
-		ballHit(0, useRandomInitialRotation ? Random.Range (0, 2 * Mathf.PI) : initialRotation, moveSpeed);
     }
 
 	private void FixedUpdate() {
@@ -63,7 +55,7 @@ public class Ball : MonoBehaviour {
 		moveSpeed = (initialSpeed * speedMultiplier) + hitStrength;
 		angle = newAngle;
 
-		speedMultiplier += speedAccPerHit;
+		speedMultiplier *= speedAccPerHit;
 
 		if (_curveDir != 0) {
 			curveDir = _curveDir;

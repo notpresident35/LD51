@@ -180,15 +180,15 @@ MonoBehaviour:
   facingRight: 0
   minYPos: -61
   maxYPos: 61
-  moveSpeed: 15
+  moveSpeed: 18
   inputSmoothFactor: 0.25
-  strongHitStrength: 8
+  strongHitStrength: 17
   nonoZoneSize: 0.12
   angleSpread: 60
-  chargeTime: 0.45
-  dashSpeed: 90
-  dashCooldown: 0.17
-  dashFalloff: 1
+  chargeTime: 0.35
+  dashSpeed: 110
+  dashCooldown: 0.14
+  dashFalloff: 0.85
   curveBallInputBuffer: 0.2
   paddleVisuals: {fileID: 3460503981111327842}
   useDedicatedCharge: 1

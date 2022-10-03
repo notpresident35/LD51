@@ -8,6 +8,8 @@ public class Settings : MonoBehaviour
     public Slider MasterVolumeSlider;
     public Slider SFXVolumeSlider;
     public Slider MusicVolumeSlider;
+    public Toggle DedicatedChargeToggleP1;
+    public Toggle DedicatedChargeToggleP2;
 
     public void Start () {
         Load ();
@@ -18,7 +20,8 @@ public class Settings : MonoBehaviour
         SFXVolumeSlider.value = PlayerPrefHandler.GetFloat (Statics.AudioSFXVolumePPD);
         MusicVolumeSlider.value = PlayerPrefHandler.GetFloat (Statics.AudioMusicVolumePPD);
 
-        // TODO: Player inputs!
+        DedicatedChargeToggleP1.isOn = PlayerPrefHandler.GetBool (Statics.DedicatedChargeP1PPD);
+        DedicatedChargeToggleP2.isOn = PlayerPrefHandler.GetBool (Statics.DedicatedChargeP2PPD);
     }
 
     public void Save () {
@@ -26,6 +29,9 @@ public class Settings : MonoBehaviour
         PlayerPrefHandler.SetFloat (Statics.AudioSFXVolumePPD, SFXVolumeSlider.value);
         PlayerPrefHandler.SetFloat (Statics.AudioMusicVolumePPD, MusicVolumeSlider.value);
 
-        // TODO: Player inputs!
+        PlayerPrefHandler.SetBool (Statics.DedicatedChargeP1PPD, DedicatedChargeToggleP1.isOn);
+        PlayerPrefHandler.SetBool (Statics.DedicatedChargeP2PPD, DedicatedChargeToggleP2.isOn);
+
+        SingletonManager.EventSystemInstance.OnSettingsSaved.Invoke ();
     }
 }
