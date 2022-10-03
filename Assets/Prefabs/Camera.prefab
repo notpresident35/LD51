@@ -134,8 +134,8 @@ MonoBehaviour:
   MinZoomSize: 16
   InitialZoomSize: 24
   EdgePadding: {x: 0, y: 9}
-  ShakeAmplitude: 4
-  ShakeFrequency: 6
+  ShakeAmplitude: 90
+  ShakeFrequency: 11
   smoothFactor: 15
   horizontalWiggleFactor: 20
   perlinNoisePosition: 0
