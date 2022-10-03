@@ -16,4 +16,6 @@ public static class GameState
     public static bool Paused = false;
 
     public static GameMode CurrentMode = null;
+
+    public static int WinTeam = 0;
 }
