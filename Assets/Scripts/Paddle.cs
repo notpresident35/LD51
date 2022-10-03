@@ -7,6 +7,8 @@ public class Paddle : MonoBehaviour
 {
 	[SerializeField] private int teamID;
 	[SerializeField] private bool facingRight;
+	[SerializeField] private float minYPos;
+	[SerializeField] private float maxYPos;
 	[SerializeField] private float moveSpeed;
 	[SerializeField] private float inputSmoothFactor;
 	[SerializeField] private float strongHitStrength;
@@ -22,6 +24,7 @@ public class Paddle : MonoBehaviour
 	private int yInputDir;
 	private float yMoveDir;
 	private float chargeShotTimer;
+	private bool isCharged;
 	private float dashInterpolationTimer;
 	private float dashTimer;
 	private float curveBallInputTimer;
@@ -119,9 +122,9 @@ public class Paddle : MonoBehaviour
             yMoveDir = 0;
 
 			float chargeAmount = chargeShotTimer / chargeTime;
-            paddleVisuals.SetCharge (1 - Mathf.Min(chargeAmount, 1));
+            paddleVisuals.SetCharge (Mathf.Min(chargeAmount, 1));
 
-			if (chargeShotTimer == 0) {
+			if (chargeShotTimer < Mathf.Epsilon) {
 				AudioManager.PlaySound(chargeUp.clip, chargeUp.volume);
 			}
 
@@ -130,10 +133,17 @@ public class Paddle : MonoBehaviour
 				if (!curveBallShotDue) {
 					curveBallInputTimer = 0;
 				}
-				
-				AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
+
+				if (!isCharged) {
+					isCharged = true;
+					AudioManager.PlaySound(chargeComplete.clip, chargeComplete.volume);
+				}
 			}
-        } else {
+			
+			//charge timer
+			chargeShotTimer += Time.deltaTime;
+		} else {
+			isCharged = false;
             chargeShotTimer = 0;
 			paddleVisuals.SetCharge(0);
 		}
@@ -172,8 +182,9 @@ public class Paddle : MonoBehaviour
 		// Merge movement and dash
 		velocity.y = Mathf.Lerp(velocity.y, moveSpeed * yMoveDir, 1 - dashInterpolationTimer);
 
+		transform.position = new Vector2(transform.position.x, Mathf.Clamp(transform.position.y, minYPos, maxYPos));
+
 		// Timers
-		chargeShotTimer += Time.deltaTime;
 		curveBallInputTimer = Mathf.Clamp01(curveBallInputTimer + Time.deltaTime);
 		dashTimer = Mathf.Clamp01 (dashTimer - Time.deltaTime);
 		dashInterpolationTimer = Mathf.Clamp01 (dashInterpolationTimer - (dashFalloff * Time.deltaTime));
