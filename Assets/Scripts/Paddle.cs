@@ -16,6 +16,7 @@ public class Paddle : MonoBehaviour
 	[SerializeField] private float dashSpeed;
 	[SerializeField] private float dashCooldown;
 	[SerializeField] private float dashFalloff;
+	[SerializeField] private float curveBallInputBuffer;
 	[SerializeField] private float curveBallInitialAngle;
 	[SerializeField] private float initialCurve;
 	[SerializeField] private float curveFalloff;
@@ -108,7 +109,7 @@ public class Paddle : MonoBehaviour
 		}
 
 			// DEBUG NONO ZONE LINE UNTIL WE GET ART
-			Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
+			//Debug.DrawRay(transform.TransformPoint(new Vector2(0, paddleHeight * (nonoZoneSize - .5f))), Vector3.right * (facingRight ? 1 : -1), Color.blue);
 
 		//start charging
 		if (chargeInputDown) {
