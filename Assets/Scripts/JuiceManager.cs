@@ -10,7 +10,9 @@ public class JuiceManager : MonoBehaviour
     [Range(0,1)]
     public float goalJuice = 1f;
     [Range(0, 1)]
-    public float paddleJuice = 0.5f;
+    public float paddleSoftJuice = 0.3f;
+    [Range(0, 1)]
+    public float paddleHardJuice = 0.5f;
     [Range(0, 1)]
     public float ballExplodeJuice = 0.5f;
 
@@ -24,14 +26,14 @@ public class JuiceManager : MonoBehaviour
 
     private void OnEnable() {
         SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalShake);
-        SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleSoftShake);
+        SingletonManager.EventSystemInstance.OnPaddleHit.AddListener(paddleShake);
         //SingletonManager.EventSystemInstance.OnGoalHit.AddListener(goalShake);
         SingletonManager.EventSystemInstance.OnBallExplode.AddListener(ballExplodeShake);
     }
 
     private void OnDisable() {
         SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalShake);
-        SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleSoftShake);
+        SingletonManager.EventSystemInstance.OnPaddleHit.RemoveListener(paddleShake);
         //SingletonManager.EventSystemInstance.OnGoalHit.RemoveListener(goalShake);
         SingletonManager.EventSystemInstance.OnBallExplode.RemoveListener(ballExplodeShake);
     }
@@ -40,12 +42,12 @@ public class JuiceManager : MonoBehaviour
         AddShake(goalJuice);
     }
 
-    private void paddleSoftShake(Vector3 location) {
-        AddShake(paddleJuice);
-    }
-
-    private void paddleHardShake() {
-
+    private void paddleShake(bool isHard) {
+        if (isHard == false) {
+            AddShake(paddleSoftJuice);
+        } else {
+            AddShake(paddleHardJuice);
+        }
     }
 
     private void ballExplodeShake(Vector3 location) {
